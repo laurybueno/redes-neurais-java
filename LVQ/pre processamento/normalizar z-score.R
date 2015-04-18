@@ -3,3 +3,8 @@ BDtreinamento = read.csv("http://archive.ics.uci.edu/ml/machine-learning-databas
 normalizado = scale(BDtreinamento)
 
 ## na primeira coluna, ficou NaN pois todos os elemtnos dela sao 0 (entao foi dividido por 0)
+
+#deleta colunas onde tem algum elemento NaN
+final = normalizado[,colSums (is.na(normalizado)) != nrow(normalizado)]
+
+write.table(final, file="optdigitsNormalizado.txt",sep="," ,row.names=FALSE, col.names=FALSE)

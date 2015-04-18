@@ -1,0 +1,15 @@
+import java.nio.file.Path;
+
+
+public class LVQ {
+	public static void main (String []args){
+		//R = numero de atributos da base de dados que serao analisados (64)
+		Input objeto = new Input();
+		String bla= Path.class.getClassLoader().getResource(".").getFile();  
+		System.out.println(bla);
+		String teste = objeto.leitura("optdigitsNormalizado.txt", 1);
+		double[] atributos = objeto.StringToDouble(teste);
+		for(int i=0;i<atributos.length;i++)
+			System.out.println(atributos[i]);
+	}
+}
