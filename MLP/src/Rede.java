@@ -77,52 +77,54 @@ public class Rede {
 
 	
 	//************* Controle para treinamento *********************//
+	// A sub classe a seguir é dedicada ao controle de fluxo de treinamento da rede neural MLP	
 	
-	// Variáveis que armazenam os dados de Entrada e Saída Esperada entregues a esta classe para o treinamento
-	// Os tipos ainda precisam ser determinados levando em conta como é o banco de dados usado
-	Object[] Entrada;
-	Object[] SaidaEsperada;
-	
-	
-	
-	// ponto de entrada para o algoritmo de treinamento
-	public Rede treinamento(Object[] Entrada, Object[] SaidaEsperada, int treinamentos){
-		this.Entrada = Entrada;
-		this.SaidaEsperada = SaidaEsperada;
-		
-		// Loop das épocas de treinamento
-		for(int epoca = 1; epoca <= treinamentos; epoca++){
+	class Treinamento {
+
+		// Variáveis que armazenam os dados de Entrada e Saída Esperada entregues a esta classe para o treinamento
+		// Os tipos ainda precisam ser determinados levando em conta como é o banco de dados usado
+		Object[] Entrada;
+		Object[] SaidaEsperada;
+
+
+
+		// ponto de entrada para o algoritmo de treinamento
+		public Rede run(Object[] Entrada, Object[] SaidaEsperada, int treinamentos){
+			this.Entrada = Entrada;
+			this.SaidaEsperada = SaidaEsperada;
+			
 			
 
-			// loop das tuplas disponíveis nesta época
-			for(int linhaAtual = 1; linhaAtual <= this.Entrada.length; linhaAtual++){
+			// Loop das épocas de treinamento
+			for(int epoca = 1; epoca <= treinamentos; epoca++){
+
+				// loop das tuplas disponíveis nesta época
+				for(int linhaAtual = 1; linhaAtual <= this.Entrada.length; linhaAtual++){
+
+					// armazena os resultados das operações de Feed Forward da rede neural para a entrada atual
+					double[] feedForward1 = new double[camadaEscondida.length];
+					double[] feedForward2 = new double[camadaSaida.length];
+
+					for(int colunaAtual = 0; colunaAtual < camadaEntrada.length; colunaAtual++){
+						// passa a entrada atual para cada neurônio da primeira camada e capta as saídas
 
 
-				// armazena os resultados das operações de Feed Forward da rede neural para a entrada atual
-				double[] feedForward1 = new double[camadaEntrada.length];
-				double[] feedForward2 = new double[camadaEscondida.length];
-
-				for(int colunaAtual = 0; colunaAtual < camadaEntrada.length; colunaAtual++){
-					// passa a entrada atual para cada neurônio da primeira camada e capta as saídas
-					
+					}
 
 				}
 
+
+
+
 			}
 
-			
-			
-			
+
+			// retorna a rede neural modificada
+			return this;
 		}
-		
-		
-		// retorna a rede neural modificada
-		return this;
+
 	}
-	
-	
-	
-	
+
 	
 	
 	
