@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.LineNumberReader;
 
 
 public class Input {
@@ -35,5 +36,24 @@ public class Input {
 		}
 		return atributos;
 		
+	}
+	
+	//recebe como parametor o nome do arquivo e retorna a quantidade de linahs do memso
+	int tamanho (String nome){
+		
+		int tamanho =0;
+		try{
+			File arquivo = new File(nome);
+			LineNumberReader lnr = new LineNumberReader(new FileReader(arquivo));
+			lnr.skip(Long.MAX_VALUE);
+			tamanho = lnr.getLineNumber();
+			tamanho++;//pois ele comeca a contar do 0
+			
+		}
+		catch(Exception e){
+			System.err.println(e);
+			return 0;
+		}
+		return tamanho;
 	}
 }

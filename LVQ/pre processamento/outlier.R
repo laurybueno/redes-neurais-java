@@ -8,6 +8,7 @@
 #sep="," pois os atributos sao separados por "," e nao tem cabecalho, por isso header=F
 BDtreinamento = read.csv("http://archive.ics.uci.edu/ml/machine-learning-databases/optdigits/optdigits.tes", sep=',' , header=F)
 
+library(outliers)
 outlier(BDtreinamento, opposite = FALSE, logical = TRUE)
 
 #para remover outlier: rm.outlier(BDtreinamento, fill = FALSE, median = FALSE, opposite = FALSE)
