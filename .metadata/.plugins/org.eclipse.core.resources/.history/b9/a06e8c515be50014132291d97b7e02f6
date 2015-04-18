@@ -1,9 +1,0 @@
-
-public class LVQ {
-	public static void main (String []args){
-		//R = numero de atributos da base de dados que serao analisados (64)
-		Input objeto = new Input();
-		String teste = objeto.leitura("nome do arquivo", 1);
-		double atributos = objeto.StringToDouble(teste);
-	}
-}

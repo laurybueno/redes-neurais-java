@@ -6,7 +6,7 @@ import java.io.LineNumberReader;
 
 public class Input {
 	//abre arquivo (nome no primeiro parametro) e retorna a linha especificada (segunto parametro) desse arquivo
-	public String leitura(String nome, int quantidade) {
+	public String leituralinha(String nome, int quantidade) {
 		String linha = "";
 		try{
 			File arquivo = new File(nome);
@@ -40,7 +40,6 @@ public class Input {
 	
 	//recebe como parametor o nome do arquivo e retorna a quantidade de linahs do memso
 	int tamanho (String nome){
-		
 		int tamanho =0;
 		try{
 			File arquivo = new File(nome);
@@ -55,5 +54,25 @@ public class Input {
 			return 0;
 		}
 		return tamanho;
+	}
+	
+	//metodo para pegar os dados do arquivo e passar para uma matriz de double
+	// recebe como parametro o nome do arquivo e retorna a matriz de double com os dados do arquivo
+	double[][] matrizDados(String nomeArquivo){
+		int tamanho = tamanho(nomeArquivo); //descobre a quantidade de linhas do arquivo
+		String linha = leituralinha(nomeArquivo, 0);// pega a primeira linha do arquivo
+		double[] ponto = StringToDouble(linha);// passa a primeira linha do arquivo para um array de double
+		double[][] matrizDados = new double[tamanho][ponto.length];//cria a matriz
+		for(int i=0;i<matrizDados.length;i++){//percorre as linhas da matriz de retorno
+			if(i!=0){ // se for diferente de 0 (pq na primeira linahe le ja fez isso antes de entrar no laco)
+				linha = leituralinha(nomeArquivo, i); //pega a string contendo a linha
+				ponto = StringToDouble(linha); //tranforma a string em um array de double
+			}
+			for(int j=0;j<matrizDados[i].length;j++){//percorre as colunas da matriz de retorno
+				matrizDados[i][j] = ponto[j];//preenche a matriz de retorno
+			}
+			
+		}
+		return matrizDados;
 	}
 }

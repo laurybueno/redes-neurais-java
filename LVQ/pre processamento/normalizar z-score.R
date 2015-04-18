@@ -9,3 +9,4 @@ final = normalizado[,colSums (is.na(normalizado)) != nrow(normalizado)]
 
 #salva a matriz normalizada em um arquivo
 write.table(final, file="optdigitsNormalizado.txt",sep="," ,row.names=FALSE, col.names=FALSE)
+
