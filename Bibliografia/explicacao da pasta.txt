@@ -1,1 +1,3 @@
 Essa é a pasta onde iremos colocar as bibliografias utilizadas e os artigos que lemos para nos ajudar na implementacao
+
+links uteis: http://www.maxwell.vrac.puc-rio.br/Busca_etds.php?strSecao=resultado&nrSeq=5492@1
