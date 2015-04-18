@@ -10,46 +10,45 @@ public class Rede {
 
 	
 	//************* Formação da instância de rede neural *********************//
+	// Vale notar que como os neurônios da primeira camada apenas servem para receber dados, eles não precisam ser instanciados
 	
-	Neuronio[] camadaEntrada;
 	Neuronio[] camadaEscondida;
 	Neuronio[] camadaSaida;
 
 	// Construtor determina quantos neuronios deverão ser criados a partir do comprimento dos arrays de pesos recebidos.
-	// Como a camada de saída não guarda pesos, ela não recebe um array correspondente, mas apenas um int indicando com quantos neurônios ela deverá ser populada.
+	// Como a camada de entrada não precisa ser instanciada, ela também não tem pesos para guardar.
 	// Este construtor será invocado no caso de a rede estar sendo criada em modo de execução.
-	public Rede(double[][] camadaEntrada, double[][] camadaEscondida, int camadaSaida){
+	public Rede(double[][] camadaEscondida, double[][] camadaSaida){
+		
+		/*	Neste contexto, camadaEscondida.length é o número de neurônios na camada escondida.
+		 *  Enquanto camadaEscondida[0].length, é o número de pesos que cada um desses neurônios 
+		 *  precisa armazenar e também o número de neurônios na camada de entrada.
+		 */
 
 		// reserva espaço nos arrays para todos os neurônios que serão criados a seguir
-		this.camadaEntrada = new Neuronio[camadaEntrada.length];
 		this.camadaEscondida = new Neuronio[camadaEscondida.length];
-		this.camadaSaida = new Neuronio[camadaSaida];
+		this.camadaSaida = new Neuronio[camadaSaida.length];
 
-
-		// Os dois loops a seguir criam os neurônios da camada de entrada e inserem os pesos dados
-		for(int i = 0; i < camadaEntrada.length; i++){
-			// este primeiro loop tem suas iterações controladas pelo número de neurônios na camada de entrada
-			this.camadaEntrada[i] = new Neuronio(camadaEscondida.length);
-
-			for(int j = 0; j < camadaEntrada[0].length; j++)
-				// este segundo loop tem suas iterações controladas pela quantidade de pesos que devem ser configurados
-				this.camadaEntrada[i].setPeso(j, camadaEntrada[i][j]);
-		}
 
 		// Os dois loops a seguir criam os neurônios da camada escondida e inserem os pesos dados
 		for(int p = 0; p < camadaEscondida.length; p++){
-			// este primeiro loop tem suas iterações controladas pelo número de neurônios na camada escondida
-			this.camadaEscondida[p] = new Neuronio(camadaSaida);
+			// este primeiro loop tem suas iterações controladas pelo número de neurônios na camada de entrada
+			this.camadaEscondida[p] = new Neuronio(camadaEscondida[0].length); // cada neurônio é criado com a informação de quantos neurônios existem na camada de entrada
 
 			for(int k = 0; k < camadaEscondida[0].length; k++)
 				// este segundo loop tem suas iterações controladas pela quantidade de pesos que devem ser configurados
 				this.camadaEscondida[p].setPeso(k, camadaEscondida[p][k]);
 		}
 
-		// O loop a seguir cria os neurônios da camada de saída
-		for(int x = 0; x < camadaSaida; x++)
-			// este loop tem suas iterações controladas pelo número de neurônios na camada de saída
-			this.camadaSaida[x] = new Neuronio();
+		// Os dois loops a seguir criam os neurônios da camada de saída
+		for(int x = 0; x < camadaSaida.length; x++){
+			// este primeiro loop tem suas iterações controladas pelo número de neurônios na camada de saída
+			this.camadaSaida[x] = new Neuronio(camadaSaida[0].length); // cada neurônio é criado com a informação de quantos neurônios existem na camada escondida
+
+			for(int z = 0; z < camadaSaida[0].length; z++)
+				// este segundo loop tem suas iterações controladas pela quantidade de pesos que devem ser configurados
+				this.camadaSaida[x].setPeso(z, camadaEscondida[x][z]);
+		}
 
 	}
 	
@@ -59,26 +58,18 @@ public class Rede {
 	public Rede(int camadaEntrada, int camadaEscondida, int camadaSaida){
 		
 		// reserva espaço nos arrays para todos os neurônios que serão criados a seguir
-		this.camadaEntrada = new Neuronio[camadaEntrada];
 		this.camadaEscondida = new Neuronio[camadaEscondida];
 		this.camadaSaida = new Neuronio[camadaSaida];
 		
-		
-		// cria os neurônios de entrada
-		for(int i = 0; i < camadaEntrada; i++){
-			this.camadaEntrada[i] = new Neuronio(camadaEscondida);
-			this.camadaEntrada[i].setPeso();
-		}
-		
 		// cria os neurônios escondidos
 		for(int j = 0; j < camadaEscondida; j++){
-			this.camadaEscondida[j] = new Neuronio(camadaSaida);
+			this.camadaEscondida[j] = new Neuronio(camadaEntrada);
 			this.camadaEscondida[j].setPeso();
 		}
 		
 		// cria os neurônios de saída
 		for(int k = 0; k < camadaSaida; k++){
-			this.camadaSaida[k] = new Neuronio();
+			this.camadaSaida[k] = new Neuronio(camadaEscondida);
 			this.camadaSaida[k].setPeso();
 		}
 		

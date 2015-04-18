@@ -6,25 +6,17 @@ public class Neuronio {
 	
 	//************* Formação da instância de neurônio *********************//
 	
-	// Armazena quantos neurônios existem na camada seguinte
+	// Armazena quantos neurônios existem na camada anterior
 	// Essa informação é necessária para que este neurônio saiba quantos pesos deverá armazenar
-	int neuroniosProxCamada;
+	int neuroniosCamadaAnt;
 	double[] peso;
 	
-	// No momento de sua criação, cada neurônio saberá quantos neurônios estão na camada seguinte 
-	public Neuronio(int neuroniosProxCamada){
-		this.neuroniosProxCamada = neuroniosProxCamada;
+	// No momento de sua criação, cada neurônio saberá quantos neurônios estão na camada anterior 
+	public Neuronio(int neuroniosCamadaAnt){
+		this.neuroniosCamadaAnt = neuroniosCamadaAnt;
 		
 		// prepara o array de pesos
-		peso = new double[neuroniosProxCamada];
-	}
-	
-	// Se o neurônio não receber informação sobre a próxima camada, ele assumirá que está na camada final
-	public Neuronio(){
-		this.neuroniosProxCamada = 0;
-		
-		// Como não há uma próxima camada, não há pesos para armazenar
-		peso = null;
+		peso = new double[neuroniosCamadaAnt];
 	}
 	
 	
@@ -35,7 +27,7 @@ public class Neuronio {
 	public void setPeso(){
 		
 		// Como Math.random sempre retorna valores positivos, é preciso acrescentar mais uma camada de aleatoriedade para variar o sinal
-		for(int i = 0; i < this.neuroniosProxCamada; i++)
+		for(int i = 0; i < this.neuroniosCamadaAnt; i++)
 			if(Math.random() > 0.5)
 				this.peso[i] = Math.random();
 			else
@@ -43,12 +35,12 @@ public class Neuronio {
 	
 	}
 
-	// Altera o peso da sinapse entre este neurônio e o neurônio N da próxima camada
+	// Altera o peso da sinapse entre este neurônio e o neurônio N da camada anterior
 	public void setPeso(int N, double peso){
 		this.peso[N] = peso;
 	}
 	
-	// Retorna o peso da sinapse entre este neurônio e o neurônio N da próxima camada
+	// Retorna o peso da sinapse entre este neurônio e o neurônio N da camada anterior
 	public double getPeso(int N){
 		return this.peso[N];
 	}
