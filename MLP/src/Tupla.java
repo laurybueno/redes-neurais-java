@@ -33,8 +33,13 @@ public class Tupla {
 	}
 	
 	// retorna a classe desta tupla
-	public int classe(){
+	public double classe(){
 		return this.classe;
+	}
+	
+	// retorna todos os dados para clonagem
+	public double[] valores(){
+		return this.dado.clone();
 	}
 	
 	// relata para uma classe externa se ainda há atributos para serem lidos nesta tupla
@@ -46,5 +51,11 @@ public class Tupla {
 	public void reset(){
 		this.posicao_atual = 0;
 	}
+	
+	// clona a tupla
+	public Tupla clonar(){
+		return new Tupla(this.valores(),this.classe());
+	}
+	
 	
 }
