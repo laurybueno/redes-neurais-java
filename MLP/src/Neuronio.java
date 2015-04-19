@@ -28,11 +28,10 @@ public class Neuronio {
 		
 		// Como Math.random sempre retorna valores positivos, é preciso acrescentar mais uma camada de aleatoriedade para variar o sinal
 		for(int i = 0; i < this.neuroniosCamadaAnt; i++)
-			double peso = Math.random(); // gera um número entre 0 e 0.999...
-			if(peso > 0.5)
-				this.peso[i] = peso;
+			if(Math.random() > 0.5)
+				this.peso[i] = Math.random();
 			else
-				this.peso[i] = peso * (-1);
+				this.peso[i] = Math.random()*(-1);
 	
 	}
 
