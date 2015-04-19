@@ -4,9 +4,6 @@ public class Resultado {
 		return new int[10][10];
 	}
 	
-	
-	
-	
 	//funcao para adicionar um em um determinado local da matriz de confusao.
 	//recebe a matriz de confusao e o local onde deve ser adicionado(linha e coluna) e retorna a nova matriz de confusao
 	public int[][] adicionaMatriz(int[][] matriz, int classeReal, int classeObservada ){
@@ -90,5 +87,44 @@ public class Resultado {
 		int fp = falsoPositivo(classe, matriz);
 		double taxa = vp/(vp+fp);
 		return taxa;
+	}
+	
+	//funcao para calcular proporcao de rejeicoes corretas dentre os exemplos preditos como negativos
+	public double pedritividadeNegativa(int[][] matriz, int classe){
+		int vn = verdadeiroNegativo(classe, matriz);
+		int fn = falsoNegativo(classe, matriz);
+		double taxa = vn/(vn+fn);
+		return taxa;
+	}
+	
+	//funcao para calcular o numeor de falsos positivos dentre os exemplos classificados como positivos
+	public double falsaDescoberta(int[][] matriz, int classe){
+		int fp = falsoPositivo(classe, matriz);
+		int vp = verdadeiroPositivo(classe, matriz);
+		double taxa = fp/(vp+fp);
+		return taxa;
+	}
+	
+	//funcao para calcular a quantiadde total de verdadeiros positivos(diagonal principal)
+	public int acuracia(int[][] matriz){
+		int cont =0;
+		for(int i=0;i<matriz.length;i++){
+			cont=cont+matriz[i][i];
+		}
+		return cont;
+	}
+	
+	//funcao para retornar a quantidade de exemplos classificados incorretamente
+	// na verdade eh o total menos os acertados
+	public int erro(int[][] matriz){
+		int cont =0;
+		for(int i=0;i<matriz.length;i++){
+			for (int j=0;j<matriz[i].length;j++){
+				if(i!=j){
+					cont=cont+matriz[i][j];
+				}
+			}
+		}
+		return cont;
 	}
 }
