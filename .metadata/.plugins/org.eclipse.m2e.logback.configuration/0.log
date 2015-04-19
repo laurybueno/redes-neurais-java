@@ -393,3 +393,4 @@ Caused by: java.io.IOException: CreateProcess error=2, O sistema não pode encont
 	at java.lang.ProcessImpl.<init>(Unknown Source) ~[na:1.8.0_31]
 	at java.lang.ProcessImpl.start(Unknown Source) ~[na:1.8.0_31]
 	... 66 common frames omitted
+2015-04-19 00:27:22,984 [main] WARN  o.e.r.i.c.rcp.TypeBindingAnalyzer - Can't handle class org.eclipse.jdt.internal.compiler.ast.BinaryExpression as parent of completion location.

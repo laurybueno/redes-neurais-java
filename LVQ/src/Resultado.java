@@ -127,4 +127,63 @@ public class Resultado {
 		}
 		return cont;
 	}
+	
+	//funcao para calcular o indice de kappa
+	double indiceKappa(int[][] matrizConfusao){
+		int diagonalPrincipal = acuracia(matrizConfusao);//somatoria da diagonal principal
+		int n = totalAmostras(matrizConfusao);//total de amostras
+		int numeroClasses = matrizConfusao.length;
+		int somaProdutosLinhasColunas = somaProdutos(matrizConfusao);
+		
+		int partedecima = n *diagonalPrincipal - somaProdutosLinhasColunas;
+		int partedebaixo = n*n - somaProdutosLinhasColunas;
+		double kappa = partedecima/partedebaixo;
+		
+		return kappa;
+		
+	}
+	
+	//funcao para calcular a soma do produto da soma entre colunas e linhas (linha i * coluna i + linha n *coluna....)
+	//ela eh usada para calcular o indice de kappa
+	int somaProdutos(int[][] matrizConfusao){
+		int[] linhas=somaLinhas(matrizConfusao);
+		int[] colunas = somaColunas(matrizConfusao);
+		int produto =0;
+		for(int i=0;i<linhas.length;i++){
+			int aux= linhas[i]*colunas[i];
+			produto=produto + aux;
+		}
+		return produto;
+	}
+	
+	//retorna a soma de cada linha
+	int[] somaLinhas(int[][] matrizConfusao){
+		int[] soma = new int[matrizConfusao.length];
+		for(int i=0;i<matrizConfusao.length;i++){
+			for(int j=0;j<matrizConfusao[i].length;j++){
+				soma[i] = soma[i] +matrizConfusao[i][j];
+			}
+		}
+		return soma;
+	}
+	
+	int[] somaColunas(int[][] matrizConfusao){
+		int[] soma = new int[matrizConfusao[0].length];
+		for(int i=0;i<matrizConfusao.length;i++){
+			for(int j=0;j<matrizConfusao[i].length;j++){
+				soma[j]=soma[j]+matrizConfusao[i][j];
+			}
+		}
+		return soma;
+	}
+	
+	int totalAmostras(int[][] matrizConfusao){
+		int cont=0;
+		for(int i=0;i<matrizConfusao.length;i++){
+			for (int j=0; j<matrizConfusao[i].length;j++){
+				cont=cont+matrizConfusao[i][j];
+			}
+		}
+		return cont;
+	}
 }
