@@ -7,15 +7,22 @@ public class Tupla {
 	 */
 	
 	private double[] dado;
-	private int classe;
+	private double classe;
 	
 	private int posicao_atual;
 	
-	// construtor recebe e copia para sua instância a classe e todos os dados da tupla dada
-	public Tupla(double [] dado, int classe){
+	// construtor recebe e copia para sua instância todos os dados da tupla dada e sua classe, quando disponível
+	public Tupla(double [] dado, double classe){
 		this.classe = classe;
 		this.dado = dado.clone();
 		this.posicao_atual = 0;
+	}
+	
+	// quando a classe não estiver disponível, e portanto a rede estiver em modo de execução, este construtor é chamado
+	public Tupla(double[] dado){
+		this.classe = -1;
+		this.dado = dado.clone();
+		this.posicao_atual = 0;		
 	}
 	
 	// retorna o próximo valor não lido desta tupla

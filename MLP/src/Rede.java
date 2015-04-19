@@ -14,11 +14,14 @@ public class Rede {
 	
 	Neuronio[] camadaEscondida;
 	Neuronio[] camadaSaida;
+	
+	double viesEscondida;
+	double viesSaida;
 
 	// Construtor determina quantos neuronios deverão ser criados a partir do comprimento dos arrays de pesos recebidos.
 	// Como a camada de entrada não precisa ser instanciada, ela também não tem pesos para guardar.
 	// Este construtor será invocado no caso de a rede estar sendo criada em modo de execução.
-	public Rede(double[][] camadaEscondida, double[][] camadaSaida){
+	public Rede(double[][] camadaEscondida, double[][] camadaSaida, double viesEscondida, double viesSaida){
 		
 		/*	Neste contexto, camadaEscondida.length é o número de neurônios na camada escondida.
 		 *  Enquanto camadaEscondida[0].length, é o número de pesos que cada um desses neurônios 
@@ -28,6 +31,10 @@ public class Rede {
 		// reserva espaço nos arrays para todos os neurônios que serão criados a seguir
 		this.camadaEscondida = new Neuronio[camadaEscondida.length];
 		this.camadaSaida = new Neuronio[camadaSaida.length];
+		
+		// armazena o viés de cada camada
+		this.viesEscondida = viesEscondida;
+		this.viesSaida = viesSaida;
 
 
 		// Os dois loops a seguir criam os neurônios da camada escondida e inserem os pesos dados
@@ -55,11 +62,17 @@ public class Rede {
 	
 	// Esse construtor será invocado se a rede for iniciada em modo de treinamento
 	// A definição de pesos será delegada para a classe Neuronio
-	public Rede(int camadaEntrada, int camadaEscondida, int camadaSaida){
+	// Este método assume que o viés de cada camada será determinado externamente
+	public Rede(int camadaEntrada, int camadaEscondida, int camadaSaida,
+			double viesEscondida, double viesSaida){
 		
 		// reserva espaço nos arrays para todos os neurônios que serão criados a seguir
 		this.camadaEscondida = new Neuronio[camadaEscondida];
 		this.camadaSaida = new Neuronio[camadaSaida];
+		
+		// armazena o viés de cada camada
+		this.viesEscondida = viesEscondida;
+		this.viesSaida = viesSaida;
 		
 		// cria os neurônios escondidos
 		for(int j = 0; j < camadaEscondida; j++){
@@ -77,61 +90,60 @@ public class Rede {
 
 	
 	//************* Controle para treinamento *********************//
-	// A sub classe a seguir é dedicada ao controle de fluxo de treinamento da rede neural MLP	
+	// A classe aninhada a seguir é dedicada ao controle de fluxo de treinamento da rede neural MLP	
 	
 	class Treinamento {
 
-		// Variáveis que armazenam os dados de Entrada e Saída Esperada entregues a esta classe para o treinamento
-		// Os tipos ainda precisam ser determinados levando em conta como é o banco de dados usado
-		Object[] Entrada;
-		Object[] SaidaEsperada;
+		// Variável que armazena as linhas de dados entregues a esta classe para o treinamento.
+		Tupla[] entrada;
+		
+		// taxa de aprendizado deste treinamento
+		double aprendizado;
+		
+		// construtor recebe todas as linhas do banco de dados 
+		public Treinamento(double[][] dados, int[] classe, double aprendizado){
+			this.entrada = new Tupla[classe.length];
+			this.aprendizado = aprendizado;
+			
+			// cria todas as tuplas de treinamento
+			for(int i = 0; i < classe.length; i++){
+				this.entrada[i] = new Tupla(dados[i],classe[i]);
+			}
+			
+		}
 
-
-
+		
 		// ponto de entrada para o algoritmo de treinamento
-		public Rede run(Object[] Entrada, Object[] SaidaEsperada, int treinamentos){
-			this.Entrada = Entrada;
-			this.SaidaEsperada = SaidaEsperada;
-			
-			
+		public Rede run(int treinamentos){
 
 			// Loop das épocas de treinamento
 			for(int epoca = 1; epoca <= treinamentos; epoca++){
-
-				// loop das tuplas disponíveis nesta época
-				for(int linhaAtual = 1; linhaAtual <= this.Entrada.length; linhaAtual++){
-
-					// armazena os resultados das operações de Feed Forward da rede neural para a entrada atual
-					double[] feedForward1 = new double[camadaEscondida.length];
-					double[] feedForward2 = new double[camadaSaida.length];
-
-					for(int colunaAtual = 0; colunaAtual < camadaEntrada.length; colunaAtual++){
-						// passa a entrada atual para cada neurônio da primeira camada e capta as saídas
-
-
-					}
-
+				
+				// Loop das tuplas em cada época
+				for(int linhaDeDados = 0; linhaDeDados < entrada.length; linhaDeDados++){
+					
 				}
-
-
-
-
-			}
-
-
+			} // encerra loop das épocas
+			
 			// retorna a rede neural modificada
-			return this;
+			return Rede.this;
+		}
+		
+		// uma sessao de treinamento inclui uma operação de feedforward e backpropagation
+		private void sessao(Tupla tupla){
+			
+			
 		}
 
-	}
-
-	
-	
-	
-	
-	
+	} // fim da classe aninhada de Treinamento
 	
 	//************* Controle para execução *********************//
+	// classe run de Rede executa a operação de FeedForward e retorna a classe a que a tupla deve pertencer
+	public int run(Tupla tupla){
+		
+		
+		
+	}
 
 
 
