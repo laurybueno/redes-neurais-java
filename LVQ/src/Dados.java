@@ -34,11 +34,19 @@ public class Dados{
 		for(int i = 0; i< dadosEntrada.length; i++){
 			if(n == dadosEntrada[i][dadosEntrada.length-1]){
 				double [] aux = dadosEntrada[i];
-				return dadosEntrada[i];
+				return aux;
 				//TODO exclusao elemento atribuido
 			}
 		}
 		return null;
 	}
+	/*
+	public void DeletaLinhaDadosEntrada(int linha){
+		double [][] novoDadosEntrada = dadosEntrada;
+		for(int i =0; i < dadosEntrada.length; i++){
+			if(i == linha) 
+		}
+	} 
+	*/
 	
 }
