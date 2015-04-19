@@ -1,24 +1,14 @@
 
 public class LVQ {
 	public static void main (String []args){
-		String nomeArquivo = "pre processamento/optdigitsNormalizado.txt";
-		//R = numero de atributos da base de dados que serao analisados (64)
-		int M =10; //quantidade de clusters (como a base de dados analisa os 10 digitos)
-		int[] vetorPesos = new int[M];
-		int taxaDeAprendizado=0;
-		Input arquivo = new Input();
-		
-		double[][] dados = arquivo.matrizDados(nomeArquivo);
-		
-		
-		double[] centroide = centroMassa(dados);
-		
+		Inicializa inicializa = new Inicializa();
+		inicializa.Dados();//metodo principal de inicializacao dos dados do algoritmo
 		
 	}
 	
 	//metodo para calcular a distancia euclidiana entre dois pontos
 	//recebe como paramentro dois vetores e retorna a distancia euclidiana
-	double distanciaEuclidiana(int[] vetor, int [] array){
+	static double distanciaEuclidiana(int[] vetor, int [] array){
 		double aux=0;//auxiliar somar as distancias locais
 		for (int i=0;i<vetor.length;i++){// percorre o arranjo para pegar todos os atributos
 			double local = vetor[i]- array[i]; //pega a distancia local
