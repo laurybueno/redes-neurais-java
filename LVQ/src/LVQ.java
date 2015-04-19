@@ -1,8 +1,12 @@
 
 public class LVQ {
 	public static void main (String []args){
-		Inicializa inicializa = new Inicializa();
-		inicializa.Dados();//metodo principal de inicializacao dos dados do algoritmo
+		Dados dados = new Dados();//Inicializa principais dados do algoritmo
+		dados.VetoresPeso(); //metodo que determina os pesos iniciais
+		UnidadeDeSaida [] unidadesDeSaida = dados.unidadesDeSaida;
+		double[][] dadosEntrada = dados.dadosEntrada;
+		double taxaDeAprendizado = dados.taxaDeAprendizado;
+		int M = dados.M;
 		
 	}
 	
