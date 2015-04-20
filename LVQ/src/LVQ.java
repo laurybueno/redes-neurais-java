@@ -1,44 +1,55 @@
 
 public class LVQ {
-	public static void main (String []args){
-		Dados dados = new Dados();//Inicializa principais dados do algoritmo
-		dados.VetoresPeso(); //metodo que determina os pesos iniciais
-		UnidadeDeSaida [] unidadesDeSaida = dados.unidadesDeSaida;
-		double[][] dadosEntrada = dados.dadosEntrada;
+	
+	UnidadeDeSaida [] unidadesDeSaida;
+	double [][] dadosEntrada;
+	
+	public LVQ( Inicializa inicializa){
 		
-		/*Valores passados pelo Usuario - Inicio*/
-		int numeroFixo =10;
-		double valorMinimo = 0.1;
-		double taxaDeAprendizado = dados.taxaDeAprendizado;
-		double valorReducaoTaxaAprendizado = 0.1;
-		/*Valores passados pelo Usuario - Fim */
+		//Declaracoes dos dados principais - Inicio		
+		inicializa.PesosPrimeiraEntrada();//metodo que determina os pesos iniciais
+		//Declaracoes dos dados principais - Fim
+		
+		this.dadosEntrada = inicializa.dadosEntrada;
+		this.unidadesDeSaida = inicializa.unidadesDeSaida;
+	}
+	
+	//Metodo principal da geracao da LVQ, onde a LVQ e treinada segundo uma entrada dada.
+	//Ele recebe por parametro valores importantes do treinamento como: dados de Entrada (dadosEntrada), 
+	//um array com as Unidades de Saida (unidadesDeSaida), taxa de aprendizado (taxaDeAprendizado), valor 
+	//da reducao da taxa de Aprendizado (reducaoAprendizado), e valores de criterios de parada como numeroFixo e valorMinimo
+	//Por fim retorna o array de UnidadeDeSaida jah treinados
+	static UnidadeDeSaida [] Treinamento(double [][] dadosEntrada, UnidadeDeSaida [] unidadesDeSaida, double taxaDeAprendizado, 
+										 double reducaoAprendizado, int numeroFixo , double valorMinimo){
 		
 		int numeroInteracoes = 0; //contador para quantidade de Interacoes do Algoritmo
-		
 		while(!(paradaNumeroFixo(numeroInteracoes, numeroFixo) && paradaValorMinimo(taxaDeAprendizado, valorMinimo))){
 			for(int i = 0; i < dadosEntrada.length; i++){
 				int indiceWJ = menorDistancia(dadosEntrada[i], unidadesDeSaida); //array de pesos mais proximo do dadoEntrada
-				double [] WJ = unidadesDeSaida[indiceWJ].W;
+				double [] WJ = unidadesDeSaida[indiceWJ].VetorPesos;
 				if(WJ[WJ.length-1] == dadosEntrada[i][dadosEntrada[i].length-1]){
 					double [] aux = operacaoEntreArray(dadosEntrada[i], WJ, 1);
 					aux = mutiplicacaoArrayComDouble(aux, taxaDeAprendizado);
 					WJ = operacaoEntreArray(WJ, aux, 0);
-					unidadesDeSaida[indiceWJ].W = WJ;
+					unidadesDeSaida[indiceWJ].VetorPesos = WJ;
 				}	
 				else{
 					double [] aux = operacaoEntreArray(dadosEntrada[i], WJ, 1);
 					aux = mutiplicacaoArrayComDouble(aux, taxaDeAprendizado);
 					WJ = operacaoEntreArray(WJ, aux, 1);
-					unidadesDeSaida[indiceWJ].W = WJ;
+					unidadesDeSaida[indiceWJ].VetorPesos = WJ;
 				}
 			}
-			taxaDeAprendizado = taxaDeAprendizado - valorReducaoTaxaAprendizado;
+			taxaDeAprendizado = taxaDeAprendizado - reducaoAprendizado;
 			
 			numeroInteracoes++;
 		}
-		
+		return unidadesDeSaida;
 	}
 	
+	//metodo que realiza operacoes algebrica de multiplicacao entre um array e um valor numerico
+	//recebe um dado array e um valor numerico
+	//retorna o novo array produzido pela multiplicacao do array por um valor numerico
 	static double [] mutiplicacaoArrayComDouble(double [] array1, double numeric){
 		double [] retorno = new double [array1.length-1];
 			for(int i =0; i < array1.length; i++){
@@ -52,21 +63,17 @@ public class LVQ {
 	//operacao = 0 soma, 1 subtracao
 	static double [] operacaoEntreArray (double [] array1, double [] array2, int operacao){
 		double [] retorno = new double [array1.length-1]; 
-		if(operacao == 0){
+		if(operacao == 0){ //operacao de soma de arrays
 			for(int i =0; i < array1.length; i++){
 				retorno[i] = array1[i] + array2[i];
 			}
 		}
-		else if(operacao ==1){
+		else if(operacao ==1){ //operacao de subtracao de arrays
 			for(int i =0; i < array1.length; i++){
 				retorno[i] = array1[i] - array2[i];
 			}
 		}
-		else if(operacao ==2){
-			for(int i =0; i < array1.length; i++){
-				retorno[i] = array1[i] * array2[i];
-			}
-		}
+		
 		return retorno;
 	}
 	
@@ -75,14 +82,13 @@ public class LVQ {
 	//e retorna o index array de pesos da menor distancia em relacao a dadosEntrada
 	static int menorDistancia(double [] dadosEntrada, UnidadeDeSaida [] unidades){
 		int indiceMenor = 0;
-
+		
 		for(int i =0 ; i < unidades.length-1; i++){
-			
 			UnidadeDeSaida aux = unidades[i]; 
-			double [] pesos = aux.W;
+			double [] pesos = aux.VetorPesos;
 			UnidadeDeSaida auxProx = unidades[i];
-			double [] pesosProx = auxProx.W;
-						
+			double [] pesosProx = auxProx.VetorPesos;
+			// verifica qual indice com a menor distancia euclidiana
 			if(distanciaEuclidiana(dadosEntrada, pesos) > distanciaEuclidiana(dadosEntrada, pesosProx))
 				indiceMenor = i+1;
 		}
@@ -119,8 +125,6 @@ public class LVQ {
 		aux =Math.sqrt(aux);//tira a raiz quadrada da soma das distancias locais
 		return aux;
 	}
-	
-	
 	
 	// não sei se sera usado. pensei que isso fosse ser usado para calcular centroide. Nao sei o que eh centroide.
 	//metodo para descobrir a media de uma coluna
