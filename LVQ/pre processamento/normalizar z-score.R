@@ -11,3 +11,6 @@ final = normalizado[,colSums (is.na(normalizado)) != nrow(normalizado)]
 #salva a matriz normalizada em um arquivo
 write.table(final, file="optdigitsNormalizado.txt",sep="," ,row.names=FALSE, col.names=FALSE)
 
+
+#fonte: http://stats.seandolinar.com/calculating-z-scores-with-r/
+

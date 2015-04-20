@@ -1,8 +1,9 @@
 public class Main{
 	
 	public static void main(String[] args){
-		Input arquivo = new Input();
-		arquivo.funcaoIntegradora("dados.txt", 60, 30, 10);
+		Normaliza bla = new Normaliza();
+		bla.zScore("dados.txt");
+		System.out.println("foi");
 		
 		
 		//TODO verificar metodo de distancia

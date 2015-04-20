@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Input {
 	//abre arquivo (nome no primeiro parametro) e retorna a linha especificada (segunto parametro) desse arquivo
-	public String leituralinha(String nome, int quantidade) {
+	public String leituralinha(String nome, int posicao) {
 		String linha = "";
 		try{
 			File arquivo = new File(nome);
@@ -22,7 +22,7 @@ public class Input {
 			BufferedReader br = new BufferedReader(fr);
 			int cont = 0;//auxliar para ver a linha atual
 			
-			while ((cont <= quantidade) && (br.ready())) {//enquanto a linha atual for menor ou igual a a linha que eh para ser lida e eh possivel ler o arquivo
+			while ((cont <= posicao) && (br.ready())) {//enquanto a linha atual for menor ou igual a a linha que eh para ser lida e eh possivel ler o arquivo
 				linha = br.readLine();//le o arquivo e vai para a proxima linha
 				cont++;//soma um no auxiliar para ver a linha atual
 			}
@@ -44,6 +44,19 @@ public class Input {
 		}
 		return atributos;
 		
+	}
+	
+	//recebe como parametro o nome do arquivo e retorna uma amtriz de double contendo os dados do arquivo
+	public double[][] arquivoToMatrizDouble(String nomeArquivo){
+		String s = leituralinha(nomeArquivo, 0);
+		int quantidadeLinhas = tamanho(nomeArquivo);
+		double[][] dados = new double[quantidadeLinhas][s.length()];
+		dados[0] = StringToDouble(s);
+		for(int i=1;i<dados.length;i++){
+			s = leituralinha(nomeArquivo, i);
+			dados[i] = StringToDouble(s);
+		}
+		return dados;
 	}
 	
 	//recebe como parametor o nome do arquivo e retorna a quantidade de linahs do memso
