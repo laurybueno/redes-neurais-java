@@ -87,7 +87,8 @@ public class Input {
 	
 	//funcao que recebe como parametro o nome do arquivo e retorna todos os registros da classe recebida como parametro
 	//retorna uma lista de strings
-	public List<String> todasClassesX(String nomeArquivo, int classe){
+	public List<String> todasClassesX(String nomeArquivo, int numero){
+		char classe =Character.forDigit(numero, 10);
 		List<String> classeX = new ArrayList<String>();
 		int tamanho = tamanho(nomeArquivo);
 		for(int i=0;i<tamanho;i++){
@@ -106,26 +107,41 @@ public class Input {
 		for(int i=0;i<classes.length;i++){
 			classes[i] = shuffle(classes[i]);
 		}
-		
+
 		System.out.println("deu o shuffle");
-		int comeco =0;
 		int[] quantidade = calculaQuantidade(p1, p2, p3, nomeArquivo);
 		
 		
-		String[] dados1 = dados(quantidade[0], 0, classes);
-		String[] dados2 = dados(quantidade[1], quantidade[1], classes);
-		String[] dados3 = dados(quantidade[2], quantidade[1]+quantidade[2], classes);
+		String[] dados = dados(tamanho(nomeArquivo), classes);
+		for(String s:dados)
+			System.out.println(s);
 		
-		for(int i=0;i<dados1.length;i++){
-			System.out.println(dados1[i]);
-		}
-		System.out.println("vai comecar a escrever");
-		escreveArquivo("treino",dados1 );
-		System.out.println("escreveu o rpiemiro");
-		escreveArquivo("teste", dados2);
-		System.out.println("escreveu o segund0");
-		escreveArquivo("validacao", dados3);
+		
+		String[] dados1 = cortaString(0, quantidade[0], dados);
+		System.out.println(quantidade[1]);
+		String[] dados2 = cortaString(quantidade[0],quantidade[1],dados);
+		String[] dados3 = cortaString(quantidade[1], quantidade[2], dados);
+		
+
+		escreveArquivo("treino.txt",dados1 );
+		escreveArquivo("teste.txt", dados2);
+		escreveArquivo("validacao.txt", dados3);
 		System.out.println("parabens");
+		
+		for(String s:dados3)
+			System.out.println(s);
+		
+	}
+	
+	String[] cortaString(int inicial, int tamanho, String[] total){
+		String[] nova=new String[tamanho];
+
+		for(int i=0;i<nova.length;i++){
+			System.out.println("inicio:" +inicial +"     tamanho:  "+total.length);
+			nova[i]= total[inicial];
+			inicial++;
+		}
+		return nova;
 	}
 	
 	public void escreveArquivo(String nomeArquivo, String[] s) {
@@ -141,41 +157,94 @@ public class Input {
 		}
 	}
 	
-	//informo a quantidade e a lista taotal e onde comecar. ele me retorna um arranjo de String pegando um de cada classe.
-	public String[] dados (int quantidadeDados, int comeco, List[] todos){
-		String[] dados = new String[quantidadeDados];
-		
-		Iterator<String>[] iterators= new Iterator[10];
-		for(int i=0;i<iterators.length;i++){
-			iterators[i] = todos[i].iterator();
+	public String[] listToArray(List dados){
+		String [] retorno = (String[]) dados.toArray(new String[dados.size()]);
+
+		return retorno;
+	}
+	
+	public String[] concat(String[] a, String[] b) {
+		   int aLen = a.length;
+		   int bLen = b.length;
+		   String[] c= new String[aLen+bLen];
+		   System.arraycopy(a, 0, c, 0, aLen);
+		   System.arraycopy(b, 0, c, aLen, bLen);
+		   return c;
 		}
+	
+	//informo a quantidade e a lista total e onde comecar. ele me retorna um arranjo de String pegando um de cada classe.
+	public String[] listArrayToArray(List[] todos, int quantidadedados){
+		String[] dados = new String[quantidadedados];
+		for(int i=0;i<todos.length;i++){
+			String[] classe = listToArray(todos[i]);
+			dados = concat(dados, classe); 
+		}
+		return null;
+		
+	}
+	
+	//informo a quantidade e a lista total . ele me retorna um arranjo de String pegando um de cada classe.
+	public String[] dados (int quantidadeDados, List[] todos){
+		String[] novo = new String[quantidadeDados];
+		
+		String[] dados0 = listToArray(todos[0]);
+		String[] dados1 = listToArray(todos[1]);
+		String[] dados2 = listToArray(todos[2]);
+		String[] dados3 = listToArray(todos[3]);
+		String[] dados4 = listToArray(todos[4]);
+		String[] dados5 = listToArray(todos[5]);
+		String[] dados6 = listToArray(todos[6]);
+		String[] dados7 = listToArray(todos[7]);
+		String[] dados8 = listToArray(todos[8]);
+		String[] dados9 = listToArray(todos[9]);
 		
 		int aux=0;
-		while (aux<comeco){
-			for(int i=0;i<iterators.length;i++){
-				if(iterators[i].hasNext()){
-					iterators[i].next();
-					aux++;					
-				}
+		for(int i=0;i<novo.length;aux++){	
+			if(aux<dados0.length){
+				novo[i]=dados0[aux];
+				i++;
 			}
-			if (aux<comeco){
-				break;
+			
+			if(aux<dados1.length){
+				novo[i]=dados1[aux];
+				i++;
+			}
+			
+			if(aux<dados2.length){
+				novo[i]=dados2[aux];
+				i++;
+			}
+			if(aux<dados3.length){
+				novo[i]=dados3[aux];
+				i++;
+			}
+			if(aux<dados4.length){
+				novo[i]=dados4[aux];
+				i++;
+			}
+			if(aux<dados5.length){
+				novo[i]=dados5[aux];
+				i++;
+			}
+			if(aux<dados6.length){
+				novo[i]=dados6[aux];
+				i++;
+			}
+			if(aux<dados7.length){
+				novo[i]=dados7[aux];
+				i++;
+			}
+			if(aux<dados8.length){
+				novo[i]=dados8[aux];
+				i++;
+			}
+			if(aux<dados9.length){
+				novo[i]=dados9[aux];
+				i++;
 			}
 		}
 		
-		int contador=0;
-		while(contador < quantidadeDados) {
-			for(int i = 0; i < iterators.length; i++) {
-				if(iterators[i].hasNext()){
-					dados[contador]=iterators[i].next();
-					contador++;
-				}
-			}
-			if (contador < quantidadeDados){
-				break;
-			}
-		}
-		return dados;
+		return novo;
 	}
 	
 	public List[] preencheClasse(String nomeArquivo) {
