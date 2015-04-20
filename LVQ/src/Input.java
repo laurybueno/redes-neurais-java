@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.LineNumberReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -108,54 +109,36 @@ public class Input {
 			classes[i] = shuffle(classes[i]);
 		}
 
-		System.out.println("deu o shuffle");
 		int[] quantidade = calculaQuantidade(p1, p2, p3, nomeArquivo);
 		
 		
 		String[] dados = dados(tamanho(nomeArquivo), classes);
-		for(String s:dados)
-			System.out.println(s);
+		
 		
 		
 		String[] dados1 = cortaString(0, quantidade[0], dados);
-		System.out.println(quantidade[1]);
 		String[] dados2 = cortaString(quantidade[0],quantidade[1],dados);
 		String[] dados3 = cortaString(quantidade[1], quantidade[2], dados);
 		
+		
+		Output grava = new Output();
+		grava.escreveArquivo("treino.txt",dados1 );
+		grava.escreveArquivo("teste.txt", dados2);
+		grava.escreveArquivo("validacao.txt", dados3);
 
-		escreveArquivo("treino.txt",dados1 );
-		escreveArquivo("teste.txt", dados2);
-		escreveArquivo("validacao.txt", dados3);
-		System.out.println("parabens");
-		
-		for(String s:dados3)
-			System.out.println(s);
-		
 	}
 	
 	String[] cortaString(int inicial, int tamanho, String[] total){
 		String[] nova=new String[tamanho];
 
 		for(int i=0;i<nova.length;i++){
-			System.out.println("inicio:" +inicial +"     tamanho:  "+total.length);
 			nova[i]= total[inicial];
 			inicial++;
 		}
 		return nova;
 	}
 	
-	public void escreveArquivo(String nomeArquivo, String[] s) {
-		try {
-			PrintWriter writer = new PrintWriter(nomeArquivo, "UTF-8");
-			for(int i = 0; i < s.length; i++) {
-				writer.println(s[i]);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-	}
+	
 	
 	public String[] listToArray(List dados){
 		String [] retorno = (String[]) dados.toArray(new String[dados.size()]);
@@ -251,7 +234,6 @@ public class Input {
 		
 		List[] classe = new List[10];
 		for(int i = 0; i < 10; i++) {
-			System.out.println("preenche Classe "+i);
 			classe[i] = todasClassesX(nomeArquivo, i);
 		}
 		return classe;
