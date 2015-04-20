@@ -4,17 +4,20 @@ public class Inicializa{
 	UnidadeDeSaida [] unidadesDeSaida; //vetores de pesos
 	double[][] dadosEntrada; //matriz de dados de entrada
 	
+	
 	//contrutor de inicializacao principais dados do algoritmo
-	//recebe nome do arquivo de entrada de dados, e a quantidade de neuronios por classe
+	//recebe nome do arquivo de entrada de dados, e a quantidade de neuronios por classe(N)
 	public Inicializa(String nomeArquivo, int N)
 	{
 		//R = numero de atributos da base de dados que serao analisados (64)
-		N =10; //quantidade de Neuronios por cada classe
+		N =N*10; //quantidade de Neuronios de saida por LVQ. N*10 pois existem 10 tipos de classes.
 		unidadesDeSaida = new UnidadeDeSaida [N]; //vetor de Unidades de Saida do Algoritmo
 		Input arquivo = new Input(); //Objeto de Leitura dos dados
 		dadosEntrada = arquivo.matrizDados(nomeArquivo); //vetor de dados de entrada
 		//double[] centroide = centroMassa(dados);
 	}
+	
+	
 	
 	//supondo que as classes vao de [0~9]
 	//metodo de Inicializacao dos N*10 vetores de peso (sendo N a quantidade de neuronios por classe)
