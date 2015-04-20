@@ -15,6 +15,7 @@ public class Inicializa{
 		dadosEntrada = arquivo.matrizDados(nomeArquivo); //vetor de dados de entrada
 		//double[] centroide = centroMassa(dados);
 	}
+	
 	//supondo que as classes vao de [0~9]
 	//metodo de Inicializacao dos N*10 vetores de peso (sendo N a quantidade de neuronios por classe)
 	//atribuindo para os N*10 vetores de pesos as primeiras entradas de classes diferentes
@@ -23,7 +24,7 @@ public class Inicializa{
 		//laco que inicializa os arrays de pesos como os primeiros dados de classes diferentes
 		//repetindo o processo no caso da existencia mais de um array de pesos por classe.
 		for(int i = 0; i < unidadesDeSaida.length; i++){
-			unidadesDeSaida[i].VetorPesos = EncontraPrimeiraEntrada(i%10);
+			unidadesDeSaida[i].VetorPesos = this.EncontraPrimeiraEntrada(i%10);
 		}
 	}
 	
@@ -38,7 +39,7 @@ public class Inicializa{
 				//copia o dado para uma classe auxiliar
 				double [] aux = dadosEntrada[i];
 				//e deleta o dado do array de dados, pois ele vai ser desconsiderado no treinamento
-				DeletaLinhaDadosEntrada(i);
+				this.DeletaLinhaDadosEntrada(i);
 				//retorna o dado copiado
 				return aux;
 			}
