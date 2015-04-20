@@ -1,7 +1,14 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.LineNumberReader;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class Input {
@@ -75,4 +82,151 @@ public class Input {
 		}
 		return matrizDados;
 	}
+	
+	//funcao parar criar um arranjo de lista
+	
+	//funcao que recebe como parametro o nome do arquivo e retorna todos os registros da classe recebida como parametro
+	//retorna uma lista de strings
+	public List<String> todasClassesX(String nomeArquivo, int classe){
+		List<String> classeX = new ArrayList<String>();
+		int tamanho = tamanho(nomeArquivo);
+		for(int i=0;i<tamanho;i++){
+			String linha = leituralinha(nomeArquivo, i);
+			if(linha.charAt(linha.length()-1)==classe){//se a ultima letra for o numero da classe
+				classeX.add(linha);
+			}
+		}
+		return classeX;
+	}
+	
+	public void funcaoIntegradora(String nomeArquivo, int p1, int p2, int p3){
+		
+		List[] classes = preencheClasse(nomeArquivo);
+		
+		for(int i=0;i<classes.length;i++){
+			classes[i] = shuffle(classes[i]);
+		}
+		
+		System.out.println("deu o shuffle");
+		int comeco =0;
+		int[] quantidade = calculaQuantidade(p1, p2, p3, nomeArquivo);
+		
+		
+		String[] dados1 = dados(quantidade[0], 0, classes);
+		String[] dados2 = dados(quantidade[1], quantidade[1], classes);
+		String[] dados3 = dados(quantidade[2], quantidade[1]+quantidade[2], classes);
+		
+		for(int i=0;i<dados1.length;i++){
+			System.out.println(dados1[i]);
+		}
+		System.out.println("vai comecar a escrever");
+		escreveArquivo("treino",dados1 );
+		System.out.println("escreveu o rpiemiro");
+		escreveArquivo("teste", dados2);
+		System.out.println("escreveu o segund0");
+		escreveArquivo("validacao", dados3);
+		System.out.println("parabens");
+	}
+	
+	public void escreveArquivo(String nomeArquivo, String[] s) {
+		try {
+			PrintWriter writer = new PrintWriter(nomeArquivo, "UTF-8");
+			for(int i = 0; i < s.length; i++) {
+				writer.println(s[i]);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//informo a quantidade e a lista taotal e onde comecar. ele me retorna um arranjo de String pegando um de cada classe.
+	public String[] dados (int quantidadeDados, int comeco, List[] todos){
+		String[] dados = new String[quantidadeDados];
+		
+		Iterator<String>[] iterators= new Iterator[10];
+		for(int i=0;i<iterators.length;i++){
+			iterators[i] = todos[i].iterator();
+		}
+		
+		int aux=0;
+		while (aux<comeco){
+			for(int i=0;i<iterators.length;i++){
+				if(iterators[i].hasNext()){
+					iterators[i].next();
+					aux++;					
+				}
+			}
+			if (aux<comeco){
+				break;
+			}
+		}
+		
+		int contador=0;
+		while(contador < quantidadeDados) {
+			for(int i = 0; i < iterators.length; i++) {
+				if(iterators[i].hasNext()){
+					dados[contador]=iterators[i].next();
+					contador++;
+				}
+			}
+			if (contador < quantidadeDados){
+				break;
+			}
+		}
+		return dados;
+	}
+	
+	public List[] preencheClasse(String nomeArquivo) {
+		
+		List[] classe = new List[10];
+		for(int i = 0; i < 10; i++) {
+			System.out.println("preenche Classe "+i);
+			classe[i] = todasClassesX(nomeArquivo, i);
+		}
+		return classe;
+	}
+	
+	public List<String> shuffle(List classes) {
+		Collections.shuffle(classes);
+		return classes;
+	}
+
+
+	//funcao para reetornar um arranjo de String contendo N quantidade (recebe como parametro) de uma clase
+	//recebe como parametro uma lista de String com as linhas ja aleatorias
+	public String[] registrosClasseX(List<String> classe, int quantidade){
+		String[] registros = new String[quantidade];
+		Iterator<String> it = classe.iterator();
+		int cont=0;
+		while(it.hasNext() && cont<quantidade){
+			registros[cont]=it.next();
+			cont++;
+		}
+		return registros;
+	}
+	
+	
+
+	
+	//recebe como parametro a porcentagem (de 0 a 100) e retorna a quantidade de registros com essa porcentagem dentro de um arranjo de int
+	public int[] calculaQuantidade(int p1, int p2,int p3, String nomeArquivo){
+		int[] quantidade = new int[3];
+		int tamanho = tamanho(nomeArquivo);
+		if ((tamanho*p1)%100==0 && (tamanho*p2)%100==0 && (tamanho*p3)%100==0){//se nao precisa arredondar
+			quantidade[0] = (tamanho*p1)/100;
+			quantidade[1] = (tamanho*p2)/100;
+			quantidade[2] = (tamanho*p3)/100;
+		}
+		else{
+			quantidade[0]=(tamanho*p1)/100;
+			quantidade[1]=(tamanho*p2)/100;
+			quantidade[2] = (tamanho*p3)/100+1;
+			
+		}
+		return quantidade;
+	}
+	
+	
 }
