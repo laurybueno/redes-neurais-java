@@ -146,13 +146,31 @@ public class Rede {
 				yI[neuronioSai] = camadaSaida[neuronioSai].feedForward(zI, viesSaida);
 			}
 			
-			// faz um log da taxa de erros desta época e a deixa à disposição da Thread guardiã
-			
-			
-			// entrega a cada neurônio o resultado que ele deveria ter dado
+			// TODO: faz um log da taxa de erros desta época e a deixa à disposição da Thread guardiã
 			
 			
 			// realiza backPropagation dos erros computados
+			/* Primeiro na camada de saída:
+			 * Todos os neurônios devem receber o sinal de treinamento -1,
+			 * exceto pelo neurônio que corresponde à classe da tupla dada, 
+			 * que deve receber 1.
+			 */
+			int tk;
+			double[] deltaK = new double[camadaSaida.length];
+			double[] wJK = new double[camadaSaida.length];
+			double w0K;
+			for(int i = 0; i < camadaSaida.length; i++){
+				
+				if(i == tupla.classe())
+					tk = 1;
+				else
+					tk = -1;
+				
+				deltaK[i] = (tk - yI[i])*camadaSaida[i].derivada();
+				wJK[i] = aprendizado*deltaK[i]*
+				
+			}
+			
 			
 			
 		}

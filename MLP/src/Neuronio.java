@@ -91,7 +91,7 @@ public class Neuronio {
 	
 	// Executa a derivada da função de ativação bipolar sigmóide
 	// Esta derivação se vale de uma simplificação apresentada por Laurene Fausett no livro "Fundamentals of Neural Networks" 
-	public double derivada(double entrada){
+	public double derivada(){
 		return (1/2)*(1+this.fAtivacao)*(1-this.fAtivacao);
 	}
 	
