@@ -133,17 +133,17 @@ public class Rede {
 		private void sessao(Tupla tupla){
 			
 			// se prepara para armazenar os resultados da camada escondida e dacamada de saída
-			double[] zI = new double[camadaEscondida.length];
-			double[] yI = new double[camadaSaida.length];
+			double[] zJ = new double[camadaEscondida.length];
+			double[] yK = new double[camadaSaida.length];
 			
 			// chama feedForward para cada neurônio da camada escondida
 			for(int neuronioEsc = 0; neuronioEsc < camadaEscondida.length; neuronioEsc++){
-				zI[neuronioEsc] = camadaEscondida[neuronioEsc].feedForward(tupla, viesEscondida);
+				zJ[neuronioEsc] = camadaEscondida[neuronioEsc].feedForward(tupla, viesEscondida);
 			}
 			
 			// chama feedFoward para cada neurônio da camada de saída
 			for(int neuronioSai = 0; neuronioSai < camadaSaida.length; neuronioSai++){
-				yI[neuronioSai] = camadaSaida[neuronioSai].feedForward(zI, viesSaida);
+				yK[neuronioSai] = camadaSaida[neuronioSai].feedForward(zJ, viesSaida);
 			}
 			
 			// TODO: faz um log da taxa de erros desta época e a deixa à disposição da Thread guardiã
@@ -158,7 +158,7 @@ public class Rede {
 			int tk;
 			double[] deltaK = new double[camadaSaida.length];
 			double[] wJK = new double[camadaSaida.length];
-			double w0K;
+			double[] w0K = new double[camadaSaida.length];
 			for(int i = 0; i < camadaSaida.length; i++){
 				
 				if(i == tupla.classe())
@@ -166,10 +166,19 @@ public class Rede {
 				else
 					tk = -1;
 				
-				deltaK[i] = (tk - yI[i])*camadaSaida[i].derivada();
-				wJK[i] = aprendizado*deltaK[i]*
+				deltaK[i] = (tk - yK[i])*camadaSaida[i].derivada();
+				wJK[i] = aprendizado*deltaK[i]*zJ[i];
+				
+				w0K[i] = aprendizado*deltaK[i];
 				
 			}
+			
+			// Backpropagation na camada de saída
+			double delta_inJ;
+			for(int j = 0; j < camadaSaida.length; j++){
+				
+			}
+			 
 			
 			
 			
