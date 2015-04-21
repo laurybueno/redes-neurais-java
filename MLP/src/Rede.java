@@ -187,9 +187,29 @@ public class Rede {
 	
 	// especifica como salvar a rede em formato String
 	public String toString(){
+		StringBuffer rede = new StringBuffer();
+		rede.append(camadaEscondida.length + ";" + camadaSaida.length + "\n");
+		rede.append(viesEscondida + ";" + viesSaida + "\n");
+		// Camada escondida
+		for(int i = 0; i < camadaEscondida.length; i++) {
+			rede.append("1"); // 1 = camada escondida
+			for(int j = 0; j < camadaEscondida[i].peso.length; j++) {
+				rede.append(";" + camadaEscondida[i].peso[j]);
+			}
+			rede.append("\n");
+		}
+		
+		// Camada saída
+		for(int i = 0; i < camadaSaida.length; i++) {
+			rede.append("2"); // 2 = camada saída
+			for(int j = 0; j < camadaSaida[i].peso.length; j++) {
+				rede.append(";" + camadaSaida[i].peso[j]);
+			}
+			rede.append("\n");
+		}
 		
 		
-		
+		return rede.toString();
 	}
 	
 	// especifica como resgatar uma rede salva em string e retorna um ponteiro para a nova rede
