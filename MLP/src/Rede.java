@@ -114,14 +114,14 @@ public class Rede {
 
 		
 		// ponto de entrada para o algoritmo de treinamento
-		public Rede run(int treinamentos){
+		public Rede executar(int treinamentos){
 
 			// Loop das épocas de treinamento
 			for(int epoca = 1; epoca <= treinamentos; epoca++){
 				
 				// Loop das tuplas em cada época
 				for(int linhaDeDados = 0; linhaDeDados < entrada.length; linhaDeDados++){
-					
+					sessao(entrada[linhaDeDados]);
 				}
 			} // encerra loop das épocas
 			
@@ -132,16 +132,50 @@ public class Rede {
 		// uma sessao de treinamento inclui uma operação de feedforward e backpropagation
 		private void sessao(Tupla tupla){
 			
+			// se prepara para armazenar os resultados da camada escondida e dacamada de saída
+			double[] zI = new double[camadaEscondida.length];
+			double[] yI = new double[camadaSaida.length];
+			
+			// chama feedForward para cada neurônio da camada escondida
+			for(int neuronioEsc = 0; neuronioEsc < camadaEscondida.length; neuronioEsc++){
+				zI[neuronioEsc] = camadaEscondida[neuronioEsc].feedForward(tupla, viesEscondida);
+			}
+			
+			// chama feedFoward para cada neurônio da camada de saída
+			for(int neuronioSai = 0; neuronioSai < camadaSaida.length; neuronioSai++){
+				yI[neuronioSai] = camadaSaida[neuronioSai].feedForward(zI, viesSaida);
+			}
+			
+			// faz um log da taxa de erros desta época e a deixa à disposição da Thread guardiã
+			
+			
+			// entrega a cada neurônio o resultado que ele deveria ter dado
+			
+			
+			// realiza backPropagation dos erros computados
+			
 			
 		}
 
 	} // fim da classe aninhada de Treinamento
 	
 	//************* Controle para execução *********************//
-	// classe run de Rede executa a operação de FeedForward e retorna a classe a que a tupla deve pertencer
-	public int run(Tupla tupla){
+	// classe executar de Rede faz a operação de FeedForward e retorna a classe a que a tupla deve pertencer
+	public int executar(Tupla tupla){
 		
 		
+		
+	}
+	
+	// especifica como salvar a rede em formato String
+	public String toString(){
+		
+		
+		
+	}
+	
+	// especifica como resgatar uma rede salva em string e retorna um ponteiro para a nova rede
+	public static Rede fromString(String string){
 		
 	}
 

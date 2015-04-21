@@ -71,6 +71,11 @@ public class Neuronio {
 		return ativacao(soma);
 	}
 	
+	// caso a tupla não tenha sido instanciada externamente, ela será instanciada agora
+	public double feedForward(double[] entrada, double vies){
+		return feedForward(new Tupla(entrada), vies);
+	}
+	
 	
 	//************* Funções de ativação e derivada *********************//
 	
@@ -89,5 +94,13 @@ public class Neuronio {
 	public double derivada(double entrada){
 		return (1/2)*(1+this.fAtivacao)*(1-this.fAtivacao);
 	}
+	
+	//************* Funções de limiar *********************//
+	
+	// enquanto estiver em treinamento, essa será a função de limiar invocada
+	public boolean limiar(){
+		return fAtivacao >= 0;
+	}
+	
 
 }
