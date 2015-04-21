@@ -3,7 +3,7 @@ public class Treinamento {
 	
 	//Objeto lvq, que possui os vetores de pesos, e a matriz de dados de teste.
 	LVQ lvq;
-	OperacaoVetores operacaoVetores;
+	OperacaoVetores operacaoVetores = new OperacaoVetores();
 	
 	public Treinamento (LVQ lvq){
 		this.lvq = lvq;
@@ -87,7 +87,7 @@ public class Treinamento {
 		//operacao = 0 soma, 1 subtracao
 		public double [] operacaoSimples (double [] array1, double [] array2, int operacao){
 			
-			double [] retorno = new double [array1.length-1]; 
+			double [] retorno = new double [array1.length]; 
 			
 			if(operacao == 0){ //operacao de soma de arrays
 				

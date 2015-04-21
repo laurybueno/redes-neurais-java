@@ -18,7 +18,7 @@ public class Inicializa{
 		
 		Input arquivo = new Input(); //Objeto de Leitura dos dados
 		
-		dadosEntrada = arquivo.matrizDados(nomeArquivo); //vetor de dados de entrada
+		dadosEntrada = arquivo.arquivoToMatrizDouble(nomeArquivo); //vetor de dados de entrada
 		//double[] centroide = centroMassa(dados);
 	}
 	
@@ -46,7 +46,7 @@ public class Inicializa{
 		for(int i = 0; i< dadosEntrada.length; i++){
 			
 			//caso encontrado o dado
-			if(c == dadosEntrada[i][dadosEntrada.length-1]){
+			if(c == dadosEntrada[i][dadosEntrada[i].length-1]){
 				
 				//copia o dado para uma classe auxiliar
 				double [] aux = dadosEntrada[i];

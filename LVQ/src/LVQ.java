@@ -8,7 +8,7 @@ public class LVQ {
 	double taxaDeAprendizado; //taxa de Aprendizado
 	double reducaoAprendizado; //valor que reduz a taxa de Aprendizado
 	double valorMinimo; //valorMinimo que a taxa de aprendizado pode chegar
-	
+	CondicaoParada parada = new CondicaoParada();
 	
 	//Construtor de inicializacao do LVQ que recebe como parametro um objeto Inicializa que inicializa os pesos e os dados de Entrada do LVQ.
 	//Além de receber por parametros dados destinados a serem definidos pelo Usuario.
@@ -38,10 +38,10 @@ public class LVQ {
 	//Espaco para criacao do metodo que realiza o aprendizado da LVQ.
 	public void Aprendizado(){
 		
-		this.numeroIteracoes = 0; //inicializar do contador de Epocas(iteracoes)
+		this.numeroIteracoes = 1; //inicializar do contador de Epocas(iteracoes)
 		//TODO condicao do while temporaria, ainda falta verifica de parada
-		
-		while(true){//enquanto não houver uma condicao de parada. Continua a realizar a Epoca
+		boolean testa = parada.NumeroFixo(numeroIteracoes, numeroFixo);
+		while(!(testa)){//enquanto não houver uma condicao de parada. Continua a realizar a Epoca
 			
 			Treinamento treina = new Treinamento(this); // cria objeto que executara o treino, passando o LVQ como parametro
 			
@@ -52,6 +52,7 @@ public class LVQ {
 			this.AtualizaAprendizado();//reduz taxa de aprendizado
 			
 			this.numeroIteracoes++;
+			testa = parada.NumeroFixo(numeroIteracoes, numeroFixo);
 		}
 	}
 	
@@ -71,7 +72,7 @@ public class LVQ {
 	}
 	
 	//Classe suporte ao Aprendizado com alguns metodos essenciais na verificacao de condicao de parada do aprendizado
-	public class CondicaoParada{
+	class CondicaoParada{
 		
 		//metodo de condicao de parada, restingindo pelo numero de interacoes
 		//recebe numero de interacoes ocorrida(numeroInteracoes) e numero maximo permitido(numeroFixo)
@@ -91,6 +92,6 @@ public class LVQ {
 			return false;
 		}
 	}
-	
-	
 }
+
+
