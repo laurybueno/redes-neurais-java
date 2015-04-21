@@ -38,8 +38,8 @@ public class Neuronio {
 	}
 
 	// Altera o peso da sinapse entre este neurônio e o neurônio N da camada anterior
-	public void setPeso(int N, double peso){
-		this.peso[N] = peso;
+	public void setPeso(int N, double variacao){
+		this.peso[N] += variacao;
 	}
 	
 	// Retorna o peso da sinapse entre este neurônio e o neurônio N da camada anterior
