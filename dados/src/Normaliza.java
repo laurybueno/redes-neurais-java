@@ -3,6 +3,10 @@ import java.util.Arrays;
 
 
 public class Normaliza {
+	
+	//funcao para fazer a normalizacao usando a tecnica Z score
+	//recebe como parametro o nome do arquivo em que se quer normalizar e o nome do arquivo onde vai salvar isso
+	//DANGER: essa funcao nao normaliza a ultima coluna do arquivo
 	public void zScore(String nomeArquivoLeitura, String NomeArquivoGravacao){
 		Input arquivo = new Input();
 		//le arqquivo e passa para uma matriz de double
@@ -21,7 +25,7 @@ public class Normaliza {
 		//se desvio padrao for zero, bota null
 		//(atributo-media)/desvio padrao
 		for(int i=0;i<dados.length;i++){
-			for (int j=0;j<dados[i].length;j++){
+			for (int j=0;j<dados[i].length-1;j++){//nao nromaliza a ultima coluna (classe)
 				if(desvioPadrao[j]!=0){
 					dados[i][j]= (dados[i][j]-medias[j])/desvioPadrao[j];
 				}
