@@ -18,7 +18,7 @@ public class LVQ {
 		
 		//metodo que inicializa os vetores de pesos -via primeira entrada,
 		//e inicializa a matriz de dados de Entrada.
-		inicializa.PesosPrimeiraEntrada();
+		inicializa.PesosNulos();
 		
 		//Declaracoes dos dados principais - Fim
 		

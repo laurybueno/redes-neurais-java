@@ -49,7 +49,7 @@ public class Input {
 	//recebe como parametro o nome do arquivo e retorna uma amtriz de double contendo os dados do arquivo
 	public double[][] arquivoToMatrizDouble(String nomeArquivo){
 		String s = leituralinha(nomeArquivo, 0);
-		int quantidadeLinhas = tamanho(nomeArquivo);
+		int quantidadeLinhas = tamanho(nomeArquivo)-1;
 		double[][] dados = new double[quantidadeLinhas][s.length()];
 		dados[0] = StringToDouble(s);
 		for(int i=1;i<dados.length;i++){

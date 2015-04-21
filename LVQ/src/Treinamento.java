@@ -72,7 +72,7 @@ public class Treinamento {
 		//retorna o novo vetor produzido pela multiplicacao do vetor por um valor numerico
 		public double [] mutiplicacaoArrayComDouble(double [] array1, double numeric){
 			
-			double [] retorno = new double [array1.length-1];
+			double [] retorno = new double [array1.length];
 				
 				for(int i =0; i < array1.length; i++){//operacao de multicacao de vetor com numerico
 					
