@@ -7,12 +7,12 @@ public class Tupla {
 	 */
 	
 	private double[] dado;
-	private double classe;
+	private int classe;
 	
 	private int posicao_atual;
 	
 	// construtor recebe e copia para sua instância todos os dados da tupla dada e sua classe, quando disponível
-	public Tupla(double [] dado, double classe){
+	public Tupla(double [] dado, int classe){
 		this.classe = classe;
 		this.dado = dado.clone();
 		this.posicao_atual = 0;
@@ -33,7 +33,7 @@ public class Tupla {
 	}
 	
 	// retorna a classe desta tupla
-	public double classe(){
+	public int classe(){
 		return this.classe;
 	}
 	
