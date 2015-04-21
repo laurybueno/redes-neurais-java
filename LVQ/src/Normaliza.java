@@ -3,10 +3,10 @@ import java.util.Arrays;
 
 
 public class Normaliza {
-	public void zScore(String nomeArquivo){
+	public void zScore(String nomeArquivoLeitura, String NomeArquivoGravacao){
 		Input arquivo = new Input();
 		//le arqquivo e passa para uma matriz de double
-		double[][] dados = arquivo.arquivoToMatrizDouble(nomeArquivo);
+		double[][] dados = arquivo.arquivoToMatrizDouble(nomeArquivoLeitura);
 		//calcula a media da coluna
 		double[] medias = new double[dados[0].length];
 		for(int i=0;i<medias.length;i++){
@@ -32,28 +32,16 @@ public class Normaliza {
 		}
 		//passa de double[][] para string[] para poder gravar
 		String[] normalizado = new String[dados.length];
-		/*normalizado[0]="";
-		for(int i=0;i<dados.length;i++){
-			for (int j=0;j<dados[i].length;j++){
-				normalizado[i]=normalizado[i]+","+String.valueOf(dados[i][j]);
-				System.out.print(dados[i][j]+" ");
-			}
-			System.out.println();
-			normalizado[i] = normalizado[i].substring(1);
-		}*/
-		/////////////////
+
 		for(int i=0;i<dados.length;i++){
 			normalizado[i] = Arrays.toString(dados[i]);
 			normalizado[i] = normalizado[i].substring(1);//tira colchetes do inicio
 			normalizado[i] = normalizado[i].substring (0, normalizado[i].length() - 1); //tira colchetes do fim
 		}
 		
-		
-		//for(String s:normalizado)
-		//	System.out.println(s);
 		//grava no disco
 		Output grava = new Output();
-		grava.escreveArquivo("normalizado.txt", normalizado);
+		grava.escreveArquivo(NomeArquivoGravacao, normalizado);
 	}
 	
 	//recebe como parametro uma matriz de double contendo os dados e a coluna a qual quer calcular a media

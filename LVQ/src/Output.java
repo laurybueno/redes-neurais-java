@@ -2,6 +2,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 
 public class Output {
@@ -24,5 +25,14 @@ public class Output {
 			System.err.println(e);
 		}
 		
+	}
+	
+	//funcao para criar um arquivo contendo os registros de cada classe
+	public void separaClasses(List[] classes){
+		System.out.println("entrou");
+		for(int i=0;i<classes.length;i++){
+			String [] registros = (String[]) classes[i].toArray(new String[classes[i].size()]);// transforma a lista em um arranjo de String
+			escreveArquivo("registros"+i+".csv", registros);
+		}
 	}
 }

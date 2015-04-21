@@ -243,6 +243,9 @@ public class Input {
 		return novo;
 	}
 	
+	
+	//retorna um arranjo de lista. Cada elemento do aranjo contem uma lsita contendo todos os registros de uma determinada classe
+	//Esta ordenado por classes
 	public List[] preencheClasse(String nomeArquivo) {
 		
 		List[] classe = new List[10];
