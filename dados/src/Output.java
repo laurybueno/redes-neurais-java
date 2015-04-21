@@ -7,10 +7,10 @@ import java.util.List;
 
 public class Output {
 
-
-	public void escreveArquivo(String nomeArquivo, String[] s) {
+	//se append for true, ele escreve no fim do arquivo
+	public void escreveArquivo(String nomeArquivo, String[] s, boolean append) {
 		try {
-			FileWriter arq = new FileWriter(nomeArquivo);
+			FileWriter arq = new FileWriter(nomeArquivo, append);
 			PrintWriter writer = new PrintWriter(arq);
 			for(int i = 0; i < s.length; i++) {
 				writer.println(s[i]);
@@ -24,7 +24,6 @@ public class Output {
 		catch (Exception e) {
 			System.err.println(e);
 		}
-		
 	}
 	
 	//funcao para criar um arquivo contendo os registros de cada classe
@@ -32,7 +31,7 @@ public class Output {
 		System.out.println("gravando arquivos");
 		for(int i=0;i<classes.length;i++){
 			String [] registros = (String[]) classes[i].toArray(new String[classes[i].size()]);// transforma a lista em um arranjo de String
-			escreveArquivo("registros"+i+".csv", registros);
+			escreveArquivo("registros"+i+".csv", registros, false);
 		}
 	}
 }

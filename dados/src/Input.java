@@ -107,14 +107,14 @@ public class Input {
 		int tamanho = tamanho(nomeArquivo);
 		for(int i=0;i<tamanho;i++){
 			String linha = leituralinha(nomeArquivo, i);
-			if(linha.charAt(linha.length()-1)==classe){//se a ultima letra for o numero da classe
+			if(linha.charAt(linha.length()-3)==classe){//se a ultima letra for o numero da classe por causa do ".0"
 				classeX.add(linha);
 			}
 		}
 		return classeX;
 	}
 	
-	public void funcaoIntegradora(String nomeArquivo, int p1, int p2, int p3){
+	public void funcaoIntegradora(String nomeArquivo, int pTreino, int pTeste, int pValidacao){
 		
 		List[] classes = preencheClasse(nomeArquivo);
 		
@@ -122,7 +122,7 @@ public class Input {
 			classes[i] = shuffle(classes[i]);
 		}
 
-		int[] quantidade = calculaQuantidade(p1, p2, p3, nomeArquivo);
+		int[] quantidade = calculaQuantidade(pTreino, pTeste, pValidacao, nomeArquivo);
 		
 		
 		String[] dados = dados(tamanho(nomeArquivo), classes);
@@ -135,9 +135,9 @@ public class Input {
 		
 		
 		Output grava = new Output();
-		grava.escreveArquivo("treino.csv",dados1 );
-		grava.escreveArquivo("teste.csv", dados2);
-		grava.escreveArquivo("validacao.csv", dados3);
+		grava.escreveArquivo("treino.csv",dados1 , false);
+		grava.escreveArquivo("teste.csv", dados2, false);
+		grava.escreveArquivo("validacao.csv", dados3, false);
 
 	}
 	

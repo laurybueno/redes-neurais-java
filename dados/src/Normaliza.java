@@ -45,7 +45,7 @@ public class Normaliza {
 		
 		//grava no disco
 		Output grava = new Output();
-		grava.escreveArquivo(NomeArquivoGravacao, normalizado);
+		grava.escreveArquivo(NomeArquivoGravacao, normalizado, false);
 	}
 	
 	//recebe como parametro uma matriz de double contendo os dados e a coluna a qual quer calcular a media
