@@ -197,7 +197,7 @@ public class Rede {
 	// especifica como salvar a rede em formato String
 	public String toString(){
 		StringBuffer rede = new StringBuffer();
-		rede.append(camadaEscondida.length + ";" + camadaSaida.length + "\n");
+		rede.append(camadaEscondida.length + ";" + camadaSaida.length + ";" + camadaEscondida[0].peso.length + ";" + camadaSaida[0].peso.length + "\n");
 		rede.append(viesEscondida + ";" + viesSaida + "\n");
 		// Camada escondida
 		for(int i = 0; i < camadaEscondida.length; i++) {
@@ -217,18 +217,46 @@ public class Rede {
 			rede.append("\n");
 		}
 		
-		
 		return rede.toString();
 	}
 	
 	// especifica como resgatar uma rede salva em string e retorna um ponteiro para a nova rede
-	public static Rede fromString(String string){
+	public static Rede fromString(String s){
+		String[] linhas = s.split(System.getProperty("line.separator")); // divide a string por linhas
 		
+		// A primeira linha da string está no formato "w;x;y;z", onde w = tamanho da camada escondida, x = tamanho da camada de saída, y = tamanho peso camada escondida, z = tamanho peso camada de saída
+		String[] tamanhos = linhas[0].split(";"); // separa x e y da primeira linha
+		
+		// Cria os arranjos com as informações do tamanho das camadas e de seus pesos
+		double[][] nCamadaEscondida = new double[Integer.parseInt(tamanhos[0])][Integer.parseInt(linhas[2])];
+		double[][] nCamadaSaida = new double[Integer.parseInt(tamanhos[1])][Integer.parseInt(linhas[3])];		
+		
+		// A segunda linha da string está no formato "x;y", onde x é o viés da camada escondida e y, o da camada de saída
+		String[] vieses = linhas[1].split(";"); // separa x e y da segunda linha
+
+		// Invoca o construtor para criar a nova rede
+		Rede novaRede = new Rede(nCamadaEscondida, nCamadaSaida, Double.parseDouble(vieses[0]), Double.parseDouble(vieses[1]));
+		
+		// As demais linhas representam os neurônios e seus pesos
+		int indiceEscondida = 0;
+		int indiceSaida = 0;
+		for(int i = 2; i < linhas.length; i++) { // percorre todas as linhas da string
+			String[] neuronios = linhas[i].split(";"); // divide os dados entre os separadores (;)
+			if(neuronios[0] == "1") { // neurônio de camada escondida
+				for(int j = 1; j < neuronios.length; j++) {
+					novaRede.camadaEscondida[indiceEscondida].peso[j-1] = Double.parseDouble(neuronios[j]);
+					indiceEscondida++; // atualiza o índice da camada escondida
+				}
+			} else if(neuronios[0] == "2") { // neurônio de camada de saída
+				for(int j = 1; j < neuronios.length; j++) {
+					novaRede.camadaSaida[indiceSaida].peso[j-1] = Double.parseDouble(neuronios[j]);
+					indiceSaida++; // atualiza o índice da camada de saída
+				}
+			}
+		}
+		
+		return novaRede;
 	}
-
-
-
-
 
 
 }
