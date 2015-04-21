@@ -1,14 +1,14 @@
 
 public class LVQ {
 	
-	//UnidadeDeSaida e o Objeto responsavel por carregar um vetor de pesos.
-	UnidadeDeSaida [] unidadesDeSaida;
+	double [][] vetoresDePesos; //matriz que carregas os vetores de pesos (unidade de saida)
 	double [][] dadosEntrada; //matriz de dados de Entrada (podendo ser de: Treinamento, Teste ou Validacao)
 	int numeroIteracoes; //contador de Iteracoes(Epocas)
 	int numeroFixo; //numero que ira restringir ate que Epoca a LVQ pode chegar
 	double taxaDeAprendizado; //taxa de Aprendizado
 	double reducaoAprendizado; //valor que reduz a taxa de Aprendizado
 	double valorMinimo; //valorMinimo que a taxa de aprendizado pode chegar
+	
 	
 	//Construtor de inicializacao do LVQ que recebe como parametro um objeto Inicializa que inicializa os pesos e os dados de Entrada do LVQ.
 	//Além de receber por parametros dados destinados a serem definidos pelo Usuario.
@@ -23,7 +23,7 @@ public class LVQ {
 		//Declaracoes dos dados principais - Fim
 		
 		this.dadosEntrada = inicializa.dadosEntrada;
-		this.unidadesDeSaida = inicializa.unidadesDeSaida;
+		this.vetoresDePesos = inicializa.vetoresDePesos;
 		
 		//Dados passados pelo Usuario - Inicio
 		
@@ -37,13 +37,20 @@ public class LVQ {
 	
 	//Espaco para criacao do metodo que realiza o aprendizado da LVQ.
 	public void Aprendizado(){
+		
 		this.numeroIteracoes = 0; //inicializar do contador de Epocas(iteracoes)
 		//TODO condicao do while temporaria, ainda falta verifica de parada
+		
 		while(true){//enquanto não houver uma condicao de parada. Continua a realizar a Epoca
+			
 			Treinamento treina = new Treinamento(this); // cria objeto que executara o treino, passando o LVQ como parametro
+			
 			treina.Epoca(); //realiza uma epoca
-			this.unidadesDeSaida = treina.lvq.unidadesDeSaida; //atualiza valores das unidadesDeSaida para o LVQ.
+			
+			this.vetoresDePesos = treina.lvq.vetoresDePesos; //atualiza valores das unidadesDeSaida para o LVQ.
+			
 			this.AtualizaAprendizado();//reduz taxa de aprendizado
+			
 			this.numeroIteracoes++;
 		}
 	}
@@ -58,8 +65,14 @@ public class LVQ {
 		
 	}
 	
+	//Metodo responsavel por reduzir a taxa de aprendizado por um valor delimitado (reducaoAprendizado)
+	public void AtualizaAprendizado(){
+			this.taxaDeAprendizado= this.taxaDeAprendizado - this.reducaoAprendizado; //reduz taxa de aprendizado
+	}
+	
 	//Classe suporte ao Aprendizado com alguns metodos essenciais na verificacao de condicao de parada do aprendizado
 	public class CondicaoParada{
+		
 		//metodo de condicao de parada, restingindo pelo numero de interacoes
 		//recebe numero de interacoes ocorrida(numeroInteracoes) e numero maximo permitido(numeroFixo)
 		//caso deva ocorrer a parada return true, caso contrario false.
@@ -78,9 +91,6 @@ public class LVQ {
 			return false;
 		}
 	}
-	//Metodo responsavel por reduzir a taxa de aprendizado por um valor delimitado (reducaoAprendizado)
-	public void AtualizaAprendizado(){
-		this.taxaDeAprendizado= this.taxaDeAprendizado - this.reducaoAprendizado; //reduz taxa de aprendizado
-	}
+	
 	
 }
