@@ -32,6 +32,11 @@ public class Tupla {
 		return this.dado[ret];
 	}
 	
+	// retorna um valor específico desta tupla
+	public double valor(int n){
+		return this.dado[n];
+	}
+
 	// retorna a classe desta tupla
 	public int classe(){
 		return this.classe;
