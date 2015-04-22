@@ -157,29 +157,66 @@ public class Rede {
 			 */
 			int tk;
 			double[] deltaK = new double[camadaSaida.length];
-			double[] wJK = new double[camadaSaida.length];
+			double[][] wJK = new double[camadaSaida.length][camadaEscondida.length];
 			double[] w0K = new double[camadaSaida.length];
-			for(int i = 0; i < camadaSaida.length; i++){
+			for(int k = 0; k < camadaSaida.length; k++){
 				
-				if(i == tupla.classe())
+				if(k == tupla.classe())
 					tk = 1;
 				else
 					tk = -1;
 				
-				deltaK[i] = (tk - yK[i])*camadaSaida[i].derivada();
-				wJK[i] = aprendizado*deltaK[i]*zJ[i];
+				deltaK[k] = (tk - yK[k])*camadaSaida[k].derivada();
 				
-				w0K[i] = aprendizado*deltaK[i];
+				for(int j = 0; j < camadaEscondida.length; j++)
+					wJK[k][j] = aprendizado*deltaK[k]*zJ[j];
+				
+				w0K[k] = aprendizado*deltaK[k];
 				
 			}
 			
-			// Backpropagation na camada de saída
-			double delta_inJ;
-			for(int j = 0; j < camadaSaida.length; j++){
+			/*
+			 *  Backpropagation na camada escondida
+			 */
+			
+			// prepara o cálculo para o termo de erro de informação
+			double[] delta_inJ = new double[camadaEscondida.length];
+			double[] deltaJ = new double[camadaEscondida.length];
+			
+			double[][] vIJ = new double[camadaEscondida.length][camadaEscondida[0].peso.length];
+			double[] v0J = new double[camadaEscondida.length];
+			
+			for(int j = 0; j < camadaEscondida.length; j++){
+				// faz o somatório para cada input de delta
+				for(int k = 0; k < camadaSaida.length; k++){
+					delta_inJ[j] += deltaK[k]*wJK[k][j];
+				}
+				
+				// calcula o termo de erro de informação
+				deltaJ[j] = delta_inJ[j]*camadaEscondida[j].derivada();
+				
+				// calcula a correção para cada peso do neurônio ativo
+				for(int i = 0; i < camadaEscondida[j].peso.length; i++)
+					vIJ[j][i] = aprendizado*deltaJ[j]*camadaEscondida[j].entrada.valor(i);
+				
+				v0J[j] = aprendizado*deltaJ[j];
 				
 			}
-			 
 			
+			// atualiza pesos e viés na camada de saída
+			for(int k = 0; k < camadaSaida.length; k++){
+				viesSaida += w0K[k];
+				for(int j = 0; j < camadaEscondida.length; j++)
+					camadaSaida[k].setPeso(j, wJK[k][j]);
+			}
+			
+			
+			// atualiza pesos e viés na camada escondida
+			for(int j = 0; j < camadaEscondida.length; j++){
+				viesEscondida += w0K[j];
+				for(int i = 0; i < camadaEscondida.length; i++)
+					camadaSaida[j].setPeso(i, vIJ[j][i]);
+			}
 			
 			
 		}
