@@ -63,17 +63,24 @@ public class Rede {
 	// Esse construtor será invocado se a rede for iniciada em modo de treinamento
 	// A definição de pesos será delegada para a classe Neuronio
 	// Este método assume que o viés de cada camada será determinado externamente
-	public Rede(int camadaEntrada, int camadaEscondida, int camadaSaida,
-			double viesEscondida, double viesSaida){
+	public Rede(int camadaEntrada, int camadaEscondida, int camadaSaida){
 		
 		// reserva espaço nos arrays para todos os neurônios que serão criados a seguir
 		this.camadaEscondida = new Neuronio[camadaEscondida];
 		this.camadaSaida = new Neuronio[camadaSaida];
 		
-		// armazena o viés de cada camada
-		this.viesEscondida = viesEscondida;
-		this.viesSaida = viesSaida;
 		
+		// decide e armazena o viés de cada camada
+		if(Math.random() > 0.5)
+			this.viesEscondida = Math.random();
+		else
+			this.viesEscondida = Math.random()*(-1);
+		
+		if(Math.random() > 0.5)
+			this.viesSaida = Math.random();
+		else
+			this.viesSaida = Math.random()*(-1);
+
 		// cria os neurônios escondidos
 		for(int j = 0; j < camadaEscondida; j++){
 			this.camadaEscondida[j] = new Neuronio(camadaEntrada);
@@ -219,7 +226,7 @@ public class Rede {
 			}
 			
 			
-		}
+		} // fim de uma sessão de Treinamento
 
 	} // fim da classe aninhada de Treinamento
 	
