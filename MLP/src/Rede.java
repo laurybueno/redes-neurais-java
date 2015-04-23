@@ -234,8 +234,42 @@ public class Rede {
 	// classe executar de Rede faz a operação de FeedForward e retorna a classe a que a tupla deve pertencer
 	public int executar(Tupla tupla){
 		
+		// passa todas as colunas da tupla para a camada escondida e armazena os resultados
+		double[] z = new double[camadaEscondida.length];
+		for(int i = 0; i < camadaEscondida.length; i++)
+			z[i] = camadaEscondida[i].feedForward(tupla, viesEscondida);
 		
+		// passa todos os valores da camada escondida para a camanda de saída e armazena os limiares
+		boolean[] y = new boolean[camadaSaida.length];
+		for(int i = 0; i < camadaSaida.length; i++)
+			y[i] = camadaSaida[i].limiar(z, viesSaida);
 		
+		return decide(y);
+		
+	}
+	
+	/*
+	 * Método recebe um array de booleans gerado pela camada de saída e resolve a decisão da rede.
+	 * Se nenhum neurônio respondeu true, ou se mais de um o fez, o método retorna -1.
+	 */
+	
+	private int decide(boolean[] saida){
+		
+		int ret;
+		int decisoes = 0;
+
+		for(int i = 0; i < saida.length; i++){
+			if(saida[i] == true){
+				ret = i;
+				decisoes++; // se a rede tomar mais de uma decisão, ou nenhuma decisão, ela deve ser rejeitada
+			}
+		}
+		
+		if(decisoes==1)
+			return ret;
+		
+		// se a rede não conseguiu tomar apenas uma decisão, é retornado um erro
+		return -1;	
 	}
 	
 	// especifica como salvar a rede em formato String
