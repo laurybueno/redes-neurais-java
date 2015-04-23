@@ -71,10 +71,10 @@ public class Treinamento {
 		//recebe um dado vetor e um valor numerico
 		//retorna o novo vetor produzido pela multiplicacao do vetor por um valor numerico
 		public double [] mutiplicacaoArrayComDouble(double [] array1, double numeric){
-			
-			double [] retorno = new double [array1.length];
-				
-				for(int i =0; i < array1.length; i++){//operacao de multicacao de vetor com numerico
+			//copia array, para o retorno manter a ultima coluna (classe intacta)
+			double [] retorno = array1;
+				//menos a ultima posicao (classe)
+				for(int i =0; i < array1.length-1; i++){//operacao de multicacao de vetor com numerico
 					
 					retorno[i] = array1[i] * numeric;
 				}
@@ -86,18 +86,18 @@ public class Treinamento {
 		//recebe dois vetores e um codigo que define o tipo de operacao, e retorna a os resultados de sua operacao.
 		//operacao = 0 soma, 1 subtracao
 		public double [] operacaoSimples (double [] array1, double [] array2, int operacao){
-			
-			double [] retorno = new double [array1.length]; 
+			//copia array, para o retorno manter a ultima coluna (classe intacta)
+			double [] retorno = array2; 
 			
 			if(operacao == 0){ //operacao de soma de arrays
 				
-				for(int i =0; i < array1.length; i++){
+				for(int i =0; i < array1.length-1; i++){ //menos a ultima posicao (classe)
 					retorno[i] = array1[i] + array2[i];
 				}
 			}
 			
 			else if(operacao ==1){ //operacao de subtracao de vetores
-				for(int i =0; i < array1.length; i++){
+				for(int i =0; i < array1.length-1; i++){ //menos a ultima posicao (classe)
 					retorno[i] = array1[i] - array2[i];
 				}
 			}
@@ -127,7 +127,7 @@ public class Treinamento {
 			
 			double aux=0;//auxiliar somar as distancias locais
 			
-			for (int i=0;i < vetor.length; i++){// percorre o arranjo para pegar todos os atributos
+			for (int i=0;i < vetor.length-1; i++){// percorre o arranjo para pegar todos os atributos, menos o último (classe)
 				
 				double local = vetor[i]- array[i]; //pega a distancia local
 				
