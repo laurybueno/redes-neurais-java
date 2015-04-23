@@ -27,9 +27,24 @@ public class Output implements Runnable {
 	}
 	
 	public void run() {
-		DateFormat dataFormatada = new SimpleDateFormat("dd-MM-yyyy HHhmm");
-		Date data =new Date();
-		this.toFile(rede.toString(), "Rede at " + dataFormatada.format(data), "csv");
+		
+		DateFormat dataFormatada;
+		Date data;
+		
+		
+		// a thread guardiã fica constantemente em execução e tenta ler parâmetros da rede de tempos em tempos
+		while(true){
+			dataFormatada = new SimpleDateFormat("dd-MM-yyyy HHhmm");
+			data = new Date();
+			this.toFile(rede.toString(), "Rede at " + dataFormatada.format(data), "csv");
+			
+			try {
+				Thread.sleep(30000); // pausa esta thread por 30 segundos
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt(); // aceita a interrupção e sai da pilha de execução
+			}
+			
+		}
 	}
 
 }

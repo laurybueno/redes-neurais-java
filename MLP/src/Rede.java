@@ -255,7 +255,7 @@ public class Rede {
 	
 	private int decide(boolean[] saida){
 		
-		int ret;
+		int ret = -1;
 		int decisoes = 0;
 
 		for(int i = 0; i < saida.length; i++){
