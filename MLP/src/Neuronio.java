@@ -97,9 +97,9 @@ public class Neuronio {
 	
 	//************* Funções de limiar *********************//
 	
-	// enquanto estiver em treinamento, essa será a função de limiar invocada
-	public boolean limiar(){
-		return fAtivacao >= 0;
+	// enquanto estiver em execução, essa será a função de limiar invocada
+	public boolean limiar(double[] entrada, double vies){
+		return feedForward(entrada,vies) >= 0;
 	}
 	
 
