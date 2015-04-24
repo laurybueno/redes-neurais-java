@@ -1,5 +1,3 @@
-import java.math.BigDecimal;
-
 public class Main{
 	
 	public static void main(String[] args){
@@ -14,8 +12,8 @@ public class Main{
 		
 		//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - inicio//
 		int numeroFixo = 100; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
-		double taxaDeAprendizado = 0.00002; //taxa de Aprendizado (ex: 2.0)
-		double reducaoAprendizado = 0.0000001; //valor que reduz a taxa de Aprendizado (ex: 0.1)
+		double taxaDeAprendizado = 2.0; //taxa de Aprendizado (ex: 2.0)
+		double reducaoAprendizado = 0.1; //valor que reduz a taxa de Aprendizado (ex: 0.1)
  		double valorMinimo=0.1; //valor minimo que a taxa de aprendizado pode chegar (ex:0.1)
 		//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - fim// (ex:)
 		
@@ -26,7 +24,7 @@ public class Main{
 		LVQ lvq1 = new LVQ(inicializa, numeroFixo, taxaDeAprendizado, reducaoAprendizado, valorMinimo);
 		lvq1.Aprendizado();
 		double [][] vetoresDePesos = lvq1.vetoresDePesos; //neuronios de saida jah treinados
-
-		int lengthAtoa = vetoresDePesos.length;
+		
+		double [][] teste  = inicializa.dadosEntrada;
 	}
 }

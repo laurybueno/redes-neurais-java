@@ -20,7 +20,7 @@ public class Treinamento {
 			int indiceWJ = operacaoVetores.menorDistancia(lvq.dadosEntrada[i], lvq.vetoresDePesos);
 			
 			//atraves do indice descoberto, atribui a unidadedesaida (vetor de pesos) mais proxima ao vetor WJ.
-			double [] WJ = lvq.vetoresDePesos[indiceWJ].clone();
+			double [] WJ = lvq.vetoresDePesos[indiceWJ];
 			
 			//atualiza o peso dessa unidadeDeSaida descoberta.
 			AtualizacaoPesos(WJ , i, indiceWJ);
@@ -72,7 +72,7 @@ public class Treinamento {
 		//retorna o novo vetor produzido pela multiplicacao do vetor por um valor numerico
 		public double [] mutiplicacaoArrayComDouble(double [] array1, double numeric){
 			//copia array, para o retorno manter a ultima coluna (classe intacta)
-			double [] retorno = array1.clone();
+			double [] retorno = array1;
 				//menos a ultima posicao (classe)
 				for(int i =0; i < array1.length-1; i++){//operacao de multicacao de vetor com numerico
 					
@@ -87,7 +87,7 @@ public class Treinamento {
 		//operacao = 0 soma, 1 subtracao
 		public double [] operacaoSimples (double [] array1, double [] array2, int operacao){
 			//copia array, para o retorno manter a ultima coluna (classe intacta)
-			double [] retorno = array2.clone(); 
+			double [] retorno = array2; 
 			
 			if(operacao == 0){ //operacao de soma de arrays
 				
