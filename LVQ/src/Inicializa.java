@@ -49,7 +49,8 @@ public class Inicializa{
 			if(c == dadosEntrada[i][dadosEntrada[i].length-1]){
 				
 				//copia o dado para uma classe auxiliar
-				double [] aux = dadosEntrada[i];
+				double [] aux;
+				aux = dadosEntrada[i].clone();
 				
 				//e deleta o dado do array de dados, pois ele vai ser desconsiderado no treinamento
 				this.DeletaLinhaDadosEntrada(i);
@@ -79,8 +80,30 @@ public class Inicializa{
 	//----------INICIALIZACAO DOS PESOS--------------|-primeiros m vetores-FIM//
 	
 	//----------INICIALIZACAO DOS PESOS--------------|-InicializacaoRandomica-Inicio//
+	//TODO especificar dominio da aleatoriedade.
 	public void PesosRandom(){
+		//recebe tamanho do Vetor de Dados de Entrada 
+		int lengthDadosEntrada = dadosEntrada[0].length; 
 		
+		// Como Math.random sempre retorna valores positivos, é preciso acrescentar mais uma camada de aleatoriedade para variar o sinal
+		for(int i = 0; i < vetoresDePesos.length; i++){
+			
+			//cria um novo vetor nulo com o mesmo tamanho de uma entrada.
+			double [] pesosAleatorios = new double [lengthDadosEntrada];
+			
+			//seta na ultima possicao o valor das classes.
+			pesosAleatorios[pesosAleatorios.length-1] = i%10; 
+			
+			//percorre novo vetor atribuindo valores random para todos campos, menos o ultimo.
+			for(int j = 0; j < pesosAleatorios.length-1; j++){
+				if(Math.random() > 0.5)
+					pesosAleatorios[j] = Math.random();
+				else
+					pesosAleatorios[j] = Math.random()*(-1);
+			}
+			//atribui array de numeros aleatorios para cada linha da matriz de vetoresPeso.
+			vetoresDePesos[i] = pesosAleatorios; 
+		}
 	}
 	//----------INICIALIZACAO DOS PESOS--------------|-InicializacaoRandomica-Inicio//
 	
