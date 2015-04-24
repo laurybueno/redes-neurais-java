@@ -18,12 +18,12 @@ public class LVQ {
 		
 		//metodo que inicializa os vetores de pesos -via primeira entrada,
 		//e inicializa a matriz de dados de Entrada.
-		inicializa.PesosNulos();
+		inicializa.PesosRandom();
 		
 		//Declaracoes dos dados principais - Fim
 		
-		this.dadosEntrada = inicializa.dadosEntrada;
-		this.vetoresDePesos = inicializa.vetoresDePesos;
+		this.dadosEntrada = inicializa.dadosEntrada.clone();
+		this.vetoresDePesos = inicializa.vetoresDePesos.clone();
 		
 		//Dados passados pelo Usuario - Inicio
 		
@@ -41,13 +41,14 @@ public class LVQ {
 		this.numeroIteracoes = 1; //inicializar do contador de Epocas(iteracoes)
 		//TODO condicao do while temporaria, ainda falta verifica de parada
 		boolean testa = parada.NumeroFixo(numeroIteracoes, numeroFixo);
+		
 		while(!(testa)){//enquanto não houver uma condicao de parada. Continua a realizar a Epoca
 			
 			Treinamento treina = new Treinamento(this); // cria objeto que executara o treino, passando o LVQ como parametro
 			
 			treina.Epoca(); //realiza uma epoca
 			
-			this.vetoresDePesos = treina.lvq.vetoresDePesos; //atualiza valores das unidadesDeSaida para o LVQ.
+			this.vetoresDePesos = treina.lvq.vetoresDePesos.clone(); //atualiza valores das unidadesDeSaida para o LVQ.
 			
 			this.AtualizaAprendizado();//reduz taxa de aprendizado
 			
