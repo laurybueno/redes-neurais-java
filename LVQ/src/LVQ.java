@@ -35,6 +35,27 @@ public class LVQ {
 		//Dados passados pelo Usuario - Fim
 	}
 	
+	//construtor criado para realizar clonagem da lvq
+	public LVQ (LVQ original){
+		this.vetoresDePesos = this.clonaMatriz(original.vetoresDePesos);
+		this.dadosEntrada = this.clonaMatriz(original.dadosEntrada);
+		this.numeroIteracoes = original.numeroFixo; 
+		this.numeroFixo = original.numeroFixo;
+		this.taxaDeAprendizado = original.taxaDeAprendizado; 
+		this.reducaoAprendizado = original.reducaoAprendizado; 
+		this.valorMinimo = original.valorMinimo; 
+		
+	}
+	
+	//metodo que clona uma matriz
+	public double [][] clonaMatriz(double [][] original){
+		double [][] clone = new double[original.length][];
+		for(int i =0; i < original.length; i++ ){
+			clone[i] = original[i].clone();
+		}
+		return clone;
+	}
+	
 	//Espaco para criacao do metodo que realiza o aprendizado da LVQ.
 	public void Aprendizado(){
 		
@@ -42,9 +63,11 @@ public class LVQ {
 		//TODO condicao do while temporaria, ainda falta verifica de parada
 		boolean testa = parada.NumeroFixo(numeroIteracoes, numeroFixo);
 		
-		while(!(testa)){//enquanto não houver uma condicao de parada. Continua a realizar a Epoca
+		while(true){//enquanto não houver uma condicao de parada. Continua a realizar a Epoca
 			
-			Treinamento treina = new Treinamento(this); // cria objeto que executara o treino, passando o LVQ como parametro
+			LVQ copia = new LVQ(this);
+			
+			Treinamento treina = new Treinamento(copia); // cria objeto que executara o treino, passando o LVQ como parametro
 			
 			treina.Epoca(); //realiza uma epoca
 			
@@ -54,6 +77,7 @@ public class LVQ {
 			
 			this.numeroIteracoes++;
 			testa = parada.NumeroFixo(numeroIteracoes, numeroFixo);
+			System.out.println(this.vetoresDePesos[0][1]);
 		}
 	}
 	

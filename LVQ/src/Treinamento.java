@@ -1,3 +1,5 @@
+import javax.xml.namespace.QName;
+
 
 public class Treinamento {
 	
@@ -109,15 +111,27 @@ public class Treinamento {
 		//recebe vetor de dados de entrada e um vetor de vetores de pesos (Matriz de pesos)
 		//e retorna o index vetor de pesos da menor distancia em relacao a dadosEntrada
 		public int menorDistancia(double [] dadosEntrada, double [][] vetoresDePesos){
-			int indiceMenor = 0;
+			int quantVetPesos = vetoresDePesos.length; //descobre quando neuronios de saida existem.
+			double [] distancias = new double [quantVetPesos];//cria array que ira receber todas as distancias
 			
-			for(int i =0 ; i < vetoresDePesos.length-1; i++){
-				double[] aux = vetoresDePesos[i]; //atribui a pesos o vetor de peso com indice i
-				double [] auxProx = vetoresDePesos[i+1]; //atribui a pesos o vetor de peso com indice i+1
-				// verifica qual indice com a menor distancia euclidiana
-				if(this.distanciaEuclidiana(dadosEntrada, aux) > this.distanciaEuclidiana(dadosEntrada, auxProx))
-					indiceMenor = i+1; //obtem indice com menor distancia.
+			//descobre todas distancias existentes entre os neuronios e um dado de entrada
+			for(int i =0 ; i < vetoresDePesos.length; i++){
+				distancias[i] = distanciaEuclidiana(dadosEntrada, vetoresDePesos[i]);
 			}
+			//valor inicial declarado como o menor
+			double menor = distancias[0];
+			
+			//primeira posicao declarada inicialmente como a menor
+			int indiceMenor =0;
+			
+			//comeca do um pois a primeira posicao jah foi pega
+			for(int i =1 ; i < distancias.length; i ++){
+				if(distancias[i]<menor){
+					menor = distancias[i];
+					indiceMenor = i;
+				}
+			}
+			
 			return indiceMenor; //retorna indice do vetor de peso mais proximo do dadoEntrada em questao
 		}	
 
@@ -132,12 +146,9 @@ public class Treinamento {
 				double local = vetor[i]- array[i]; //pega a distancia local
 				
 				local = Math.pow(local, 2);// eleva a distancia local ao quadrado
-				
 				aux=aux+local;
 			}
-			
 			aux =Math.sqrt(aux);//tira a raiz quadrada da soma das distancias locais
-			
 			return aux;
 		}
 	}
