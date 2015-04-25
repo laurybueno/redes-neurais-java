@@ -14,6 +14,7 @@ public class Output implements Runnable {
 		rede = r;
 	}
 	
+	// Função que cria um arquivo a partir de uma string de conteúdo
 	public void toFile(String conteudo, String nome, String ext) {
 		try {
 			PrintWriter arq = new PrintWriter(nome + "." + ext, "UTF-8");
@@ -36,7 +37,7 @@ public class Output implements Runnable {
 		while(true){
 			dataFormatada = new SimpleDateFormat("dd-MM-yyyy HHhmm");
 			data = new Date();
-			this.toFile(rede.toString(), "Rede at " + dataFormatada.format(data), "csv");
+			this.toFile(rede.toString(), "Rede at " + dataFormatada.format(data), "csv"); // cria o arquivo .csv, contendo a data e hora da criação
 			
 			try {
 				Thread.sleep(30000); // pausa esta thread por 30 segundos
