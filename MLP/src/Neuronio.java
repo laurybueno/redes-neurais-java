@@ -85,14 +85,14 @@ public class Neuronio {
 	// Recebe o valor de entrada dado ao neurônio e retorna o valor de saída
 	// A saída deverá variar entre -1 e 1
 	public double ativacao(double entrada){
-		this.fAtivacao = ((2/(1 + Math.exp(entrada))) - 1);
+		this.fAtivacao = ((2/(1 + Math.exp(entrada*(-1)))) - 1);
 		return this.fAtivacao;
 	}
 	
 	// Executa a derivada da função de ativação bipolar sigmóide
 	// Esta derivação se vale de uma simplificação apresentada por Laurene Fausett no livro "Fundamentals of Neural Networks" 
 	public double derivada(){
-		return (1/2)*(1+this.fAtivacao)*(1-this.fAtivacao);
+		return (1+this.fAtivacao)*(1-this.fAtivacao)/2;
 	}
 	
 	//************* Funções de limiar *********************//
