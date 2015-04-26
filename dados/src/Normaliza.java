@@ -3,6 +3,65 @@ import java.util.Arrays;
 
 
 public class Normaliza {
+	//funcao para normalizar usando a tecnica minMax
+	//recebe como parametro o nome do arquivo em que se quer normalizar
+	//escreve os dados normalizados no arquivo normalizadoMinMax
+	public void minMax(String nomeArquivoLeitura){
+		Input arquivo = new Input();
+		double[][] dados = arquivo.arquivoToMatrizDouble(nomeArquivoLeitura);//le arqquivo e passa para uma matriz de double
+		double[] minimo = encontraMin(dados);//arranjo contendo o menor numeor de cada coluna respectivamente
+		double[] maximo = encontraMax(dados);//arranjo contendo o maior numeor de cada coluna respectivamente
+		
+		for(int i =0;i<dados.length;i++){
+			for(int j=0;j<dados[i].length;j++){
+				dados[i][j]=(dados[i][j]-minimo[i])/(maximo[i]-minimo[i]);
+			}
+		}
+		
+		String[] normalizado = new String[dados.length];
+
+		for(int i=0;i<dados.length;i++){
+			normalizado[i] = Arrays.toString(dados[i]);
+			normalizado[i] = normalizado[i].substring(1);//tira colchetes do inicio
+			normalizado[i] = normalizado[i].substring (0, normalizado[i].length() - 1); //tira colchetes do fim
+		}
+		//grava no disco
+		Output grava = new Output();
+		grava.escreveArquivo("normalizadoMinMax.csv", normalizado, false);
+		
+	}
+	
+	//funcao que retorna um arranjo contendo o menor numero encontrado em cada coluna respectivamente
+	public double[] encontraMin(double[][] dados){
+		double[] minimo = new double[dados.length];
+		for(int i=0;i<dados.length;i++){//percorre o arranjo colocando o primeiro elemento de cada coluna
+			minimo[i] = dados[i][0];
+		}
+		for(int i=0;i<dados.length;i++){//percorre o arranjo de dados
+			for(int j=1;j<dados[i].length;j++){// o primeiro elemtno ja esta no aranjo
+				if(dados[i][j]<minimo[i]){
+					minimo[i]=dados[i][j];
+				}
+			}
+		}
+		return minimo;
+	}
+	
+	//funcao que retorna um arranjo contendo o maior numero encontrado em cada coluna respectivamente
+		public double[] encontraMax(double[][] dados){
+			double[] maximo = new double[dados.length];
+			for(int i=0;i<dados.length;i++){//percorre o arranjo colocando o primeiro elemento de cada coluna
+				maximo[i] = dados[i][0];
+			}
+			for(int i=0;i<dados.length;i++){//percorre o arranjo de dados
+				for(int j=1;j<dados[i].length;j++){// o primeiro elemtno ja esta no aranjo
+					if(dados[i][j]>maximo[i]){
+						maximo[i]=dados[i][j];
+					}
+				}
+			}
+			return maximo;
+		}
 	
 	//funcao para fazer a normalizacao usando a tecnica Z score
 	//recebe como parametro o nome do arquivo em que se quer normalizar e o nome do arquivo onde vai salvar isso
