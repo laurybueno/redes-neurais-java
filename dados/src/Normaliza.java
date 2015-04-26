@@ -25,13 +25,10 @@ public class Normaliza {
 		}
 		
 		
-		double[][] minMax = deletaColunas(dados);
-		for(int i=0;i<dados.length;i++){
-			for(int j=0;j<dados[i].length;j++){
-				System.out.print(dados[i][j]+" ");
-			}
-			System.out.println();
-		}
+		
+		
+		double[][] minMax = geraNovaMatriz(dados);
+
 		String[] normalizado = new String[minMax.length];
 
 		for(int i=0;i<minMax.length;i++){
@@ -45,44 +42,55 @@ public class Normaliza {
 		
 	}
 	
+	
+	public double [][] deletaColuna(double[][] dados,int col){
+		double [][] novaMatriz;
+	    	novaMatriz = new double[dados.length][dados[0].length-1];
+	        for(int i =0;i<dados.length;i++){ 
+	            int newColIdx = 0;
+	            for(int j =0;j<dados[i].length;j++){
+	                if(j!=col){
+	                    novaMatriz[i][newColIdx] = dados[i][j];
+	                    newColIdx++;
+	                }               
+	            }
+	     }
+	     return novaMatriz;
+	 }
+	
 	//funcao para deletar coluna que so tem numeor igual
-	double[][] deletaColunas (double[][] dados){
-		int cont=0;//quantidade de colunas para deletar
-		boolean[] igual = new boolean[dados[0].length];//arranjo contendo colunas para deletar
-		for(int i=0;i<dados[0].length;i++){
-			igual[i]=sotem0(dados, i);
-			cont++;
-		}
-		for(int i=0;i<igual.length;i++)
-			if(igual[i]==false)
-				System.out.println(i);
-		
-		double[][] nova= new double[dados.length][dados.length-cont];
-		int aux=0;
-		for(int i=0;i<dados.length;i++){
-			for(int j=0;j<dados[i].length;j++){
-				if(igual[j]==false){//copiar coluna
-					nova[i][j-aux]=dados[i][j];
-				}
-				else{
-					aux++;
-				}
+	public double [][] geraNovaMatriz(double[][] args1){
+		double [][] novaMatriz = clonaMatriz(args1);
+		boolean parada = true;
+		int coluna = 0;
+		while (parada && coluna < args1[0].length){
+			if(sotem0(args1, coluna)){
+				parada = false;
+				novaMatriz = deletaColuna(args1, coluna);
+				geraNovaMatriz(novaMatriz);
 			}
-			aux=0;
+			else{
+				coluna++;
+			}
 		}
-		
-		
-		
-		
-		
-		return nova;
+		return novaMatriz;
 	}
+		 
+	public static double [][] clonaMatriz(double [][] original){
+		double [][] clone = new double[original.length][];
+		for(int i =0; i < original.length; i++ ){
+			clone[i] = original[i].clone();
+		}
+		return clone;
+	}
+		 
+	
 
 
 	//funcao para checar coluna que só tem 0
 	//recebe como parametro a matriz e o numeor da coluna
 	boolean sotem0(double[][] dados, int coluna){
-		for(int i=0;i<dados[coluna].length;i++){
+		for(int i=0;i<dados.length;i++){
 			if(dados[i][coluna]!=0){
 				return false;
 			}

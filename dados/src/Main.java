@@ -9,8 +9,9 @@ public class Main {
 		Input arquivo = new Input();
 		//arquivo.arquivoToMatrizDouble("dados.txt");
 		Normaliza normal = new Normaliza();
-		normal.zScore("dados.csv", "zScore.csv");
-		System.out.println("criando treino, teste, validacao");
-		arquivo.funcaoIntegradora("zScore.csv", 60, 20, 20);
+		normal.minMax("dados.csv");
+		//normal.zScore("dados.csv", "zScore.csv");
+		//System.out.println("criando treino, teste, validacao");
+		//arquivo.funcaoIntegradora("zScore.csv", 60, 20, 20, "minMax");
  }
 }
