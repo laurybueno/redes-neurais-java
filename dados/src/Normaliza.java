@@ -1,5 +1,11 @@
 import javax.swing.text.AbstractDocument.LeafElement;
+
+import sun.security.util.Length;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class Normaliza {
@@ -18,10 +24,18 @@ public class Normaliza {
 			}
 		}
 		
-		String[] normalizado = new String[dados.length];
-
+		
+		double[][] minMax = deletaColunas(dados);
 		for(int i=0;i<dados.length;i++){
-			normalizado[i] = Arrays.toString(dados[i]);
+			for(int j=0;j<dados[i].length;j++){
+				System.out.print(dados[i][j]+" ");
+			}
+			System.out.println();
+		}
+		String[] normalizado = new String[minMax.length];
+
+		for(int i=0;i<minMax.length;i++){
+			normalizado[i] = Arrays.toString(minMax[i]);
 			normalizado[i] = normalizado[i].substring(1);//tira colchetes do inicio
 			normalizado[i] = normalizado[i].substring (0, normalizado[i].length() - 1); //tira colchetes do fim
 		}
@@ -30,6 +44,52 @@ public class Normaliza {
 		grava.escreveArquivo("normalizadoMinMax.csv", normalizado, false);
 		
 	}
+	
+	//funcao para deletar coluna que so tem numeor igual
+	double[][] deletaColunas (double[][] dados){
+		int cont=0;//quantidade de colunas para deletar
+		boolean[] igual = new boolean[dados[0].length];//arranjo contendo colunas para deletar
+		for(int i=0;i<dados[0].length;i++){
+			igual[i]=sotem0(dados, i);
+			cont++;
+		}
+		for(int i=0;i<igual.length;i++)
+			if(igual[i]==false)
+				System.out.println(i);
+		
+		double[][] nova= new double[dados.length][dados.length-cont];
+		int aux=0;
+		for(int i=0;i<dados.length;i++){
+			for(int j=0;j<dados[i].length;j++){
+				if(igual[j]==false){//copiar coluna
+					nova[i][j-aux]=dados[i][j];
+				}
+				else{
+					aux++;
+				}
+			}
+			aux=0;
+		}
+		
+		
+		
+		
+		
+		return nova;
+	}
+
+
+	//funcao para checar coluna que só tem 0
+	//recebe como parametro a matriz e o numeor da coluna
+	boolean sotem0(double[][] dados, int coluna){
+		for(int i=0;i<dados[coluna].length;i++){
+			if(dados[i][coluna]!=0){
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	
 	//funcao que retorna um arranjo contendo o menor numero encontrado em cada coluna respectivamente
 	public double[] encontraMin(double[][] dados){

@@ -136,8 +136,11 @@ public class Input {
 		
 		Output grava = new Output();
 		grava.escreveArquivo("treino.csv",dados1 , false);
+		System.out.println("criado treino");
 		grava.escreveArquivo("teste.csv", dados2, false);
+		System.out.println("criado teste");
 		grava.escreveArquivo("validacao.csv", dados3, false);
+		System.out.println("criado validacao");
 
 	}
 	
