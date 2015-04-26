@@ -196,16 +196,16 @@ public class Input {
 		String[] dados9 = listToArray(todos[9]);
 		
 		Output grava = new Output();
-		grava.escreveArquivo("classe0", dados0, false);
-		grava.escreveArquivo("classe1", dados1, false);
-		grava.escreveArquivo("classe2", dados2, false);
-		grava.escreveArquivo("classe3", dados3, false);
-		grava.escreveArquivo("classe4", dados4, false);
-		grava.escreveArquivo("classe5", dados5, false);
-		grava.escreveArquivo("classe6", dados6, false);
-		grava.escreveArquivo("classe7", dados7, false);
-		grava.escreveArquivo("classe8", dados8, false);
-		grava.escreveArquivo("classe9", dados9, false);	
+		grava.escreveArquivo("classe0.csv", dados0, false);
+		grava.escreveArquivo("classe1.csv", dados1, false);
+		grava.escreveArquivo("classe2.csv", dados2, false);
+		grava.escreveArquivo("classe3.csv", dados3, false);
+		grava.escreveArquivo("classe4.csv", dados4, false);
+		grava.escreveArquivo("classe5.csv", dados5, false);
+		grava.escreveArquivo("classe6.csv", dados6, false);
+		grava.escreveArquivo("classe7.csv", dados7, false);
+		grava.escreveArquivo("classe8.csv", dados8, false);
+		grava.escreveArquivo("classe9.csv", dados9, false);	
 	}
 	
 	
@@ -216,7 +216,13 @@ public class Input {
 		
 		int cont=0;
 		for(int i=0;i<quantidadeDados;i++){
-			novo[i]=leituralinha("classe"+cont, i);
+			String s = leituralinha("classe"+cont+".csv", i);
+			if(s!=null){
+				novo[i]=s;
+			}
+			else{
+				i--;
+			}
 			cont++;
 			if(cont==10){
 				cont=0;

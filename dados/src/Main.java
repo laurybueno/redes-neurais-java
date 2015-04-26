@@ -12,6 +12,6 @@ public class Main {
 		normal.minMax("dados.csv");
 		//normal.zScore("dados.csv", "zScore.csv");
 		System.out.println("criando treino, teste, validacao");
-		arquivo.funcaoIntegradora("normalizadoMinMax.csv", 60, 20, 20, "minMax");
+		arquivo.funcaoIntegradora("normalizadoMinMax.csv", 2, 1, 97, "minMax");
 	}
 }

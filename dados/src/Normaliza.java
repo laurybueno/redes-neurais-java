@@ -19,7 +19,7 @@ public class Normaliza {
 		double[] maximo = encontraMax(dados);//arranjo contendo o maior numeor de cada coluna respectivamente
 		
 		for(int i =0;i<dados.length;i++){
-			for(int j=0;j<dados[i].length;j++){
+			for(int j=0;j<dados[i].length-1;j++){
 				dados[i][j]=(dados[i][j]-minimo[i])/(maximo[i]-minimo[i]);
 			}
 		}
