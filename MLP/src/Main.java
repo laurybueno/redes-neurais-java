@@ -43,13 +43,11 @@ public class Main {
 			
 		}
 		
-		System.out.println(mlp.toString());
-		
+		//System.out.println(mlp.toString());
 		Rede.Treinamento train = mlp.new Treinamento(dados, classe, 0.5);
 		
-		train.executar(50);
-		
-		System.out.println(mlp.toString());
+		train.executar(300000);
+		//System.out.println(mlp.toString());
 		
 	}
 	
