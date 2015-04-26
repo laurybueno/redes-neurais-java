@@ -42,18 +42,18 @@ public class Normaliza {
 		
 	}
 	
-	
+	//funcao para deletar uma coluna especifica
 	public double [][] deletaColuna(double[][] dados,int col){
 		double [][] novaMatriz;
-	    	novaMatriz = new double[dados.length][dados[0].length-1];
-	        for(int i =0;i<dados.length;i++){ 
-	            int newColIdx = 0;
-	            for(int j =0;j<dados[i].length;j++){
-	                if(j!=col){
-	                    novaMatriz[i][newColIdx] = dados[i][j];
-	                    newColIdx++;
-	                }               
-	            }
+	    novaMatriz = new double[dados.length][dados[0].length-1];//cria matriz com uma coluna a menos
+	    for(int i =0;i<dados.length;i++){ 
+	    	int newColIdx = 0;
+	        for(int j =0;j<dados[i].length;j++){
+	        	if(j!=col){//se nao for a coluna pra deletar, copia ela
+	        		novaMatriz[i][newColIdx] = dados[i][j];
+	                newColIdx++;
+	            }               
+	        }
 	     }
 	     return novaMatriz;
 	 }
@@ -75,7 +75,8 @@ public class Normaliza {
 		}
 		return novaMatriz;
 	}
-		 
+	
+	//funcao para copiar matriz
 	public static double [][] clonaMatriz(double [][] original){
 		double [][] clone = new double[original.length][];
 		for(int i =0; i < original.length; i++ ){

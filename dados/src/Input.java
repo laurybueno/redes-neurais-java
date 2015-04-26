@@ -114,7 +114,7 @@ public class Input {
 		return classeX;
 	}
 	
-	public void funcaoIntegradora(String nomeArquivo, int pTreino, int pTeste, int pValidacao){
+	public void funcaoIntegradora(String nomeArquivo, int pTreino, int pTeste, int pValidacao, String normalizacao){
 		
 		List[] classes = preencheClasse(nomeArquivo);
 		
@@ -135,11 +135,11 @@ public class Input {
 		
 		
 		Output grava = new Output();
-		grava.escreveArquivo("treino.csv",dados1 , false);
+		grava.escreveArquivo("treino"+normalizacao+".csv",dados1 , false);
 		System.out.println("criado treino");
-		grava.escreveArquivo("teste.csv", dados2, false);
+		grava.escreveArquivo("teste"+normalizacao+".csv", dados2, false);
 		System.out.println("criado teste");
-		grava.escreveArquivo("validacao.csv", dados3, false);
+		grava.escreveArquivo("validacao"+normalizacao+".csv", dados3, false);
 		System.out.println("criado validacao");
 
 	}
