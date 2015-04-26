@@ -11,7 +11,7 @@ public class Arquivo {
 	// O arquivo passado por parâmetro é lido linha por linha, sendo que cada uma é inserida
 	// numa lista. Após todas as linhas terem sido inseridas, elas são divididas uma por uma
 	// pegando-se os valores entre as vírgulas. Esses valores são, por fim, inseridos na matriz que será retornada.
-	public double[][] csvToDouble(String caminho) {
+	public static double[][] csvToDouble(String caminho) {
 		
 		BufferedReader br = null;
 		String linhaAtual;
