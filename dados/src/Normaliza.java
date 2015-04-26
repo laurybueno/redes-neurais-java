@@ -1,5 +1,11 @@
 import javax.swing.text.AbstractDocument.LeafElement;
+
+import sun.security.util.Length;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class Normaliza {
@@ -18,10 +24,15 @@ public class Normaliza {
 			}
 		}
 		
-		String[] normalizado = new String[dados.length];
+		
+		
+		
+		double[][] minMax = geraNovaMatriz(dados);
 
-		for(int i=0;i<dados.length;i++){
-			normalizado[i] = Arrays.toString(dados[i]);
+		String[] normalizado = new String[minMax.length];
+
+		for(int i=0;i<minMax.length;i++){
+			normalizado[i] = Arrays.toString(minMax[i]);
 			normalizado[i] = normalizado[i].substring(1);//tira colchetes do inicio
 			normalizado[i] = normalizado[i].substring (0, normalizado[i].length() - 1); //tira colchetes do fim
 		}
@@ -30,6 +41,63 @@ public class Normaliza {
 		grava.escreveArquivo("normalizadoMinMax.csv", normalizado, false);
 		
 	}
+	
+	
+	public double [][] deletaColuna(double[][] dados,int col){
+		double [][] novaMatriz;
+	    	novaMatriz = new double[dados.length][dados[0].length-1];
+	        for(int i =0;i<dados.length;i++){ 
+	            int newColIdx = 0;
+	            for(int j =0;j<dados[i].length;j++){
+	                if(j!=col){
+	                    novaMatriz[i][newColIdx] = dados[i][j];
+	                    newColIdx++;
+	                }               
+	            }
+	     }
+	     return novaMatriz;
+	 }
+	
+	//funcao para deletar coluna que so tem numeor igual
+	public double [][] geraNovaMatriz(double[][] args1){
+		double [][] novaMatriz = clonaMatriz(args1);
+		boolean parada = true;
+		int coluna = 0;
+		while (parada && coluna < args1[0].length){
+			if(sotem0(args1, coluna)){
+				parada = false;
+				novaMatriz = deletaColuna(args1, coluna);
+				geraNovaMatriz(novaMatriz);
+			}
+			else{
+				coluna++;
+			}
+		}
+		return novaMatriz;
+	}
+		 
+	public static double [][] clonaMatriz(double [][] original){
+		double [][] clone = new double[original.length][];
+		for(int i =0; i < original.length; i++ ){
+			clone[i] = original[i].clone();
+		}
+		return clone;
+	}
+		 
+	
+
+
+	//funcao para checar coluna que só tem 0
+	//recebe como parametro a matriz e o numeor da coluna
+	boolean sotem0(double[][] dados, int coluna){
+		for(int i=0;i<dados.length;i++){
+			if(dados[i][coluna]!=0){
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	
 	//funcao que retorna um arranjo contendo o menor numero encontrado em cada coluna respectivamente
 	public double[] encontraMin(double[][] dados){
