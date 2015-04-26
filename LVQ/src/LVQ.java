@@ -9,7 +9,11 @@ public class LVQ {
 	double reducaoAprendizado; //valor que reduz a taxa de Aprendizado
 	double valorMinimo; //valorMinimo que a taxa de aprendizado pode chegar
 	CondicaoParada parada = new CondicaoParada();
-	
+	//Objeto de Leitura dos dados
+	Input arquivo = new Input();
+	String nomeArquivo = "../dados/testeminMax.csv";
+	//vetorDeDados de Teste
+	double [][] dadosTeste = arquivo.arquivoToMatrizDouble(nomeArquivo);
 	//Construtor de inicializacao do LVQ que recebe como parametro um objeto Inicializa que inicializa os pesos e os dados de Entrada do LVQ.
 	//Além de receber por parametros dados destinados a serem definidos pelo Usuario.
 	public LVQ( Inicializa inicializa, int numeroFixo, double taxaDeAprendizado, double reducaoAprendizado, double valorMinimo){
@@ -63,8 +67,7 @@ public class LVQ {
 		//TODO condicao do while temporaria, ainda falta verifica de parada
 		boolean testa = parada.NumeroFixo(numeroIteracoes, numeroFixo);
 		
-		while(true){//enquanto não houver uma condicao de parada. Continua a realizar a Epoca
-			
+		while(testa){//enquanto não houver uma condicao de parada. Continua a realizar a Epoca
 			LVQ copia = new LVQ(this);
 			
 			Treinamento treina = new Treinamento(copia); // cria objeto que executara o treino, passando o LVQ como parametro
@@ -78,7 +81,9 @@ public class LVQ {
 			this.numeroIteracoes++;
 			testa = parada.NumeroFixo(numeroIteracoes, numeroFixo);
 			
-			Teste(this.dadosEntrada);
+			//metodo de teste chamado somente para testes iniciais
+			
+			Teste(nomeArquivo);
 		}
 	}
 	
@@ -88,8 +93,13 @@ public class LVQ {
 	}
 	
 	//Espaco para criacao do metodo que realiza os testes.
-	public void Teste(double [][] dadosTeste){
+	public void Teste(String nomeArquivo){
 		
+		
+		
+		
+		
+		//declara objeto com metodos de operacao entre vetores
 		OperacaoVetores operacao = new OperacaoVetores();
 		
 		//cria copia desse mesmo LVQ
@@ -103,19 +113,22 @@ public class LVQ {
 			//verifica qual vetor de pesos com a menor distancia de um dos dados de Teste.
 			int indexVet = operacao.menorDistancia(dadosTeste[i], copia.vetoresDePesos);
 			//copia a classe desse vetor de pesos encontrado para o array com os resultados
-			resultado[i] = copia.vetoresDePesos[indexVet][copia.vetoresDePesos[i].length-1];
+			
+			resultado[i] = copia.vetoresDePesos[indexVet][copia.vetoresDePesos[0].length-1];
 		}
 		
 		//---------parte dedicada somente a testes do algoritmo --------INICIO//
-		/*for(int i=0; i<resultado.length;i++){
-			if(resultado[i]==dadosTeste[i][dadosTeste[i].length-1]){
+		
+		for(int i=0; i<resultado.length;i++){
+			if(resultado[i]==dadosTeste[i][dadosTeste[0].length-1]){
 				System.out.print(true + " ");
 			}
 			else{
 				System.out.print(false + " ");
 			}
 			
-		}*/
+		}
+		
 		System.out.println();
 		//---------parte dedicada somente a testes do algoritmo -----------FIM//
 		
@@ -133,7 +146,7 @@ public class LVQ {
 		//recebe numero de interacoes ocorrida(numeroInteracoes) e numero maximo permitido(numeroFixo)
 		//caso deva ocorrer a parada return true, caso contrario false.
 		public boolean NumeroFixo(int numeroInteracoes,int numeroFixo){
-			if(numeroFixo < numeroInteracoes)
+			if(numeroFixo >= numeroInteracoes)
 				return true;
 			return false;
 		}

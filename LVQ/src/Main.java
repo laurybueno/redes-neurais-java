@@ -10,7 +10,7 @@ public class Main{
 		//Objeto responsavel por inicializar os pesos (neuronios de saida) e por alinhar os dados de teste recebidos da
 		//entrada.
 		//Recebe arquivo de dados de treinamento (ex: "entrada.txt"), e numero de neuronios de saida por cada classe (ex:"1")
-		Inicializa inicializa = new Inicializa("aquiDNS.csv", 4);
+		//Inicializa inicializa = new Inicializa("../dados/treinominMax.csv", 10);
 		
 		//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - inicio//
 		int numeroFixo = 1000000; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
@@ -24,7 +24,7 @@ public class Main{
 		//e dados de entrada, alem de medidas que iram definir a cara da rede (numero fixo que as iteracoes podem chegar, taxa de Aprendizado, 
 		//taxa de reducao do Aprendizado e valor minimo que a taxa de reducao pode chegar)
 		LVQ lvq1 = new LVQ(inicializa, numeroFixo, taxaDeAprendizado, reducaoAprendizado, valorMinimo);
-		lvq1.Aprendizado();
+		//lvq1.Aprendizado();
 		double [][] vetoresDePesos = lvq1.vetoresDePesos; //neuronios de saida jah treinados
 
 		int lengthAtoa = vetoresDePesos.length;
