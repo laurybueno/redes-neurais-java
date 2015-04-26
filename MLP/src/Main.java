@@ -1,4 +1,6 @@
-﻿
+﻿import java.util.Arrays;
+
+
 public class Main {
 	
 	/* 
@@ -21,6 +23,59 @@ public class Main {
 	
 	public static void main(String[] args){
 		
+		double[][] entrada = Arquivo.csvToDouble("../dados/dados.csv");
+		
+		Rede mlp = new Rede(64,40,10);
+		
+		
+		// separa os dados de suas classes
+		int[] classe = new int[entrada.length];
+		double[][] dados = new double[entrada.length][(entrada[0].length-1)];
+		
+		for(int i = 0; i < entrada.length; i++){
+			
+			for(int j = 0; j < entrada[0].length; j++){
+				if(j < 64)
+					dados[i][j] = entrada[i][j];
+				else
+					classe[i] = (int)entrada[i][j];
+			}
+			
+		}
+		
+		System.out.println(mlp.toString());
+		
+		Rede.Treinamento train = mlp.new Treinamento(dados, classe, 0.5);
+		
+		train.executar(50);
+		
+		System.out.println(mlp.toString());
+		
+	}
+	
+	
+	// printa um array bidimensional quadrado na tela e informa quantas linhas foram lidas
+	public static void printDados(double [][] a)
+	{
+
+		int linhas = 0;
+		for(int i = 0; i < a.length; i++)
+		{
+			for(int j = 0; j < a[0].length; j++)
+			{
+				System.out.print(a[i][j] + " ");
+			}
+			System.out.println();
+			linhas++;
+		}
+		System.out.println("Total de linhas encontradas: " + linhas);
+	}
+	
+	// printa o array de classes
+	public static void printClasses(int [] classe){
+		for(int i = 0; i < classe.length; i++){
+			System.out.println("Classe "+i+": " + classe[i]);
+		}
 	}
 	
 
