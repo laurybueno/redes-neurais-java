@@ -123,15 +123,29 @@ public class Rede {
 		
 		// ponto de entrada para o algoritmo de treinamento
 		public Rede executar(int treinamentos){
-
-			// Loop das épocas de treinamento
-			for(int epoca = 1; epoca <= treinamentos; epoca++){
+			
+			// armazena o intervalo de épocas em que a rede passará por validação
+			int intervalo = 30;
+			int EpocasExecutadas = 0;
+			
+			for(int i = 0; i < treinamentos/intervalo; i++){
 				
-				// Loop das tuplas em cada época
-				for(int linhaDeDados = 0; linhaDeDados < entrada.length; linhaDeDados++){
-					sessao(entrada[linhaDeDados]);
-				}
-			} // encerra loop das épocas
+				// Loop das épocas de treinamento
+				for(int epoca = 1; epoca <= intervalo; epoca++){
+
+					// Loop das tuplas em cada época
+					for(int linhaDeDados = 0; linhaDeDados < entrada.length; linhaDeDados++){
+						sessao(entrada[linhaDeDados]);
+					}
+					EpocasExecutadas++;
+				} // encerra loop das épocas
+				
+				// testa o desempenho da rede no momento
+				System.out.println("Épocas executadas: "+EpocasExecutadas);
+				System.out.println("Acertos obtidos: "+acertosTreinamento());
+				System.out.println();
+				
+			} // encerra o looop dos intervalos
 			
 			// retorna a rede neural modificada
 			return Rede.this;
@@ -174,6 +188,8 @@ public class Rede {
 					tk = 1;
 				else
 					tk = -1;
+				
+				//System.out.println("("+tk +" - "+ yK[k]+")"+"*"+camadaSaida[k].derivada());
 				
 				deltaK[k] = (tk - yK[k])*camadaSaida[k].derivada();
 				
@@ -229,6 +245,27 @@ public class Rede {
 			
 			
 		} // fim de uma sessão de Treinamento
+		
+		/*
+		 * Retorna a quantidade de acertos que a rede consegue alcançar
+		 * no conjunto usado para treinamento.
+		 */
+		private double acertosTreinamento(){
+			
+			int tentativas = entrada.length;
+			int acertos = 0;
+			int resultado;
+			
+			
+			for(int i = 0; i < tentativas; i++){
+				resultado = Rede.this.executar(entrada[i]);
+				if(resultado == entrada[i].classe())
+					acertos++;
+			}
+			
+			return acertos/tentativas;
+		}
+		
 
 	} // fim da classe aninhada de Treinamento
 	
