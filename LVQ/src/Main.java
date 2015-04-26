@@ -13,7 +13,7 @@ public class Main{
 		Inicializa inicializa = new Inicializa("aquiDNS.csv", 4);
 		
 		//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - inicio//
-		int numeroFixo = 100; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
+		int numeroFixo = 1000000; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
 		double taxaDeAprendizado = 0.0002; //taxa de Aprendizado (ex: 2.0)
 		double reducaoAprendizado = 0.0; //valor que reduz a taxa de Aprendizado (ex: 0.1)
  		double valorMinimo=0.1; //valor minimo que a taxa de aprendizado pode chegar (ex:0.1)
