@@ -117,7 +117,7 @@ public class Input {
 	public void funcaoIntegradora(String nomeArquivo, int pTreino, int pTeste, int pValidacao, String normalizacao){
 		
 		List[] classes = preencheClasse(nomeArquivo);
-		
+		System.out.println("passou pra lista");
 		for(int i=0;i<classes.length;i++){
 			classes[i] = shuffle(classes[i]);
 		}
@@ -182,10 +182,8 @@ public class Input {
 		
 	}
 	
-	//informo a quantidade e a lista total . ele me retorna um arranjo de String pegando um de cada classe.
-	public String[] dados (int quantidadeDados, List[] todos){
-		String[] novo = new String[quantidadeDados];
-		
+	//escreve um arquivo para cada classe contendo todos os registros dessa classe
+	public void escreveArquivoClasses(List[] todos){
 		String[] dados0 = listToArray(todos[0]);
 		String[] dados1 = listToArray(todos[1]);
 		String[] dados2 = listToArray(todos[2]);
@@ -197,52 +195,33 @@ public class Input {
 		String[] dados8 = listToArray(todos[8]);
 		String[] dados9 = listToArray(todos[9]);
 		
-		int aux=0;
-		for(int i=0;i<novo.length;aux++){	
-			if(aux<dados0.length){
-				novo[i]=dados0[aux];
-				i++;
-			}
-			
-			if(aux<dados1.length){
-				novo[i]=dados1[aux];
-				i++;
-			}
-			
-			if(aux<dados2.length){
-				novo[i]=dados2[aux];
-				i++;
-			}
-			if(aux<dados3.length){
-				novo[i]=dados3[aux];
-				i++;
-			}
-			if(aux<dados4.length){
-				novo[i]=dados4[aux];
-				i++;
-			}
-			if(aux<dados5.length){
-				novo[i]=dados5[aux];
-				i++;
-			}
-			if(aux<dados6.length){
-				novo[i]=dados6[aux];
-				i++;
-			}
-			if(aux<dados7.length){
-				novo[i]=dados7[aux];
-				i++;
-			}
-			if(aux<dados8.length){
-				novo[i]=dados8[aux];
-				i++;
-			}
-			if(aux<dados9.length){
-				novo[i]=dados9[aux];
-				i++;
+		Output grava = new Output();
+		grava.escreveArquivo("classe0", dados0, false);
+		grava.escreveArquivo("classe1", dados1, false);
+		grava.escreveArquivo("classe2", dados2, false);
+		grava.escreveArquivo("classe3", dados3, false);
+		grava.escreveArquivo("classe4", dados4, false);
+		grava.escreveArquivo("classe5", dados5, false);
+		grava.escreveArquivo("classe6", dados6, false);
+		grava.escreveArquivo("classe7", dados7, false);
+		grava.escreveArquivo("classe8", dados8, false);
+		grava.escreveArquivo("classe9", dados9, false);	
+	}
+	
+	
+	//informo a quantidade e a lista total ele me retorna um arranjo de String pegando um de cada classe.
+	public String[] dados (int quantidadeDados, List[] todos){
+		escreveArquivoClasses(todos);
+		String[] novo = new String[quantidadeDados];
+		
+		int cont=0;
+		for(int i=0;i<quantidadeDados;i++){
+			novo[i]=leituralinha("classe"+cont, i);
+			cont++;
+			if(cont==10){
+				cont=0;
 			}
 		}
-		
 		return novo;
 	}
 	
