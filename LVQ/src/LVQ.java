@@ -9,11 +9,7 @@ public class LVQ {
 	double reducaoAprendizado; //valor que reduz a taxa de Aprendizado
 	double valorMinimo; //valorMinimo que a taxa de aprendizado pode chegar
 	CondicaoParada parada = new CondicaoParada();
-	//Objeto de Leitura dos dados
-	Input arquivo = new Input();
-	String nomeArquivo = "../dados/testeminMax.csv";
-	//vetorDeDados de Teste
-	double [][] dadosTeste = arquivo.arquivoToMatrizDouble(nomeArquivo);
+	
 	//Construtor de inicializacao do LVQ que recebe como parametro um objeto Inicializa que inicializa os pesos e os dados de Entrada do LVQ.
 	//Além de receber por parametros dados destinados a serem definidos pelo Usuario.
 	public LVQ( Inicializa inicializa, int numeroFixo, double taxaDeAprendizado, double reducaoAprendizado, double valorMinimo){
@@ -82,8 +78,7 @@ public class LVQ {
 			testa = parada.NumeroFixo(numeroIteracoes, numeroFixo);
 			
 			//metodo de teste chamado somente para testes iniciais
-			
-			Teste(nomeArquivo);
+
 		}
 	}
 	
@@ -94,10 +89,11 @@ public class LVQ {
 	
 	//Espaco para criacao do metodo que realiza os testes.
 	public void Teste(String nomeArquivo){
+		//Objeto de Leitura dos dados
+		Input arquivo = new Input();
 		
-		
-		
-		
+		//vetorDeDados de Teste
+		double [][] dadosTeste = arquivo.arquivoToMatrizDouble(nomeArquivo);	
 		
 		//declara objeto com metodos de operacao entre vetores
 		OperacaoVetores operacao = new OperacaoVetores();
