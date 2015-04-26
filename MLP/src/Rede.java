@@ -18,6 +18,7 @@ public class Rede {
 	double viesEscondida;
 	double viesSaida;
 
+	// MODO DE EXECUÇÃO:
 	// Construtor determina quantos neuronios deverão ser criados a partir do comprimento dos arrays de pesos recebidos.
 	// Como a camada de entrada não precisa ser instanciada, ela também não tem pesos para guardar.
 	// Este construtor será invocado no caso de a rede estar sendo criada em modo de execução.
@@ -59,7 +60,7 @@ public class Rede {
 
 	}
 	
-	
+	// MODO DE TREINAMENTO
 	// Esse construtor será invocado se a rede for iniciada em modo de treinamento
 	// A definição de pesos será delegada para a classe Neuronio
 	// Este método assume que o viés de cada camada será determinado externamente
@@ -156,8 +157,9 @@ public class Rede {
 			// TODO: faz um log da taxa de erros desta época e a deixa à disposição da Thread guardiã
 			
 			
-			// realiza backPropagation dos erros computados
-			/* Primeiro na camada de saída:
+			/*
+			 * Backpropagation na camada de saída
+			 * 
 			 * Todos os neurônios devem receber o sinal de treinamento -1,
 			 * exceto pelo neurônio que corresponde à classe da tupla dada, 
 			 * que deve receber 1.
@@ -220,9 +222,9 @@ public class Rede {
 			
 			// atualiza pesos e viés na camada escondida
 			for(int j = 0; j < camadaEscondida.length; j++){
-				viesEscondida += w0K[j];
-				for(int i = 0; i < camadaEscondida.length; i++)
-					camadaSaida[j].setPeso(i, vIJ[j][i]);
+				viesEscondida += v0J[j];
+				for(int i = 0; i < camadaEscondida[0].peso.length; i++)
+					camadaEscondida[j].setPeso(i, vIJ[j][i]);
 			}
 			
 			
