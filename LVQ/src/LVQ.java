@@ -77,7 +77,8 @@ public class LVQ {
 			
 			this.numeroIteracoes++;
 			testa = parada.NumeroFixo(numeroIteracoes, numeroFixo);
-			System.out.println(this.vetoresDePesos[0][1]);
+			
+			Teste(this.dadosEntrada);
 		}
 	}
 	
@@ -87,7 +88,36 @@ public class LVQ {
 	}
 	
 	//Espaco para criacao do metodo que realiza os testes.
-	public void Teste(){
+	public void Teste(double [][] dadosTeste){
+		
+		OperacaoVetores operacao = new OperacaoVetores();
+		
+		//cria copia desse mesmo LVQ
+		LVQ copia = new LVQ(this);
+		
+		//declara array com as classes que a lvq sugeriu (resposta). 
+		double [] resultado = new double[dadosTeste.length];
+		
+		//percorre as linhas da matriz com os dados de entrada
+		for(int i =0; i<dadosTeste.length; i++){
+			//verifica qual vetor de pesos com a menor distancia de um dos dados de Teste.
+			int indexVet = operacao.menorDistancia(dadosTeste[i], copia.vetoresDePesos);
+			//copia a classe desse vetor de pesos encontrado para o array com os resultados
+			resultado[i] = copia.vetoresDePesos[indexVet][copia.vetoresDePesos[i].length-1];
+		}
+		
+		//---------parte dedicada somente a testes do algoritmo --------INICIO//
+		/*for(int i=0; i<resultado.length;i++){
+			if(resultado[i]==dadosTeste[i][dadosTeste[i].length-1]){
+				System.out.print(true + " ");
+			}
+			else{
+				System.out.print(false + " ");
+			}
+			
+		}*/
+		System.out.println();
+		//---------parte dedicada somente a testes do algoritmo -----------FIM//
 		
 	}
 	

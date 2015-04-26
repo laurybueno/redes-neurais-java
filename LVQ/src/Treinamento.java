@@ -66,93 +66,93 @@ public class Treinamento {
 		}
 	} 
 	
-	//Classe suporte de Treinamento com alguns metodos essenciais na realizacao de operacao entre vetores
-	public class OperacaoVetores{
-		
-		//metodo que realiza operacoes algebrica de multiplicacao entre um vetor e um valor numerico
-		//recebe um dado vetor e um valor numerico
-		//retorna o novo vetor produzido pela multiplicacao do vetor por um valor numerico
-		public double [] mutiplicacaoArrayComDouble(double [] array1, double numeric){
-			//copia array, para o retorno manter a ultima coluna (classe intacta)
-			double [] retorno = array1.clone();
-				//menos a ultima posicao (classe)
-				for(int i =0; i < array1.length-1; i++){//operacao de multicacao de vetor com numerico
-					
-					retorno[i] = array1[i] * numeric;
-				}
-			
-			return retorno;
-		}
-		
-		//metodo que realiza operacoes algebrica elementos dos vetores
-		//recebe dois vetores e um codigo que define o tipo de operacao, e retorna a os resultados de sua operacao.
-		//operacao = 0 soma, 1 subtracao
-		public double [] operacaoSimples (double [] array1, double [] array2, int operacao){
-			//copia array, para o retorno manter a ultima coluna (classe intacta)
-			double [] retorno = array2.clone(); 
-			
-			if(operacao == 0){ //operacao de soma de arrays
+	
+}
+//Classe suporte de Treinamento com alguns metodos essenciais na realizacao de operacao entre vetores
+class OperacaoVetores{
+	
+	//metodo que realiza operacoes algebrica de multiplicacao entre um vetor e um valor numerico
+	//recebe um dado vetor e um valor numerico
+	//retorna o novo vetor produzido pela multiplicacao do vetor por um valor numerico
+	public double [] mutiplicacaoArrayComDouble(double [] array1, double numeric){
+		//copia array, para o retorno manter a ultima coluna (classe intacta)
+		double [] retorno = array1.clone();
+			//menos a ultima posicao (classe)
+			for(int i =0; i < array1.length-1; i++){//operacao de multicacao de vetor com numerico
 				
-				for(int i =0; i < array1.length-1; i++){ //menos a ultima posicao (classe)
-					retorno[i] = array1[i] + array2[i];
-				}
+				retorno[i] = array1[i] * numeric;
 			}
+		
+		return retorno;
+	}
+	
+	//metodo que realiza operacoes algebrica elementos dos vetores
+	//recebe dois vetores e um codigo que define o tipo de operacao, e retorna a os resultados de sua operacao.
+	//operacao = 0 soma, 1 subtracao
+	public double [] operacaoSimples (double [] array1, double [] array2, int operacao){
+		//copia array, para o retorno manter a ultima coluna (classe intacta)
+		double [] retorno = array2.clone(); 
+		
+		if(operacao == 0){ //operacao de soma de arrays
 			
-			else if(operacao ==1){ //operacao de subtracao de vetores
-				for(int i =0; i < array1.length-1; i++){ //menos a ultima posicao (classe)
-					retorno[i] = array1[i] - array2[i];
-				}
+			for(int i =0; i < array1.length-1; i++){ //menos a ultima posicao (classe)
+				retorno[i] = array1[i] + array2[i];
 			}
-			
-			return retorno;
 		}
 		
-		//metodo que descobre qual a menor distancia quando comparado um vetor de dados de entrada e outros M vetores de pesos.
-		//recebe vetor de dados de entrada e um vetor de vetores de pesos (Matriz de pesos)
-		//e retorna o index vetor de pesos da menor distancia em relacao a dadosEntrada
-		public int menorDistancia(double [] dadosEntrada, double [][] vetoresDePesos){
-			int quantVetPesos = vetoresDePesos.length; //descobre quando neuronios de saida existem.
-			double [] distancias = new double [quantVetPesos];//cria array que ira receber todas as distancias
-			
-			//descobre todas distancias existentes entre os neuronios e um dado de entrada
-			for(int i =0 ; i < vetoresDePesos.length; i++){
-				distancias[i] = distanciaEuclidiana(dadosEntrada, vetoresDePesos[i]);
+		else if(operacao ==1){ //operacao de subtracao de vetores
+			for(int i =0; i < array1.length-1; i++){ //menos a ultima posicao (classe)
+				retorno[i] = array1[i] - array2[i];
 			}
-			//valor inicial declarado como o menor
-			double menor = distancias[0];
-			
-			//primeira posicao declarada inicialmente como a menor
-			int indiceMenor =0;
-			
-			//comeca do um pois a primeira posicao jah foi pega
-			for(int i =1 ; i < distancias.length; i ++){
-				if(distancias[i]<menor){
-					menor = distancias[i];
-					indiceMenor = i;
-				}
+		}
+		
+		return retorno;
+	}
+	
+	//metodo que descobre qual a menor distancia quando comparado um vetor de dados de entrada e outros M vetores de pesos.
+	//recebe vetor de dados de entrada e um vetor de vetores de pesos (Matriz de pesos)
+	//e retorna o index vetor de pesos da menor distancia em relacao a dadosEntrada
+	public int menorDistancia(double [] dadosEntrada, double [][] vetoresDePesos){
+		int quantVetPesos = vetoresDePesos.length; //descobre quando neuronios de saida existem.
+		double [] distancias = new double [quantVetPesos];//cria array que ira receber todas as distancias
+		
+		//descobre todas distancias existentes entre os neuronios e um dado de entrada
+		for(int i =0 ; i < vetoresDePesos.length; i++){
+			distancias[i] = distanciaEuclidiana(dadosEntrada, vetoresDePesos[i]);
+		}
+		//valor inicial declarado como o menor
+		double menor = distancias[0];
+		
+		//primeira posicao declarada inicialmente como a menor
+		int indiceMenor =0;
+		
+		//comeca do um pois a primeira posicao jah foi pega
+		for(int i =1 ; i < distancias.length; i ++){
+			if(distancias[i]<menor){
+				menor = distancias[i];
+				indiceMenor = i;
 			}
-			
-			return indiceMenor; //retorna indice do vetor de peso mais proximo do dadoEntrada em questao
-		}	
+		}
+		
+		return indiceMenor; //retorna indice do vetor de peso mais proximo do dadoEntrada em questao
+	}	
 
-		//metodo para calcular a distancia euclidiana entre dois pontos
-		//recebe como paramentro dois vetores e retorna a distancia euclidiana
-		public double distanciaEuclidiana(double[] vetor, double [] array){
+	//metodo para calcular a distancia euclidiana entre dois pontos
+	//recebe como paramentro dois vetores e retorna a distancia euclidiana
+	public double distanciaEuclidiana(double[] vetor, double [] array){
+		
+		double aux=0;//auxiliar somar as distancias locais
+		
+		for (int i=0;i < vetor.length-1; i++){// percorre o arranjo para pegar todos os atributos, menos o último (classe)
 			
-			double aux=0;//auxiliar somar as distancias locais
+			double local = vetor[i]- array[i]; //pega a distancia local
 			
-			for (int i=0;i < vetor.length-1; i++){// percorre o arranjo para pegar todos os atributos, menos o último (classe)
-				
-				double local = vetor[i]- array[i]; //pega a distancia local
-				
-				local = Math.pow(local, 2);// eleva a distancia local ao quadrado
-				aux=aux+local;
-			}
-			aux =Math.sqrt(aux);//tira a raiz quadrada da soma das distancias locais
-			return aux;
+			local = Math.pow(local, 2);// eleva a distancia local ao quadrado
+			aux=aux+local;
 		}
+		aux =Math.sqrt(aux);//tira a raiz quadrada da soma das distancias locais
+		return aux;
 	}
 }
-
 
 
