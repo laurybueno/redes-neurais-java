@@ -1,4 +1,6 @@
-﻿
+﻿import java.util.Arrays;
+
+
 public class Rede {
 
 	/*
@@ -168,7 +170,6 @@ public class Rede {
 				yK[neuronioSai] = camadaSaida[neuronioSai].feedForward(zJ, viesSaida);
 			}
 			
-			// TODO: faz um log da taxa de erros desta época e a deixa à disposição da Thread guardiã
 			
 			
 			/*
@@ -178,7 +179,7 @@ public class Rede {
 			 * exceto pelo neurônio que corresponde à classe da tupla dada, 
 			 * que deve receber 1.
 			 */
-			int tk;
+			double tk;
 			double[] deltaK = new double[camadaSaida.length];
 			double[][] wJK = new double[camadaSaida.length][camadaEscondida.length];
 			double[] w0K = new double[camadaSaida.length];
@@ -262,8 +263,8 @@ public class Rede {
 				if(resultado == entrada[i].classe())
 					acertos++;
 			}
-			
-			return acertos/tentativas;
+			System.out.println("Acertos: "+acertos);
+			return (double)acertos/tentativas;
 		}
 		
 
@@ -296,6 +297,8 @@ public class Rede {
 		
 		int ret = -1;
 		int decisoes = 0;
+		
+		System.out.println("Array de saída: "+Arrays.toString(saida));
 
 		for(int i = 0; i < saida.length; i++){
 			if(saida[i] == true){
