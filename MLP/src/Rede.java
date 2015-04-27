@@ -147,7 +147,7 @@ public class Rede {
 				System.out.println("Proporção de acertos: "+acertosTreinamento());
 				System.out.println("Taxa de aprendizado: "+aprendizado);
 				System.out.println();
-				aprendizado = aprendizado/1.1;
+				aprendizado = aprendizado*0.999;
 				
 			} // encerra o looop dos intervalos
 			
@@ -188,7 +188,7 @@ public class Rede {
 			for(int k = 0; k < camadaSaida.length; k++){
 				
 				if(k == tupla.classe())
-					tk = 1;
+					tk = 1;	
 				else
 					tk = -1;
 				
@@ -224,8 +224,8 @@ public class Rede {
 				deltaJ[j] = delta_inJ[j]*camadaEscondida[j].derivada();
 				
 				// calcula a correção para cada peso do neurônio ativo
-				for(int i = 0; i < camadaEscondida[j].peso.length; i++)
-					vIJ[j][i] = aprendizado*deltaJ[j]*camadaEscondida[j].entrada.valor(i);
+				for(int i = 0; i < tupla.length(); i++)
+					vIJ[j][i] = aprendizado*deltaJ[j]*tupla.valor(i);
 				
 				v0J[j] = aprendizado*deltaJ[j];
 				
@@ -242,7 +242,7 @@ public class Rede {
 			// atualiza pesos e viés na camada escondida
 			for(int j = 0; j < camadaEscondida.length; j++){
 				viesEscondida += v0J[j];
-				for(int i = 0; i < camadaEscondida[0].peso.length; i++)
+				for(int i = 0; i < tupla.length(); i++)
 					camadaEscondida[j].setPeso(i, vIJ[j][i]);
 			}
 			
