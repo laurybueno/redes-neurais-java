@@ -127,7 +127,7 @@ public class Rede {
 		public Rede executar(int treinamentos){
 			
 			// armazena o intervalo de épocas em que a rede passará por validação
-			int intervalo = 30;
+			int intervalo = 10000;
 			int EpocasExecutadas = 0;
 			
 			for(int i = 0; i < treinamentos/intervalo; i++){
@@ -144,8 +144,10 @@ public class Rede {
 				
 				// testa o desempenho da rede no momento
 				System.out.println("Épocas executadas: "+EpocasExecutadas);
-				System.out.println("Acertos obtidos: "+acertosTreinamento());
+				System.out.println("Proporção de acertos: "+acertosTreinamento());
+				System.out.println("Taxa de aprendizado: "+aprendizado);
 				System.out.println();
+				aprendizado = aprendizado/1.1;
 				
 			} // encerra o looop dos intervalos
 			
@@ -298,7 +300,7 @@ public class Rede {
 		int ret = -1;
 		int decisoes = 0;
 		
-		System.out.println("Array de saída: "+Arrays.toString(saida));
+		// System.out.println("Array de saída: "+Arrays.toString(saida));
 
 		for(int i = 0; i < saida.length; i++){
 			if(saida[i] == true){
