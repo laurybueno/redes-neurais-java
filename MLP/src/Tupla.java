@@ -36,6 +36,11 @@ public class Tupla {
 	public double valor(int n){
 		return this.dado[n];
 	}
+	
+	// retorna a quantidade de dados armazenada
+	public int length(){
+		return this.dado.length;
+	}
 
 	// retorna a classe desta tupla
 	public int classe(){
