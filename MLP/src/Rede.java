@@ -127,7 +127,7 @@ public class Rede {
 		public Rede executar(int treinamentos){
 			
 			// armazena o intervalo de épocas em que a rede passará por validação
-			int intervalo = 10000;
+			int intervalo = 1;
 			int EpocasExecutadas = 0;
 			
 			for(int i = 0; i < treinamentos/intervalo; i++){
