@@ -23,9 +23,9 @@ public class Main {
 	
 	public static void main(String[] args){
 		
-		double[][] entrada = Arquivo.csvToDouble("../dados/or.csv");
+		double[][] entrada = Arquivo.csvToDouble("../dados/xor.csv");
 		
-		Rede mlp = new Rede(2,2,2);
+		Rede mlp = new Rede(2,10,2);
 		
 		
 		// separa os dados de suas classes
@@ -44,9 +44,9 @@ public class Main {
 		}
 		
 		//System.out.println(mlp.toString());
-		Rede.Treinamento train = mlp.new Treinamento(dados, classe, 1);
+		Rede.Treinamento train = mlp.new Treinamento(dados, classe, 0.1);
 		
-		train.executar(100);
+		train.executar(1000);
 		
 		System.out.println(mlp.toString());
 		
