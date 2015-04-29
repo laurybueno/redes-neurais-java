@@ -50,17 +50,13 @@ public class Neuronio {
 	
 	//************* Controle de feedforward *********************//
 	
-	Tupla entrada;
-	
 	// esse método dá apenas um passo na operação de feedForward, ou seja, ele passa da entrada para a camadaEscondida, ou da escondida para a saída
 	public double feedForward(Tupla entrada, double vies){
 		
-		// guarda a entrada para a fase de backpropagation
-		this.entrada = (Tupla) entrada.clonar();
-		
-		
 		double soma = 0;
 		int peso_ativo = 0;
+		
+		entrada.reset();
 		
 		// prepara o somatório
 		while(entrada.haProx()){
