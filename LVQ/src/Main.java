@@ -1,22 +1,33 @@
+
 import java.math.BigDecimal;
+import java.util.Scanner;
 
 public class Main{
 	
 	public static void main(String[] args){
-		
+		Scanner sc = new Scanner(System.in);
 		
 		//------------- TREINAMENTO ---------------//
 		
 		//Objeto responsavel por inicializar os pesos (neuronios de saida) e por alinhar os dados de teste recebidos da
 		//entrada.
 		//Recebe arquivo de dados de treinamento (ex: "entrada.txt"), e numero de neuronios de saida por cada classe (ex:"1")
-		Inicializa inicializa = new Inicializa("treinozScore.csv", 10);
+		Inicializa inicializa = new Inicializa("../dados/treinoNada.csv", 10);//coloca arquivo de treino
 		
 		//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - inicio//
-		int numeroFixo = 1000000; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
+		
+		int numeroFixo = 100; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
+		//System.out.println("digite o numero de epocas:");
+		//int numeroFixo = sc.nextInt();
 		double taxaDeAprendizado = 0.0002; //taxa de Aprendizado (ex: 2.0)
+		//System.out.println("digite a taxa de aprendizado:");
+		//double taxaDeAprendizado = sc.nextDouble();
 		double reducaoAprendizado = 0.0; //valor que reduz a taxa de Aprendizado (ex: 0.1)
+		//System.out.println("digite o valor que reduz a taxa de aprendizado");
+		//double reducaoAprendizado = sc.nextDouble();
  		double valorMinimo=0.1; //valor minimo que a taxa de aprendizado pode chegar (ex:0.1)
+		//System.out.println("digite o valor minimo que a taxa de aprendizado pode chegar");
+		//double valorMinimo = sc.nextDouble();
 		//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - fim// (ex:)
 		
 		
@@ -25,7 +36,7 @@ public class Main{
 		//taxa de reducao do Aprendizado e valor minimo que a taxa de reducao pode chegar)
 		LVQ lvq1 = new LVQ(inicializa, numeroFixo, taxaDeAprendizado, reducaoAprendizado, valorMinimo);
 		lvq1.Aprendizado();
-		String nomeArquivoTeste = "testezScore.csv";
+		String nomeArquivoTeste = "../dados/testeNada.csv";
 		lvq1.Teste(nomeArquivoTeste);
 	}
 }
