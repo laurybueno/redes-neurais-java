@@ -1,4 +1,6 @@
-﻿
+﻿import java.util.Arrays;
+
+
 public class Tupla {
 	
 	/* 
@@ -14,14 +16,14 @@ public class Tupla {
 	// construtor recebe e copia para sua instância todos os dados da tupla dada e sua classe, quando disponível
 	public Tupla(double [] dado, int classe){
 		this.classe = classe;
-		this.dado = dado.clone();
+		this.dado = Arrays.copyOf(dado, dado.length);
 		this.posicao_atual = 0;
 	}
 	
 	// quando a classe não estiver disponível, e portanto a rede estiver em modo de execução, este construtor é chamado
 	public Tupla(double[] dado){
 		this.classe = -1;
-		this.dado = dado.clone();
+		this.dado = Arrays.copyOf(dado, dado.length);
 		this.posicao_atual = 0;		
 	}
 	
@@ -49,7 +51,7 @@ public class Tupla {
 	
 	// retorna todos os dados para clonagem
 	public double[] valores(){
-		return this.dado.clone();
+		return Arrays.copyOf(dado, dado.length);
 	}
 	
 	// relata para uma classe externa se ainda há atributos para serem lidos nesta tupla
