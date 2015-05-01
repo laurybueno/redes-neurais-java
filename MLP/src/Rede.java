@@ -16,15 +16,12 @@ public class Rede {
 	
 	Neuronio[] camadaEscondida;
 	Neuronio[] camadaSaida;
-	
-	double viesEscondida;
-	double viesSaida;
 
 	// MODO DE EXECUÇÃO:
 	// Construtor determina quantos neuronios deverão ser criados a partir do comprimento dos arrays de pesos recebidos.
 	// Como a camada de entrada não precisa ser instanciada, ela também não tem pesos para guardar.
 	// Este construtor será invocado no caso de a rede estar sendo criada em modo de execução.
-	public Rede(double[][] camadaEscondida, double[][] camadaSaida, double viesEscondida, double viesSaida){
+	public Rede(double[][] camadaEscondida, double[][] camadaSaida, double[] viesEscondida, double[] viesSaida){
 		
 		/*	Neste contexto, camadaEscondida.length é o número de neurônios na camada escondida.
 		 *  Enquanto camadaEscondida[0].length, é o número de pesos que cada um desses neurônios 
@@ -35,15 +32,11 @@ public class Rede {
 		this.camadaEscondida = new Neuronio[camadaEscondida.length];
 		this.camadaSaida = new Neuronio[camadaSaida.length];
 		
-		// armazena o viés de cada camada
-		this.viesEscondida = viesEscondida;
-		this.viesSaida = viesSaida;
-
-
 		// Os dois loops a seguir criam os neurônios da camada escondida e inserem os pesos dados
 		for(int p = 0; p < camadaEscondida.length; p++){
 			// este primeiro loop tem suas iterações controladas pelo número de neurônios na camada de entrada
 			this.camadaEscondida[p] = new Neuronio(camadaEscondida[0].length); // cada neurônio é criado com a informação de quantos neurônios existem na camada de entrada
+			this.camadaEscondida[p].setVies(viesEscondida[p]);
 
 			for(int k = 0; k < camadaEscondida[0].length; k++)
 				// este segundo loop tem suas iterações controladas pela quantidade de pesos que devem ser configurados
@@ -54,10 +47,11 @@ public class Rede {
 		for(int x = 0; x < camadaSaida.length; x++){
 			// este primeiro loop tem suas iterações controladas pelo número de neurônios na camada de saída
 			this.camadaSaida[x] = new Neuronio(camadaSaida[0].length); // cada neurônio é criado com a informação de quantos neurônios existem na camada escondida
+			this.camadaSaida[x].setVies(viesSaida[x]);
 
 			for(int z = 0; z < camadaSaida[0].length; z++)
 				// este segundo loop tem suas iterações controladas pela quantidade de pesos que devem ser configurados
-				this.camadaSaida[x].setPeso(z, camadaEscondida[x][z]);
+				this.camadaSaida[x].setPeso(z, camadaSaida[x][z]);
 		}
 
 	}

@@ -8,15 +8,13 @@ public class Neuronio {
 	
 	// Armazena quantos neurônios existem na camada anterior
 	// Essa informação é necessária para que este neurônio saiba quantos pesos deverá armazenar
-	int neuroniosCamadaAnt;
+	double vies;
 	double[] peso;
 	
 	
 	
 	// No momento de sua criação, cada neurônio saberá quantos neurônios estão na camada anterior 
 	public Neuronio(int neuroniosCamadaAnt){
-		this.neuroniosCamadaAnt = neuroniosCamadaAnt;
-		
 		// prepara o array de pesos
 		peso = new double[neuroniosCamadaAnt];
 	}
@@ -29,11 +27,18 @@ public class Neuronio {
 	public void setPeso(){
 		
 		// Como Math.random sempre retorna valores positivos, é preciso acrescentar mais uma camada de aleatoriedade para variar o sinal
-		for(int i = 0; i < this.neuroniosCamadaAnt; i++)
+		for(int i = 0; i < this.peso.length; i++)
 			if(Math.random() > 0.5)
 				this.peso[i] = Math.random();
 			else
 				this.peso[i] = Math.random()*(-1);
+		
+		// determina o vies
+		if(Math.random() > 0.5)
+			this.vies = Math.random();
+		else
+			this.vies = Math.random()*(-1);
+	
 	
 	}
 
@@ -47,6 +52,13 @@ public class Neuronio {
 		return this.peso[N];
 	}
 	
+	public void setVies(double vies){
+		this.vies = vies;
+	}
+	
+	public double getVies(){
+		return this.vies;
+	}
 	
 	//************* Controle de feedforward *********************//
 	
