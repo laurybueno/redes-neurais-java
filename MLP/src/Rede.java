@@ -123,10 +123,10 @@
 				
 				// testa o desempenho da rede no momento
 				System.out.println("Épocas executadas: "+EpocasExecutadas);
-				System.out.println("Proporção de acertos: "+acertosTreinamento());
+				System.out.println("Proporção de acertos: "+errosTreinamento());
 				System.out.println("Taxa de aprendizado: "+aprendizado);
 				System.out.println();
-				aprendizado = aprendizado*0.999;
+				//aprendizado = aprendizado*0.999;
 				
 			} // encerra o looop dos intervalos
 			
@@ -234,20 +234,19 @@
 		 * Retorna a quantidade de acertos que a rede consegue alcançar
 		 * no conjunto usado para treinamento.
 		 */
-		private double acertosTreinamento(){
+		private double errosTreinamento(){
 			
 			int tentativas = entrada.length;
-			int acertos = 0;
+			int erros = 0;
 			int resultado;
 			
 			
 			for(int i = 0; i < tentativas; i++){
 				resultado = Rede.this.executar(entrada[i]);
-				if(resultado == entrada[i].classe())
-					acertos++;
+				if(resultado != entrada[i].classe())
+					erros++;
 			}
-			System.out.println("Acertos: "+acertos);
-			return (double)acertos/tentativas;
+			return (double)erros/tentativas;
 		}
 		
 
