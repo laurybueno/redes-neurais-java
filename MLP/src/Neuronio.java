@@ -24,7 +24,7 @@ public class Neuronio {
 
 	// Define todos os pesos deste neurônio aleatoriamente
 	// Este método poderá ser chamado na inicialização de uma rede para treinamento
-	public void setPeso(){
+	public void reset(){
 		
 		// Como Math.random sempre retorna valores positivos, é preciso acrescentar mais uma camada de aleatoriedade para variar o sinal
 		for(int i = 0; i < this.peso.length; i++)
@@ -63,7 +63,7 @@ public class Neuronio {
 	//************* Controle de feedforward *********************//
 	
 	// esse método dá apenas um passo na operação de feedForward, ou seja, ele passa da entrada para a camadaEscondida, ou da escondida para a saída
-	public double feedForward(Tupla entrada, double vies){
+	public double feedForward(Tupla entrada){
 		
 		double soma = 0;
 		int peso_ativo = 0;
@@ -80,8 +80,8 @@ public class Neuronio {
 	}
 	
 	// caso a tupla não tenha sido instanciada externamente, ela será instanciada agora
-	public double feedForward(double[] entrada, double vies){
-		return feedForward(new Tupla(entrada), vies);
+	public double feedForward(double[] entrada){
+		return feedForward(new Tupla(entrada));
 	}
 	
 	
@@ -107,8 +107,8 @@ public class Neuronio {
 	//************* Funções de limiar *********************//
 	
 	// enquanto estiver em execução, essa será a função de limiar invocada
-	public boolean limiar(double[] entrada, double vies){
-		return feedForward(entrada,vies) >= 0;
+	public boolean limiar(double[] entrada){
+		return feedForward(entrada) >= 0;
 	}
 	
 

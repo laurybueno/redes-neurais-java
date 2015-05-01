@@ -66,28 +66,16 @@ public class Rede {
 		this.camadaEscondida = new Neuronio[camadaEscondida];
 		this.camadaSaida = new Neuronio[camadaSaida];
 		
-		
-		// decide e armazena o viés de cada camada
-		if(Math.random() > 0.5)
-			this.viesEscondida = Math.random();
-		else
-			this.viesEscondida = Math.random()*(-1);
-		
-		if(Math.random() > 0.5)
-			this.viesSaida = Math.random();
-		else
-			this.viesSaida = Math.random()*(-1);
-
-		// cria os neurônios escondidos
+				// cria os neurônios escondidos
 		for(int j = 0; j < camadaEscondida; j++){
 			this.camadaEscondida[j] = new Neuronio(camadaEntrada);
-			this.camadaEscondida[j].setPeso();
+			this.camadaEscondida[j].reset();
 		}
 		
 		// cria os neurônios de saída
 		for(int k = 0; k < camadaSaida; k++){
 			this.camadaSaida[k] = new Neuronio(camadaEscondida);
-			this.camadaSaida[k].setPeso();
+			this.camadaSaida[k].reset();
 		}
 		
 	}
@@ -158,12 +146,12 @@ public class Rede {
 			
 			// chama feedForward para cada neurônio da camada escondida
 			for(int neuronioEsc = 0; neuronioEsc < camadaEscondida.length; neuronioEsc++){
-				zJ[neuronioEsc] = camadaEscondida[neuronioEsc].feedForward(tupla, viesEscondida);
+				zJ[neuronioEsc] = camadaEscondida[neuronioEsc].feedForward(tupla);
 			}
 			
 			// chama feedFoward para cada neurônio da camada de saída
 			for(int neuronioSai = 0; neuronioSai < camadaSaida.length; neuronioSai++){
-				yK[neuronioSai] = camadaSaida[neuronioSai].feedForward(zJ, viesSaida);
+				yK[neuronioSai] = camadaSaida[neuronioSai].feedForward(zJ);
 			}
 			
 			
@@ -177,8 +165,8 @@ public class Rede {
 			 */
 			double tk;
 			double[] deltaK = new double[camadaSaida.length];
-			double[][] wJK = new double[camadaSaida.length][camadaEscondida.length];
-			double[] w0K = new double[camadaSaida.length];
+			double[][] delta_wJK = new double[camadaSaida.length][camadaEscondida.length];
+			double[] delta_w0K = new double[camadaSaida.length];
 			for(int k = 0; k < camadaSaida.length; k++){
 				
 				if(k == tupla.classe())
@@ -191,9 +179,9 @@ public class Rede {
 				deltaK[k] = (tk - yK[k])*camadaSaida[k].derivada();
 				
 				for(int j = 0; j < camadaEscondida.length; j++)
-					wJK[k][j] = aprendizado*deltaK[k]*zJ[j];
+					delta_wJK[k][j] = aprendizado*deltaK[k]*zJ[j];
 				
-				w0K[k] = aprendizado*deltaK[k];
+				delta_w0K[k] = aprendizado*deltaK[k];
 				
 			}
 			
@@ -205,13 +193,13 @@ public class Rede {
 			double[] delta_inJ = new double[camadaEscondida.length];
 			double[] deltaJ = new double[camadaEscondida.length];
 			
-			double[][] vIJ = new double[camadaEscondida.length][camadaEscondida[0].peso.length];
-			double[] v0J = new double[camadaEscondida.length];
+			double[][] delta_vIJ = new double[camadaEscondida.length][camadaEscondida[0].peso.length];
+			double[] delta_v0J = new double[camadaEscondida.length];
 			
 			for(int j = 0; j < camadaEscondida.length; j++){
 				// faz o somatório para cada input de delta
 				for(int k = 0; k < camadaSaida.length; k++){
-					delta_inJ[j] += deltaK[k]*wJK[k][j];
+					delta_inJ[j] += deltaK[k]*camadaSaida[k].getPeso(k);
 				}
 				
 				// calcula o termo de erro de informação
@@ -219,25 +207,25 @@ public class Rede {
 				
 				// calcula a correção para cada peso do neurônio ativo
 				for(int i = 0; i < tupla.length(); i++)
-					vIJ[j][i] = aprendizado*deltaJ[j]*tupla.valor(i);
+					delta_vIJ[j][i] = aprendizado*deltaJ[j]*tupla.valor(i);
 				
-				v0J[j] = aprendizado*deltaJ[j];
+				delta_v0J[j] = aprendizado*deltaJ[j];
 				
 			}
 			
 			// atualiza pesos e viés na camada de saída
 			for(int k = 0; k < camadaSaida.length; k++){
-				viesSaida += w0K[k];
+				camadaSaida[k].setVies(camadaSaida[k].getVies()+delta_w0K[k]);
 				for(int j = 0; j < camadaEscondida.length; j++)
-					camadaSaida[k].setPeso(j, wJK[k][j]);
+					camadaSaida[k].setPeso(j, delta_wJK[k][j]);
 			}
 			
 			
 			// atualiza pesos e viés na camada escondida
 			for(int j = 0; j < camadaEscondida.length; j++){
-				viesEscondida += v0J[j];
+				camadaEscondida[j].setVies(camadaEscondida[j].getVies()+delta_v0J[j]);
 				for(int i = 0; i < tupla.length(); i++)
-					camadaEscondida[j].setPeso(i, vIJ[j][i]);
+					camadaEscondida[j].setPeso(i, delta_vIJ[j][i]);
 			}
 			
 			
@@ -273,12 +261,12 @@ public class Rede {
 		// passa todas as colunas da tupla para a camada escondida e armazena os resultados
 		double[] z = new double[camadaEscondida.length];
 		for(int i = 0; i < camadaEscondida.length; i++)
-			z[i] = camadaEscondida[i].feedForward(tupla, viesEscondida);
+			z[i] = camadaEscondida[i].feedForward(tupla);
 		
 		// passa todos os valores da camada escondida para a camanda de saída e armazena os limiares
 		boolean[] y = new boolean[camadaSaida.length];
 		for(int i = 0; i < camadaSaida.length; i++)
-			y[i] = camadaSaida[i].limiar(z, viesSaida);
+			y[i] = camadaSaida[i].limiar(z);
 		
 		return decide(y);
 		
