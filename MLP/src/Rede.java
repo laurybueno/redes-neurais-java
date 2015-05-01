@@ -123,7 +123,7 @@
 				
 				// testa o desempenho da rede no momento
 				System.out.println("Épocas executadas: "+EpocasExecutadas);
-				System.out.println("Proporção de acertos: "+errosTreinamento());
+				System.out.println("Taxa de erro: "+errosTreinamento());
 				System.out.println("Taxa de aprendizado: "+aprendizado);
 				System.out.println();
 				//aprendizado = aprendizado*0.999;
