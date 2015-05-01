@@ -1,5 +1,3 @@
-
-import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class Main{
@@ -9,10 +7,17 @@ public class Main{
 		
 		//------------- TREINAMENTO ---------------//
 		
+		//parametros objeto Inicializa - Inicio
+		String random = "aleatoria";
+		String nulo = "zero";
+		String primEntrada = "primeiraEntrada";
+		String ArquivoTreinamento= "aquiDNS.csv";
+		//parametros objeto Inicializa - Fim
+		
 		//Objeto responsavel por inicializar os pesos (neuronios de saida) e por alinhar os dados de teste recebidos da
 		//entrada.
 		//Recebe arquivo de dados de treinamento (ex: "entrada.txt"), e numero de neuronios de saida por cada classe (ex:"1")
-		Inicializa inicializa = new Inicializa("../dados/treinoNada.csv", 10);//coloca arquivo de treino
+		Inicializa inicializa = new Inicializa("../dados/treinoNada.csv", 10, random);//coloca arquivo de treino
 		
 		//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - inicio//
 		
