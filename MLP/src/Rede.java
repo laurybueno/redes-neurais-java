@@ -1,7 +1,4 @@
-﻿import java.util.Arrays;
-
-
-public class Rede {
+﻿public class Rede {
 
 	/*
 	 * Esta classe controla o funcionamento da Rede Neural MLP.
@@ -199,7 +196,7 @@ public class Rede {
 			for(int j = 0; j < camadaEscondida.length; j++){
 				// faz o somatório para cada input de delta
 				for(int k = 0; k < camadaSaida.length; k++){
-					delta_inJ[j] += deltaK[k]*camadaSaida[k].getPeso(k);
+					delta_inJ[j] += deltaK[k]*camadaSaida[k].getPeso(j);
 				}
 				
 				// calcula o termo de erro de informação

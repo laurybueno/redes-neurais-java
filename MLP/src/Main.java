@@ -23,7 +23,7 @@ public class Main {
 	
 	public static void main(String[] args){
 		
-		double[][] entrada = Arquivo.csvToDouble("../dados/treinozScore.csv");
+		double[][] entrada = Arquivo.csvToDouble("../dados/dados_teste10.csv");
 		
 		Rede mlp = new Rede(64,64,10);
 		
@@ -44,9 +44,9 @@ public class Main {
 		}
 		
 		//System.out.println(mlp.toString());
-		Rede.Treinamento train = mlp.new Treinamento(dados, classe, 0.5);
+		Rede.Treinamento train = mlp.new Treinamento(dados, classe, 1);
 		
-		train.executar(100000);
+		train.executar(10000000);
 		
 		System.out.println(mlp.toString());
 		
