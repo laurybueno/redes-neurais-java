@@ -355,9 +355,6 @@ public class Rede {
 		
 		// A segunda linha da string está no formato "x;y", onde x é o viés da camada escondida e y, o da camada de saída
 		String[] vieses = linhas[1].split(";"); // separa x e y da segunda linha
-
-		// Invoca o construtor para criar a nova rede
-		Rede novaRede = new Rede(nCamadaEscondida, nCamadaSaida, Double.parseDouble(vieses[0]), Double.parseDouble(vieses[1]));
 		
 		// As demais linhas representam os neurônios e seus pesos
 		int indiceEscondida = 0;
@@ -366,18 +363,22 @@ public class Rede {
 			String[] neuronios = linhas[i].split(";"); // divide os dados entre os separadores (;)
 			if(neuronios[0] == "1") { // neurônio de camada escondida
 				for(int j = 1; j < neuronios.length; j++) {
-					novaRede.camadaEscondida[indiceEscondida].peso[j-1] = Double.parseDouble(neuronios[j]);
+					//novaRede.camadaEscondida[indiceEscondida].peso[j-1] = Double.parseDouble(neuronios[j]);
+					nCamadaEscondida[indiceEscondida][j-1] = Double.parseDouble(neuronios[j]);
 					indiceEscondida++; // atualiza o índice da camada escondida
 				}
 			} else if(neuronios[0] == "2") { // neurônio de camada de saída
 				for(int j = 1; j < neuronios.length; j++) {
-					novaRede.camadaSaida[indiceSaida].peso[j-1] = Double.parseDouble(neuronios[j]);
+					//novaRede.camadaSaida[indiceSaida].peso[j-1] = Double.parseDouble(neuronios[j]);
+					nCamadaSaida[indiceSaida][j-1] = Double.parseDouble(neuronios[j]);
 					indiceSaida++; // atualiza o índice da camada de saída
 				}
 			}
 		}
 		
-		return novaRede;
+		// Invoca o construtor para criar a nova rede
+		return new Rede(nCamadaEscondida, nCamadaSaida, Double.parseDouble(vieses[0]), Double.parseDouble(vieses[1]));
+				
 	}
 
 
