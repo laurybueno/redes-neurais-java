@@ -74,6 +74,7 @@ public class Rede {
 		
 		
 		// decide e armazena o viés de cada camada
+		/*
 		if(Math.random() > 0.5)
 			this.viesEscondida = Math.random();
 		else
@@ -83,7 +84,9 @@ public class Rede {
 			this.viesSaida = Math.random();
 		else
 			this.viesSaida = Math.random()*(-1);
-
+		*/
+		this.viesEscondida = 0;
+		this.viesSaida = 0;
 		// cria os neurônios escondidos
 		for(int j = 0; j < camadaEscondida; j++){
 			this.camadaEscondida[j] = new Neuronio(camadaEntrada);
@@ -232,8 +235,9 @@ public class Rede {
 			}
 			
 			// atualiza pesos e viés na camada de saída
+			
 			for(int k = 0; k < camadaSaida.length; k++){
-				viesSaida += w0K[k];
+				//viesSaida += w0K[k];
 				for(int j = 0; j < camadaEscondida.length; j++)
 					camadaSaida[k].setPeso(j, wJK[k][j]);
 			}
@@ -241,7 +245,7 @@ public class Rede {
 			
 			// atualiza pesos e viés na camada escondida
 			for(int j = 0; j < camadaEscondida.length; j++){
-				viesEscondida += v0J[j];
+				//viesEscondida += v0J[j];
 				for(int i = 0; i < tupla.length(); i++)
 					camadaEscondida[j].setPeso(i, vIJ[j][i]);
 			}
