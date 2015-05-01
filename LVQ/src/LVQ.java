@@ -14,14 +14,6 @@ public class LVQ {
 	//Além de receber por parametros dados destinados a serem definidos pelo Usuario.
 	public LVQ( Inicializa inicializa, int numeroFixo, double taxaDeAprendizado, double reducaoAprendizado, double valorMinimo){
 		
-		//Declaracoes dos dados principais - Inicio	
-		
-		//metodo que inicializa os vetores de pesos -via primeira entrada,
-		//e inicializa a matriz de dados de Entrada.
-		inicializa.PesosRandom();
-		
-		//Declaracoes dos dados principais - Fim
-		
 		this.dadosEntrada = inicializa.dadosEntrada.clone();
 		this.vetoresDePesos = inicializa.vetoresDePesos.clone();
 		

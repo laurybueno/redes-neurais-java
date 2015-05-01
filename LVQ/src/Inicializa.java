@@ -8,7 +8,7 @@ public class Inicializa{
 	
 	//contrustor de inicializacao principais dados do algoritmo
 	//recebe nome do arquivo de entrada de dados, e a quantidade de neuronios por classe(N)
-	public Inicializa(String nomeArquivo, int N)
+	public Inicializa(String nomeArquivo, int N, String TipoInicializacao)
 	{
 		//R = numero de atributos da base de dados que serao analisados (64)
 		
@@ -20,8 +20,31 @@ public class Inicializa{
 		
 		dadosEntrada = arquivo.arquivoToMatrizDouble(nomeArquivo); //vetor de dados de entrada
 		//double[] centroide = centroMassa(dados);
+		
+		//metodo que inicializa matriz de pesos
+		this.InicializaPesos(TipoInicializacao);
 	}
 	
+	//metodo dedicado a determinar qual tipo de inicializacao
+	public void InicializaPesos(String TipoInicializacao){
+		//caso pesos iniciam com zero
+		if(TipoInicializacao == "zero")
+		{
+			this.PesosNulos();
+		}
+		//caso pesos iniciam aleatoriamente
+		else if(TipoInicializacao == "aleatoria")
+		{
+			this.PesosRandom();
+		}
+		//caso pesos iniciam com uma copia das primeiras m entradas
+		else if(TipoInicializacao == "primeiraEntrada")
+		{
+			this.PesosPrimeiraEntrada();
+		}
+		
+	}
+
 	//----------INICIALIZACAO DOS PESOS--------------|-primeiros m vetores-INICIO//
 	
 	//supondo que as classes vao de [0~9]
