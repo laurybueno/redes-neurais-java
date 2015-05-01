@@ -25,7 +25,7 @@ public class Main {
 		
 		double[][] entrada = Arquivo.csvToDouble("../dados/treinozScore.csv");
 		
-		Rede mlp = new Rede(64,50,10);
+		Rede mlp = new Rede(64,64,10);
 		
 		
 		// separa os dados de suas classes

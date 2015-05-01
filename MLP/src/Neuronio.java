@@ -69,7 +69,7 @@ public class Neuronio {
 		int peso_ativo = 0;
 		
 		entrada.reset();
-		
+			
 		// prepara o somatório
 		while(entrada.haProx()){
 			soma += entrada.valor()*this.peso[peso_ativo];
