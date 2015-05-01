@@ -8,10 +8,10 @@ import java.util.List;
 public class Output {
 
 
-	public void escreveArquivo(String nomeArquivo, String[] s) {
+	public void escreveArquivo(String nomeArquivo, String[] s, boolean append) {
 		try {
 			FileWriter arq = new FileWriter(nomeArquivo);
-			PrintWriter writer = new PrintWriter(arq);
+			PrintWriter writer = new PrintWriter(arq, append);
 			for(int i = 0; i < s.length; i++) {
 				writer.println(s[i]);
 			}
