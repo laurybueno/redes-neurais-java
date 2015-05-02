@@ -56,6 +56,9 @@ public class LVQ {
 		boolean testa = parada.NumeroFixo(numeroIteracoes, numeroFixo);
 		
 		while(testa){//enquanto não houver uma condicao de parada. Continua a realizar a Epoca
+			//escreve no arquivo de log
+			Log log = new Log();
+			log.escreveLogRedes(numeroIteracoes, reducaoAprendizado, taxaDeAprendizado, 0, vetoresDePesos, "log/log0");
 			LVQ copia = new LVQ(this);
 			
 			Treinamento treina = new Treinamento(copia); // cria objeto que executara o treino, passando o LVQ como parametro

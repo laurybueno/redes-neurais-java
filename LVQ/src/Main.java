@@ -4,7 +4,8 @@ public class Main{
 	
 	public static void main(String[] args){
 		Scanner sc = new Scanner(System.in);
-		
+		Log log = new Log();
+		log.criaHead("log/log0");
 		//------------- TREINAMENTO ---------------//
 		
 		//parametros objeto Inicializa - Inicio
@@ -17,7 +18,7 @@ public class Main{
 		//Objeto responsavel por inicializar os pesos (neuronios de saida) e por alinhar os dados de teste recebidos da
 		//entrada.
 		//Recebe arquivo de dados de treinamento (ex: "entrada.txt"), e numero de neuronios de saida por cada classe (ex:"1")
-		Inicializa inicializa = new Inicializa("../dados/treinoNada.csv", 10, random);//coloca arquivo de treino
+		Inicializa inicializa = new Inicializa("treinozScore.csv", 10, random);//coloca arquivo de treino
 		
 		//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - inicio//
 		
@@ -41,7 +42,7 @@ public class Main{
 		//taxa de reducao do Aprendizado e valor minimo que a taxa de reducao pode chegar)
 		LVQ lvq1 = new LVQ(inicializa, numeroFixo, taxaDeAprendizado, reducaoAprendizado, valorMinimo);
 		lvq1.Aprendizado();
-		String nomeArquivoTeste = "../dados/testeNada.csv";
+		String nomeArquivoTeste = "testezScore.csv";
 		lvq1.Teste(nomeArquivoTeste);
 	}
 }

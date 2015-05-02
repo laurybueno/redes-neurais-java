@@ -135,9 +135,9 @@ public class Input {
 		
 		
 		Output grava = new Output();
-		grava.escreveArquivo("treino.txt",dados1 );
-		grava.escreveArquivo("teste.txt", dados2);
-		grava.escreveArquivo("validacao.txt", dados3);
+		grava.escreveArquivo("treino.txt",dados1,false );
+		grava.escreveArquivo("teste.txt", dados2,false);
+		grava.escreveArquivo("validacao.txt", dados3,false);
 
 	}
 	

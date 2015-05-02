@@ -10,11 +10,12 @@ public class Output {
 
 	public void escreveArquivo(String nomeArquivo, String[] s, boolean append) {
 		try {
-			FileWriter arq = new FileWriter(nomeArquivo);
-			PrintWriter writer = new PrintWriter(arq, append);
+			FileWriter arq = new FileWriter(nomeArquivo,append);
+			PrintWriter writer = new PrintWriter(arq);
 			for(int i = 0; i < s.length; i++) {
-				writer.println(s[i]);
+				writer.print(s[i]);
 			}
+			writer.println();
 			arq.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -32,7 +33,7 @@ public class Output {
 		System.out.println("entrou");
 		for(int i=0;i<classes.length;i++){
 			String [] registros = (String[]) classes[i].toArray(new String[classes[i].size()]);// transforma a lista em um arranjo de String
-			escreveArquivo("registros"+i+".csv", registros);
+			escreveArquivo("registros"+i+".csv", registros, true);
 		}
 	}
 }
