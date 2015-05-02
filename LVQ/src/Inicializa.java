@@ -3,22 +3,30 @@ import java.util.*;
 public class Inicializa{
 	
 	double [][] vetoresDePesos; //vetores de pesos(matriz que carregas os neuronios de saida)
-	double [][] dadosEntrada; //matriz de dados de entrada
-	
+	double [][] dadosEntrada; //matriz de dados de entrada (Treinamento)
+	double [][] dadosValidacao; //matriz de dados de Entrada (Validacao)
 	
 	//contrustor de inicializacao principais dados do algoritmo
 	//recebe nome do arquivo de entrada de dados, e a quantidade de neuronios por classe(N)
-	public Inicializa(String nomeArquivo, int N, String TipoInicializacao)
+	public Inicializa(String nomeTreinamento, String nomeValidacao, int N, String TipoInicializacao)
 	{
 		//R = numero de atributos da base de dados que serao analisados (64)
 		
-		N =N*10; //quantidade de Neuronios de saida por LVQ. N*10 pois existem 10 tipos de classes.
+		//quantidade de Neuronios de saida por LVQ. N*10 pois existem 10 tipos de classes.
+		N =N*10; 
 		
-		vetoresDePesos = new double [N][]; //vetor de Unidades de Saida do Algoritmo
+		//vetor de Unidades de Saida do Algoritmo
+		vetoresDePesos = new double [N][]; 
 		
-		Input arquivo = new Input(); //Objeto de Leitura dos dados
+		//Objeto de Leitura dos dados
+		Input arquivo = new Input(); 
 		
-		dadosEntrada = arquivo.arquivoToMatrizDouble(nomeArquivo); //vetor de dados de entrada
+		//vetor de dados de entrada(treinamento)
+		dadosEntrada = arquivo.arquivoToMatrizDouble(nomeTreinamento); 
+		
+		//vetor de dados de entrada(validacao)
+		dadosValidacao = arquivo.arquivoToMatrizDouble(nomeValidacao);
+		
 		//double[] centroide = centroMassa(dados);
 		
 		//metodo que inicializa matriz de pesos

@@ -17,11 +17,11 @@ public class Main{
 		//Objeto responsavel por inicializar os pesos (neuronios de saida) e por alinhar os dados de teste recebidos da
 		//entrada.
 		//Recebe arquivo de dados de treinamento (ex: "entrada.txt"), e numero de neuronios de saida por cada classe (ex:"1")
-		Inicializa inicializa = new Inicializa("../dados/treinoNada.csv", 10, random);//coloca arquivo de treino
+		Inicializa inicializa = new Inicializa("../dados/treinozScore.csv","../dados/validacaozScore.csv", 10, random);//coloca arquivo de treino
 		
 		//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - inicio//
 		
-		int numeroFixo = 100; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
+		int numeroFixo = 1000; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
 		//System.out.println("digite o numero de epocas:");
 		//int numeroFixo = sc.nextInt();
 		double taxaDeAprendizado = 0.0002; //taxa de Aprendizado (ex: 2.0)
@@ -41,7 +41,7 @@ public class Main{
 		//taxa de reducao do Aprendizado e valor minimo que a taxa de reducao pode chegar)
 		LVQ lvq1 = new LVQ(inicializa, numeroFixo, taxaDeAprendizado, reducaoAprendizado, valorMinimo);
 		lvq1.Aprendizado();
-		String nomeArquivoTeste = "../dados/testeNada.csv";
+		String nomeArquivoTeste = "../dados/treinozScore.csv";
 		lvq1.Teste(nomeArquivoTeste);
 	}
 }

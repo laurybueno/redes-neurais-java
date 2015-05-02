@@ -2,7 +2,8 @@
 public class LVQ {
 	
 	double [][] vetoresDePesos; //matriz que carregas os vetores de pesos (unidade de saida)
-	double [][] dadosEntrada; //matriz de dados de Entrada (podendo ser de: Treinamento, Teste ou Validacao)
+	double [][] dadosEntrada; //matriz de dados de Entrada (Treinamento)
+	double [][] dadosValidacao; //matriz de dados de Entrada (Validacao)
 	int numeroIteracoes; //contador de Iteracoes(Epocas)
 	int numeroFixo; //numero que ira restringir ate que Epoca a LVQ pode chegar
 	double taxaDeAprendizado; //taxa de Aprendizado
@@ -15,8 +16,9 @@ public class LVQ {
 	public LVQ( Inicializa inicializa, int numeroFixo, double taxaDeAprendizado, double reducaoAprendizado, double valorMinimo){
 		
 		this.dadosEntrada = inicializa.dadosEntrada.clone();
+		this.dadosValidacao = inicializa.dadosValidacao.clone();
 		this.vetoresDePesos = inicializa.vetoresDePesos.clone();
-		
+
 		//Dados passados pelo Usuario - Inicio
 		
 		this.numeroFixo = numeroFixo;
@@ -58,29 +60,99 @@ public class LVQ {
 		while(testa){//enquanto não houver uma condicao de parada. Continua a realizar a Epoca
 			LVQ copia = new LVQ(this);
 			
-			Treinamento treina = new Treinamento(copia); // cria objeto que executara o treino, passando o LVQ como parametro
+			// cria objeto que executara o treino, passando o LVQ como parametro
+			Treinamento treina = new Treinamento(copia); 
 			
-			treina.Epoca(); //realiza uma epoca
+			//realiza uma epoca
+			treina.Epoca(); 
 			
-			this.vetoresDePesos = treina.lvq.vetoresDePesos.clone(); //atualiza valores das unidadesDeSaida para o LVQ.
+			//atualiza valores das unidadesDeSaida para o LVQ.
+			this.vetoresDePesos = treina.lvq.vetoresDePesos.clone(); 
 			
-			this.AtualizaAprendizado();//reduz taxa de aprendizado
+			//reduz taxa de aprendizado
+			this.AtualizaAprendizado();
 			
+			//Mostra Progresso Na Tela
+			this.ProgressaoTreinamento();
+			
+			//incrementa numero de interacoes
 			this.numeroIteracoes++;
-			testa = parada.NumeroFixo(numeroIteracoes, numeroFixo);
 			
-			//metodo de teste chamado somente para testes iniciais
+			//atualiza condicao de parada
+			testa = parada.NumeroFixo(numeroIteracoes, numeroFixo);
 
 		}
 	}
 	
-	//Espaco para criacao do metodo que realiza a validacao
-	public void Validacao(){
+	//Metodo que responsavel por mostrar na tela a progressao do treinamento 
+	public void ProgressaoTreinamento(){
 		
+		//intervalo entre epocas, que deve haver quando executar a progessaoTreinamento
+		int epocas = 5;	
+		
+		//verifica se deve mostrar pogresso para epoca corrente.
+		if((this.numeroIteracoes % epocas)==0){ 
+			double [] validacaoSobreSi = this.ValidacaoSobreTreinamento();
+			double ErroSobreSi = CalculaTaxaErro(validacaoSobreSi, this.dadosEntrada);
+			double [] validacaoComum = this.Validacao();
+			double ErroSobreValidacao = CalculaTaxaErro(validacaoComum, this.dadosValidacao);
+			System.out.println("Epoca: " + this.numeroIteracoes);
+			System.out.println("Erro sobre Treinamento: "+ ErroSobreSi);
+			System.out.println("Erro sobre Validacao: "+ ErroSobreValidacao);
+			System.out.println();
+		}
+	}
+	
+	//Espaco para criacao do metodo que realiza a validacao
+	public double [] Validacao(){
+		//declara objeto com metodos de operacao entre vetores
+		OperacaoVetores operacao = new OperacaoVetores();
+		
+		//cria copia desse mesmo LVQ
+		LVQ copia = new LVQ(this);
+		
+		//declara array com as classes que a lvq sugeriu (resposta). 
+		double [] resultado = new double[this.dadosValidacao.length];
+		
+		//percorre as linhas da matriz com os dados de entrada
+		for(int i =0; i<this.dadosValidacao.length; i++){
+			
+			//verifica qual vetor de pesos com a menor distancia de um dos dados de Teste.
+			int indexVet = operacao.menorDistancia(this.dadosValidacao[i], copia.vetoresDePesos);
+			
+			//copia a classe desse vetor de pesos encontrado para o array com os resultados
+			resultado[i] = copia.vetoresDePesos[indexVet][copia.vetoresDePesos[0].length-1];
+		}
+		
+		return resultado;
+	}
+	
+	public double [] ValidacaoSobreTreinamento()
+	{
+		//declara objeto com metodos de operacao entre vetores
+		OperacaoVetores operacao = new OperacaoVetores();
+		
+		//cria copia desse mesmo LVQ
+		LVQ copia = new LVQ(this);
+		
+		//declara array com as classes que a lvq sugeriu (resposta). 
+		double [] resultado = new double[this.dadosEntrada.length];
+		
+		//percorre as linhas da matriz com os dados de entrada
+		for(int i =0; i<this.dadosEntrada.length; i++){
+			
+			//verifica qual vetor de pesos com a menor distancia de um dos dados de Teste.
+			int indexVet = operacao.menorDistancia(this.dadosEntrada[i], copia.vetoresDePesos);
+			
+			//copia a classe desse vetor de pesos encontrado para o array com os resultados
+			resultado[i] = copia.vetoresDePesos[indexVet][copia.vetoresDePesos[0].length-1];
+		}
+		
+		return resultado;
 	}
 	
 	//Espaco para criacao do metodo que realiza os testes.
-	public void Teste(String nomeArquivo){
+	public double [] Teste(String nomeArquivo){
 		//Objeto de Leitura dos dados
 		Input arquivo = new Input();
 		
@@ -98,33 +170,42 @@ public class LVQ {
 		
 		//percorre as linhas da matriz com os dados de entrada
 		for(int i =0; i<dadosTeste.length; i++){
+			
 			//verifica qual vetor de pesos com a menor distancia de um dos dados de Teste.
 			int indexVet = operacao.menorDistancia(dadosTeste[i], copia.vetoresDePesos);
-			//copia a classe desse vetor de pesos encontrado para o array com os resultados
 			
+			//copia a classe desse vetor de pesos encontrado para o array com os resultados
 			resultado[i] = copia.vetoresDePesos[indexVet][copia.vetoresDePesos[0].length-1];
 		}
 		
-		//---------parte dedicada somente a testes do algoritmo --------INICIO//
-		
-		for(int i=0; i<resultado.length;i++){
-			if(resultado[i]==dadosTeste[i][dadosTeste[0].length-1]){
-				System.out.print(true + " ");
-			}
-			else{
-				System.out.print(false + " ");
-			}
-			
-		}
-		
-		System.out.println();
-		//---------parte dedicada somente a testes do algoritmo -----------FIM//
-		
+		//retorna classes determinadas pela LVQ
+		return resultado;
 	}
 	
 	//Metodo responsavel por reduzir a taxa de aprendizado por um valor delimitado (reducaoAprendizado)
 	public void AtualizaAprendizado(){
 			this.taxaDeAprendizado= this.taxaDeAprendizado - this.reducaoAprendizado; //reduz taxa de aprendizado
+	}
+	
+	//Metodo que calcula Taxa De Erro
+	//recebe como parametro array com resultados de algum teste para verificacao
+	//recebe como parametro matriz com dados que se usou para extrair resultado
+	public double CalculaTaxaErro(double [] resultado, double [][] dadosVerificacao){
+		int erros =0;
+		
+		//laco que conta quantidade de erros
+		for(int i=0; i<resultado.length;i++){
+			
+			//caso classe do resultado eh diferente da classe de dados 
+			if(resultado[i] != dadosVerificacao[i][dadosVerificacao[0].length-1]){
+				//conta erro
+				erros++;
+			}
+		}
+		int quantidadeDados = dadosVerificacao.length;
+		
+		double taxaErro = (double) erros/ (double)quantidadeDados;
+		return taxaErro;
 	}
 	
 	//Classe suporte ao Aprendizado com alguns metodos essenciais na verificacao de condicao de parada do aprendizado
