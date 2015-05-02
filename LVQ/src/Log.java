@@ -44,6 +44,15 @@ public class Log {
 		grava.escreveArquivo(nomeArquivo+"Redes.csv", linha, true);
 	}
 	
+	public void escreveValidacao(String nomeArquivo, int epocaAtual, double taxaErro){
+		String[] linha = new String[2];
+		linha[0] = String.valueOf(epocaAtual)+",";
+		linha[1] = String.valueOf(taxaErro)+",";
+		
+		Output grava = new Output();
+		grava.escreveArquivo(nomeArquivo, linha, true);
+	}
+	
 	public void escreveMatrizConfusao(int[][] matrizConfusao, String nomeArquivo){
 		Output grava = new Output();
 		String[] linha = new String[1+matrizConfusao[0].length];
@@ -60,6 +69,5 @@ public class Log {
 			}
 			grava.escreveArquivo(nomeArquivo, linha, true);
 		}
-		
 	}
 }
