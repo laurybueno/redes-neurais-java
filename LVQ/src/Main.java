@@ -21,7 +21,7 @@ public class Main{
 		
 		//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - inicio//
 		
-		int numeroFixo = 1000; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
+		int numeroFixo = 10; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
 		//System.out.println("digite o numero de epocas:");
 		//int numeroFixo = sc.nextInt();
 		double taxaDeAprendizado = 0.0002; //taxa de Aprendizado (ex: 2.0)
@@ -42,6 +42,9 @@ public class Main{
 		LVQ lvq1 = new LVQ(inicializa, numeroFixo, taxaDeAprendizado, reducaoAprendizado, valorMinimo);
 		lvq1.Aprendizado();
 		String nomeArquivoTeste = "../dados/treinozScore.csv";
-		lvq1.Teste(nomeArquivoTeste);
+		double[] respostas = lvq1.Teste(nomeArquivoTeste);
+		MatrizConfusao confusao = new MatrizConfusao();
+		confusao.adicionaMatriz("../dados/treinozScore.csv", respostas);
+		confusao.gravaMAtrizConfusao("log/log0MatrizConfusao.csv");
 	}
 }

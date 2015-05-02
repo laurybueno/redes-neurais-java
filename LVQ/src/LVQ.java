@@ -58,6 +58,8 @@ public class LVQ {
 		boolean testa = parada.NumeroFixo(numeroIteracoes, numeroFixo);
 		
 		while(testa){//enquanto não houver uma condicao de parada. Continua a realizar a Epoca
+			Log log = new Log();
+			log.escreveLogRedes(numeroIteracoes, reducaoAprendizado, taxaDeAprendizado, 0, vetoresDePesos, "log/log0");
 			LVQ copia = new LVQ(this);
 			
 			// cria objeto que executara o treino, passando o LVQ como parametro
@@ -179,6 +181,11 @@ public class LVQ {
 		}
 		
 		//retorna classes determinadas pela LVQ
+		double erro=0;
+		erro = CalculaTaxaErro(resultado, dadosTeste);
+		System.out.println();
+		System.out.println("Erro sobre Teste: "+ erro);
+
 		return resultado;
 	}
 	

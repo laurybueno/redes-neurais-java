@@ -8,8 +8,17 @@ public class MatrizConfusao {
 	
 	//funcao para adicionar um em um determinado local da matriz de confusao.
 	//recebe a matriz de confusao e o local onde deve ser adicionado(linha e coluna) e retorna a nova matriz de confusao
-	public void adicionaMatriz(int classeReal, int classeObservada ){
-		matriz[classeReal][classeObservada]++;
+	public void adicionaMatriz(String nomeArquivoGabarito, double[] respostasDadas ){
+
+		Input le = new Input();
+		double[][] dados = le.arquivoToMatrizDouble(nomeArquivoGabarito);
+		
+		for(int i=0;i<respostasDadas.length;i++){
+			int classeReal = (int) dados[i][dados[i].length-1];
+			int classeObservada = (int)respostasDadas[i];
+			matriz[classeReal][classeObservada]++;
+		}
+		
 	}
 	
 	//funcao para calcular a quantidade de verdadeiros positivos
@@ -187,5 +196,27 @@ public class MatrizConfusao {
 			}
 		}
 		return cont;
+	}
+	
+	public void gravaMAtrizConfusao(String nomeArquivoLog){
+
+		Output grava = new Output();
+		String[] linha = new String[1+matriz[0].length];
+		for(int i=0;i<matriz.length;i++){
+			linha[i+1]=","+String.valueOf(i);
+		}
+		
+		grava.escreveArquivo(nomeArquivoLog, linha, false);
+		
+		for (int i=0;i<matriz.length;i++){
+			linha[0]=String.valueOf(i)+",";
+			for (int j=0;j<matriz[i].length;j++){
+				linha[j+1]=String.valueOf((int)matriz[i][j])+",";//pega o valor do elemento da matriz
+			}
+			grava.escreveArquivo(nomeArquivoLog, linha, true);
+		}
+		
+		double kappa = indiceKappa();
+		System.out.println("kappa= "+kappa);
 	}
 }
