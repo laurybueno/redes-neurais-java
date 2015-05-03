@@ -2,7 +2,7 @@
 public class Log {
 	public void criaHead(String nomeArquivoLog){
 		criaHeadRedesNeurais(nomeArquivoLog+"Redes.csv");
-		criaHeadValidacao(nomeArquivoLog+"Validacao.csv");
+		criaHeadAprendizado(nomeArquivoLog+"Aprendizado.csv");
 	}
 	
 	public void criaHeadRedesNeurais(String nomeArquivo){
@@ -16,14 +16,16 @@ public class Log {
 		grava.escreveArquivo(nomeArquivo, head, false);
 	}
 	
-	public void criaHeadValidacao(String nomeArquivo){
-		String[] head = new String[2];
+	public void criaHeadAprendizado(String nomeArquivo){
+		String[] head = new String[3];
 		head[0] = "Epoca atual:,";
-		head[1] = "Taxa de erro:,";
+		head[1] = "Taxa de erro sobre Treinamento:,";
+		head[2] = "Taxa de erro sobre Validacao:,";
 		
 		Output grava = new Output();
 		grava.escreveArquivo(nomeArquivo, head, false);
 	}
+	
 	
 	public void escreveLogRedes(int epocaAtual, double taxaReducaoAprendizado, double taxaAprendizadoAtual, double quantidadeReduzir, double[][] pesos, String nomeArquivo){
 		String[] linha = new String[4+pesos.length*pesos[0].length];
@@ -44,13 +46,14 @@ public class Log {
 		grava.escreveArquivo(nomeArquivo+"Redes.csv", linha, true);
 	}
 	
-	public void escreveValidacao(String nomeArquivo, int epocaAtual, double taxaErro){
-		String[] linha = new String[2];
+	public void escreveAprendizado(String nomeArquivo, int epocaAtual, double taxaErroTreinamento, double erroSobreValidacao){
+		String[] linha = new String[3];
 		linha[0] = String.valueOf(epocaAtual)+",";
-		linha[1] = String.valueOf(taxaErro)+",";
+		linha[1] = String.valueOf(taxaErroTreinamento)+",";
+		linha[2] = String.valueOf(erroSobreValidacao)+",S";
 		
 		Output grava = new Output();
-		grava.escreveArquivo(nomeArquivo, linha, true);
+		grava.escreveArquivo(nomeArquivo+"Aprendizado.csv", linha, true);
 	}
 	
 	public void escreveMatrizConfusao(int[][] matrizConfusao, String nomeArquivo){

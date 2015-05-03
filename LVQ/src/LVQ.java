@@ -58,8 +58,6 @@ public class LVQ {
 		boolean testa = parada.NumeroFixo(numeroIteracoes, numeroFixo);
 		
 		while(testa){//enquanto não houver uma condicao de parada. Continua a realizar a Epoca
-			Log log = new Log();
-			log.escreveLogRedes(numeroIteracoes, reducaoAprendizado, taxaDeAprendizado, 0, vetoresDePesos, "log/log0");
 			LVQ copia = new LVQ(this);
 			
 			// cria objeto que executara o treino, passando o LVQ como parametro
@@ -90,7 +88,7 @@ public class LVQ {
 	public void ProgressaoTreinamento(){
 		
 		//intervalo entre epocas, que deve haver quando executar a progessaoTreinamento
-		int epocas = 5;	
+		int epocas = 50;	
 		
 		//verifica se deve mostrar pogresso para epoca corrente.
 		if((this.numeroIteracoes % epocas)==0){ 
@@ -102,6 +100,9 @@ public class LVQ {
 			System.out.println("Erro sobre Treinamento: "+ ErroSobreSi);
 			System.out.println("Erro sobre Validacao: "+ ErroSobreValidacao);
 			System.out.println();
+			Log log = new Log();
+			log.escreveLogRedes(numeroIteracoes, reducaoAprendizado, taxaDeAprendizado, 0, vetoresDePesos, "log/log1");
+			log.escreveAprendizado("log/log1", this.numeroIteracoes, ErroSobreSi, ErroSobreValidacao);
 		}
 	}
 	

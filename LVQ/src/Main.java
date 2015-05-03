@@ -4,7 +4,8 @@ public class Main{
 	
 	public static void main(String[] args){
 		Scanner sc = new Scanner(System.in);
-		
+		Log log = new Log();
+		log.criaHead("log/log1");
 		//------------- TREINAMENTO ---------------//
 		
 		//parametros objeto Inicializa - Inicio
@@ -17,14 +18,14 @@ public class Main{
 		//Objeto responsavel por inicializar os pesos (neuronios de saida) e por alinhar os dados de teste recebidos da
 		//entrada.
 		//Recebe arquivo de dados de treinamento (ex: "entrada.txt"), e numero de neuronios de saida por cada classe (ex:"1")
-		Inicializa inicializa = new Inicializa("../dados/treinozScore.csv","../dados/validacaozScore.csv", 10, random);//coloca arquivo de treino
+		Inicializa inicializa = new Inicializa("../dados/treinozScore.csv","../dados/validacaozScore.csv", 2, nulo);//coloca arquivo de treino
 		
 		//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - inicio//
 		
-		int numeroFixo = 10; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
+		int numeroFixo = 10000; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
 		//System.out.println("digite o numero de epocas:");
 		//int numeroFixo = sc.nextInt();
-		double taxaDeAprendizado = 0.0002; //taxa de Aprendizado (ex: 2.0)
+		double taxaDeAprendizado = 0.002; //taxa de Aprendizado (ex: 2.0)
 		//System.out.println("digite a taxa de aprendizado:");
 		//double taxaDeAprendizado = sc.nextDouble();
 		double reducaoAprendizado = 0.0; //valor que reduz a taxa de Aprendizado (ex: 0.1)
@@ -41,10 +42,10 @@ public class Main{
 		//taxa de reducao do Aprendizado e valor minimo que a taxa de reducao pode chegar)
 		LVQ lvq1 = new LVQ(inicializa, numeroFixo, taxaDeAprendizado, reducaoAprendizado, valorMinimo);
 		lvq1.Aprendizado();
-		String nomeArquivoTeste = "../dados/treinozScore.csv";
+		String nomeArquivoTeste ="../dados/testezScore.csv";
 		double[] respostas = lvq1.Teste(nomeArquivoTeste);
 		MatrizConfusao confusao = new MatrizConfusao();
-		confusao.adicionaMatriz("../dados/treinozScore.csv", respostas);
-		confusao.gravaMAtrizConfusao("log/log0MatrizConfusao.csv");
+		confusao.adicionaMatriz(nomeArquivoTeste, respostas);
+		confusao.gravaMAtrizConfusao("log/log1MatrizConfusao.csv");
 	}
 }
