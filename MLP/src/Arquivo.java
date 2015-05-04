@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -61,66 +63,24 @@ public class Arquivo {
 		return dados;
 	}
 
-	/*
-	public double[][] csvToDouble(String arq) {
-		
-		BufferedReader br = null;
-		
-		String linhaAtual;
-		
-		double[][] dados = null;
-		
-		
+	public void gravaMatrizConfusao(int[][] matriz, String nomeArquivo) {
+		FileWriter arq;
 		try {
-			br = new BufferedReader(new FileReader(arq));
-			
-			// A primeira linha do arquivo estï¿½ no formato "w;x;y;z", onde w = tamanho da camada escondida, x = tamanho da camada de saï¿½da, y = tamanho peso camada escondida, z = tamanho peso camada de saï¿½da
-			linhaAtual = br.readLine();
-			String[] tamanhos = linhaAtual.split(";");
-			
-			int tamanhoCamadaEscondida = Integer.parseInt(tamanhos[0]);
-			int tamanhoCamadaSaida = Integer.parseInt(tamanhos[1]);
-			int tamanhoPesoEscondida = Integer.parseInt(tamanhos[2]);
-			int tamanhoPesoSaida = Integer.parseInt(tamanhos[3]);
-			
-			// Cria a variï¿½vel dados[x][y], onde x ï¿½ o tamanho da camada escondida + tamanho da camada saï¿½da + 1 da linha dos vieses
-			// y ï¿½ o o valor mï¿½ximo entre o nï¿½mero de pesos da camada escondida e o da camada de saï¿½da
-			dados = new double[tamanhoCamadaEscondida + tamanhoCamadaSaida + 1][Math.max(tamanhoPesoEscondida, tamanhoPesoSaida)];
-			
-			// A primeira linha da variï¿½vel dados contï¿½m os tamanhos e pesos
-			dados[0][0] = tamanhoCamadaEscondida;
-			dados[0][1] = tamanhoCamadaSaida;
-			dados[0][2] = tamanhoPesoEscondida;
-			dados[0][3] = tamanhoPesoSaida;
-			
-			// A segunda linha do arquivo ï¿½ referente aos vieses
-			linhaAtual = br.readLine();
-			String[] vieses = linhaAtual.split(";");
-			
-			// A segunda linha da variï¿½vel dados contï¿½m os vieses
-			dados[1][0] = Double.parseDouble(vieses[0]);
-			dados[1][1] = Double.parseDouble(vieses[1]);
-			
-			// As prï¿½ximas linhas do arquivo sï¿½o referentes aos neurï¿½nios e seus pesos
-			int indiceDados = 2;
-			while((linhaAtual = br.readLine()) != null) {
-				String[] pesos = linhaAtual.split(";");
-				for(int i = 0; i < pesos.length; i++) {
-					dados[indiceDados][i] = Double.parseDouble(pesos[i]);
-					indiceDados++;
+			arq = new FileWriter(nomeArquivo + ".csv");
+			PrintWriter gravarArq = new PrintWriter(arq);
+			// Preenche a primeira linha do arquivo com os números 0...9
+			gravarArq.println("null;0;1;2;3;4;5;6;7;8;9");
+			for(int i = 0; i < 10; i++) {
+				gravarArq.print(i); // a primeira coluna é fixa, com os números 0...9
+				for(int j = 0; j < 10; j++) {
+					gravarArq.print(";" + matriz[i][j]);
 				}
+				gravarArq.println(); // pula para a próxima linha
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			try {
-				if(br != null) br.close(); // fecha o arquivo
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
 		}
 		
-		return dados;
-	} */
+	}
 }
