@@ -153,6 +153,23 @@ class OperacaoVetores{
 		aux =Math.sqrt(aux);//tira a raiz quadrada da soma das distancias locais
 		return aux;
 	}
+	
+	//metodo para calcular distancia entre dois pontos
+	//recebe como parametro dois vetores e retorna a distancia
+	//se indice =2, é distancia euclidiana. Se indice =1, é distancia de manhattan
+	public double distancia(double[] vetor, double[] array, int indice){
+		double aux=0;
+		
+		for (int i=0;i < vetor.length-1; i++){// percorre o arranjo para pegar todos os atributos, menos o último (classe)
+			double local = vetor[i]-array[i];//pega distancia local
+			local = Math.pow(local, indice);//eleva ao indice
+			aux=aux+local;
+		}
+		//fazer para calcular a ene-ezima raiz. Esse math.pow nao funciona para mim, na internet fala que funciona :(s
+		aux = Math.pow(aux, 1/indice);
+		return aux;
+		
+	}
 }
 
 

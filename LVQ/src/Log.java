@@ -50,13 +50,10 @@ public class Log {
 		String[] linha = new String[3];
 		linha[0] = String.valueOf(epocaAtual)+",";
 		linha[1] = String.valueOf(taxaErroTreinamento)+",";
-		linha[2] = String.valueOf(erroSobreValidacao)+",S";
+		linha[2] = String.valueOf(erroSobreValidacao)+",";
 		
 		Output grava = new Output();
 		grava.escreveArquivo(nomeArquivo+"Aprendizado.csv", linha, true);
 	}
 	
-	public void escreveMatrizConfusao(int[][] matrizConfusao, String nomeArquivo){
-		
-	}
 }

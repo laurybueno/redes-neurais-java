@@ -202,6 +202,7 @@ public class MatrizConfusao {
 
 		Output grava = new Output();
 		String[] linha = new String[1+matriz[0].length];
+		linha[0]=" ";
 		for(int i=0;i<matriz.length;i++){
 			linha[i+1]=","+String.valueOf(i);
 		}
