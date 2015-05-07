@@ -51,7 +51,7 @@ public class LVQ {
 	}
 	
 	//Espaco para criacao do metodo que realiza o aprendizado da LVQ.
-	public void Aprendizado(){
+	public void Aprendizado(String nomeArquivoLog){
 		
 		this.numeroIteracoes = 1; //inicializar do contador de Epocas(iteracoes)
 		//TODO condicao do while temporaria, ainda falta verifica de parada
@@ -73,7 +73,7 @@ public class LVQ {
 			this.AtualizaAprendizado();
 			
 			//Mostra Progresso Na Tela
-			this.ProgressaoTreinamento();
+			this.ProgressaoTreinamento(nomeArquivoLog);
 			
 			//incrementa numero de interacoes
 			this.numeroIteracoes++;
@@ -85,7 +85,7 @@ public class LVQ {
 	}
 	
 	//Metodo que responsavel por mostrar na tela a progressao do treinamento 
-	public void ProgressaoTreinamento(){
+	public void ProgressaoTreinamento(String nomeArquivoLog){
 		
 		//intervalo entre epocas, que deve haver quando executar a progessaoTreinamento
 		int epocas = 50;	
@@ -101,8 +101,8 @@ public class LVQ {
 			System.out.println("Erro sobre Validacao: "+ ErroSobreValidacao);
 			System.out.println();
 			Log log = new Log();
-			log.escreveLogRedes(numeroIteracoes, reducaoAprendizado, taxaDeAprendizado, 0, vetoresDePesos, "log/log1");
-			log.escreveAprendizado("log/log1", this.numeroIteracoes, ErroSobreSi, ErroSobreValidacao);
+			log.escreveLogRedes(numeroIteracoes, reducaoAprendizado, taxaDeAprendizado, 0, vetoresDePesos, nomeArquivoLog);
+			log.escreveAprendizado(nomeArquivoLog, this.numeroIteracoes, ErroSobreSi, ErroSobreValidacao);
 		}
 	}
 	

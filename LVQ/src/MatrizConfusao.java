@@ -220,4 +220,18 @@ public class MatrizConfusao {
 		double kappa = indiceKappa();
 		System.out.println("kappa= "+kappa);
 	}
+	
+	
+	//funcao que recebe como parametoro a classe e retorna a f_score dela
+	//faz o F_score, nao entendi pq ela mandou fazer isso, ja que isso eh para matriz de confusao binaria.Nao entendi bem a formula tambem
+	//nao sei se fiz certo
+	public double F_score(int classe){
+		double tpr =taxaVerdadeiroPositivo(classe);
+		double ppv = precisao(classe);
+		
+		double fscore = 2*(tpr*ppv)/(tpr+ppv);
+		return fscore;
+	}
+	
+	//pode ser o Característica de Operação do Receptor
 }
