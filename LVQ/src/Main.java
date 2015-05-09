@@ -41,7 +41,8 @@ public class Main{
 		//e dados de entrada, alem de medidas que iram definir a cara da rede (numero fixo que as iteracoes podem chegar, taxa de Aprendizado, 
 		//taxa de reducao do Aprendizado e valor minimo que a taxa de reducao pode chegar)
 		LVQ lvq1 = new LVQ(inicializa, numeroFixo, taxaDeAprendizado, reducaoAprendizado, valorMinimo);
-		lvq1.Aprendizado("log/log1");
+		lvq1.Aprendizado("log/log1"); 
+		
 		String nomeArquivoTeste ="../dados/testezScore.csv";
 		double[] respostas = lvq1.Teste(nomeArquivoTeste);
 		MatrizConfusao confusao = new MatrizConfusao();
