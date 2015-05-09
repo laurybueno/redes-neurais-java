@@ -59,6 +59,18 @@ public class Input {
 		return dados;
 	}
 	
+	public double[][] arquivoComHeadToMatrizDouble(String nomeArquivo){
+		String s = leituralinha(nomeArquivo, 0);
+		int quantidadeLinhas = tamanho(nomeArquivo)-1;
+		double[][] dados = new double[quantidadeLinhas-1][s.length()];
+		for(int i=0;i<dados.length;i++){
+			s = leituralinha(nomeArquivo, i+1);
+			dados[i] = StringToDouble(s);
+		}
+		return dados;
+	}
+	
+	
 	//recebe como parametor o nome do arquivo e retorna a quantidade de linahs do memso
 	int tamanho (String nome){
 		int tamanho =0;

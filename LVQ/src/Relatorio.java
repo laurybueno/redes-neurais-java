@@ -15,9 +15,10 @@ public class Relatorio {
 		
 		
 
-		executaLVQ("zScore", random, 10);
-		executaLVQ("MinMax", nulo, 1);
-		
+		//executaLVQ("zScore", random, 10);
+		executaLVQ("MinMax", random, 10);
+		criaArquivoMediaAprendizado("log/logzScorealeatoria", 10, "log/logzMediaScorealeatoria.csv");
+		criaArquivoMediaAprendizado("log/logMinMaxaleatoria", 10, "log/logMediaMinMaxaleatoria.csv");
 		
 	}
 	
@@ -35,7 +36,7 @@ public class Relatorio {
 			
 			//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - inicio//
 			
-			int numeroFixo = 50000; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
+			int numeroFixo = 10000; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
 			//System.out.println("digite o numero de epocas:");
 			//int numeroFixo = sc.nextInt();
 			double taxaDeAprendizado = 0.002; //taxa de Aprendizado (ex: 2.0)
@@ -60,6 +61,44 @@ public class Relatorio {
 			MatrizConfusao confusao = new MatrizConfusao();
 			confusao.adicionaMatriz(nomeArquivoTeste, respostas);
 			confusao.gravaMAtrizConfusao("log/log"+normalizacao+parametroInicio +cont+"MatrizConfusao.csv");
+		}
+	}
+	
+	
+	//funcao para calcualr a meida de duas matrizes, usado apara tirar a meida de todos os randomicos
+	static double[][] mediaMatriz (double[][] matriz, double[][] media){
+		for(int i=0;i<media.length;i++){
+			for(int j=0;j<media[i].length;j++){
+				media[i][j]=media[i][j]+matriz[i][j];
+				media[i][j] = media[i][j]/2;
+			}
+		}
+		return media;
+	}
+	
+	static void criaArquivoMediaAprendizado(String arquivoLeitura, int quantidadeArquivos, String arquivoGravacao){
+		Input le = new Input();
+		double[][] dados = le.arquivoComHeadToMatrizDouble(arquivoLeitura+0+"Aprendizado.csv");
+		
+		for(int i=1;i<quantidadeArquivos;i++){//ja leu o primeiro
+			double[][] media = le.arquivoComHeadToMatrizDouble(arquivoLeitura+i+"Aprendizado.csv");
+			dados= mediaMatriz(media, dados);
+		}
+		
+		Output grava = new Output();
+		String[] s = new String[3];
+		s[0]="Epoca:,";
+		s[1]="Taxa erro do treinamento:,";
+		s[2]="Taxa erro da validacao:,";
+		
+		grava.escreveArquivo(arquivoGravacao, s, false);//cria head do arquivo
+		
+		//passa da matriz de double pra arranjo de string e grava
+		for(int i=0;i<dados.length;i++){
+			for(int j=0;j<dados[i].length;j++){
+				s[j]= String.valueOf(dados[i][j]+",");
+			}
+			grava.escreveArquivo(arquivoGravacao, s, true);
 		}
 	}
 }
