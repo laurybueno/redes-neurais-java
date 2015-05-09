@@ -33,6 +33,7 @@ public class Main{
 		//double reducaoAprendizado = sc.nextDouble();
  		double valorMinimo=0.1; //valor minimo que a taxa de aprendizado pode chegar (ex:0.1)
 		//System.out.println("digite o valor minimo que a taxa de aprendizado pode chegar");
+ 		int maxPiora = 2;
 		//double valorMinimo = sc.nextDouble();
 		//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - fim// (ex:)
 		
@@ -40,7 +41,7 @@ public class Main{
 		//Objeto que da inicio ao corpo da LVQ. Recebendo como parametro um objeto Inicializa, para inicializar seus pesos
 		//e dados de entrada, alem de medidas que iram definir a cara da rede (numero fixo que as iteracoes podem chegar, taxa de Aprendizado, 
 		//taxa de reducao do Aprendizado e valor minimo que a taxa de reducao pode chegar)
-		LVQ lvq1 = new LVQ(inicializa, numeroFixo, taxaDeAprendizado, reducaoAprendizado, valorMinimo);
+		LVQ lvq1 = new LVQ(inicializa, numeroFixo, taxaDeAprendizado, reducaoAprendizado, valorMinimo, maxPiora);
 		lvq1.Aprendizado("log/log1"); 
 		
 		String nomeArquivoTeste ="../dados/testezScore.csv";
