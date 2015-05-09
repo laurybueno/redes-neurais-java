@@ -28,12 +28,12 @@ public class Main{
 		double taxaDeAprendizado = 0.002; //taxa de Aprendizado (ex: 2.0)
 		//System.out.println("digite a taxa de aprendizado:");
 		//double taxaDeAprendizado = sc.nextDouble();
-		double reducaoAprendizado = 0.0; //valor que reduz a taxa de Aprendizado (ex: 0.1)
+		double reducaoAprendizado = 0.000002; //valor que reduz a taxa de Aprendizado (ex: 0.1)
 		//System.out.println("digite o valor que reduz a taxa de aprendizado");
 		//double reducaoAprendizado = sc.nextDouble();
- 		double valorMinimo=0.1; //valor minimo que a taxa de aprendizado pode chegar (ex:0.1)
+ 		double valorMinimo=0.0001; //valor minimo que a taxa de aprendizado pode chegar (ex:0.1)
 		//System.out.println("digite o valor minimo que a taxa de aprendizado pode chegar");
- 		int maxPiora = 2;
+ 		int maxPiora = 1;
 		//double valorMinimo = sc.nextDouble();
 		//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - fim// (ex:)
 		

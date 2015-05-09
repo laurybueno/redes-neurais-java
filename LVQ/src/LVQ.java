@@ -320,14 +320,14 @@ public class LVQ {
 		//caso deva ocorrer a parada return false, caso contrario true.
 		public boolean testaValorMinimo(double taxaDeAprendizado, double valorMinimo){
 			if(valorMinimo < taxaDeAprendizado)
-				return false;
-			return true;
+				return true;
+			return false;
 		}
 		
 		//metodo de condicao de parada, restingindo pelo contador de Pioras
 		//caso deva ocorrer a parada return false, caso contrario true.
 		public boolean testaQntPioras (int pioras, int maxPioras){
-			if(maxPioras >= pioras)
+			if(maxPioras > pioras)
 				return true;
 			return false;
 		}
