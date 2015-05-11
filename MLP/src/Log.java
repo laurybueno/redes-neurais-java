@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 public class Log {
 	
-	List<String> dados = new ArrayList<String>();
+	List<String> dados = new LinkedList<String>();
 	private String nomeArquivo;
 	private String diretorio;
 	private String extensao = ".csv";
 	
 	public void addDados(int epocaAtual, double taxaRedAprendizado, double taxaAprendizadoAtual, int epocasReduzidas) {
-		// As strings j· s„o formatadas no formato do .csv, utilizando ";" como separador
+		// As strings j√° s√£o formatadas no formato do .csv, utilizando ";" como separador
 		String linha = epocaAtual + ";" + "taxaRedAprendizado" + ";" + taxaAprendizadoAtual + ";" + epocasReduzidas;
 		dados.add(linha);
 	}
@@ -45,14 +45,14 @@ public class Log {
 			PrintWriter gravarArq = new PrintWriter(arq);
 			Iterator<String> it = dados.iterator();
 			while(it.hasNext()) {
-				gravarArq.println(it.next()); // percorre toda a lista de dados, j· devidamente formatada, e adiciona linha por linha
+				gravarArq.println(it.next()); // percorre toda a lista de dados, j√° devidamente formatada, e adiciona linha por linha
 			}
 			gravarArq.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// ApÛs os dados serem gravados, a lista È esvaziada
+		// Ap√≥s os dados serem gravados, a lista √© esvaziada
 		limparDados();
 	}
 }
