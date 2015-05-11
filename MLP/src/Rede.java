@@ -97,11 +97,11 @@
 		private static final int TESTE = 2;
 		
 		// construtor recebe todas as linhas do banco de dados 
-		public Treinamento(double[][] treinamento, int[] classeTr,
+		public Treinamento(double[][] treinamento, int[] classeTr,	
 					double[][] validacao, int[] classeV,
 					double[][] teste, int[] classeTe,
 					double aprendizado){
-						
+			
 			this.treinamento = new Tupla[classeTr.length];
 			this.validacao = new Tupla[classeV.length];
 			this.teste = new Tupla[classeTe.length];
@@ -279,7 +279,17 @@
 		 * Retorna a quantidade de erros que a rede consegue alcançar
 		 * no conjunto de dados apontado via parâmetro.
 		 */
-		private double errosTreinamento(){
+		private double erros(int META){
+			
+			// decide qual será o conjunto de dados usado para testar desempenho
+			Tupla[] entrada;
+			if(META == TREINAMENTO)
+				entrada = treinamento;
+			else if(META == VALIDACAO)
+				entrada = validacao;
+			else if(META == TESTE)
+				entrada = teste;
+			
 			
 			int tentativas = entrada.length;
 			int erros = 0;
