@@ -84,19 +84,39 @@
 	class Treinamento {
 
 		// Variável que armazena as linhas de dados entregues a esta classe para o treinamento.
-		Tupla[] entrada;
+		Tupla[] treinamento;
+		Tupla[] validacao;
+		Tupla[] teste;
+		
 		
 		// taxa de aprendizado deste treinamento
 		double aprendizado;
 		
 		// construtor recebe todas as linhas do banco de dados 
-		public Treinamento(double[][] dados, int[] classe, double aprendizado){
-			this.entrada = new Tupla[classe.length];
+		public Treinamento(double[][] treinamento, int[] classeTr,
+					double[][] validacao, int[] classeV,
+					double[][] teste, int[] classeTe,
+					double aprendizado){
+						
+			this.treinamento = new Tupla[classeTr.length];
+			this.validacao = new Tupla[classeV.length];
+			this.teste = new Tupla[classeTe.length];
+			
 			this.aprendizado = aprendizado;
 			
 			// cria todas as tuplas de treinamento
-			for(int i = 0; i < classe.length; i++){
-				this.entrada[i] = new Tupla(dados[i],classe[i]);
+			for(int i = 0; i < classeTr.length; i++){
+				this.treinamento[i] = new Tupla(treinamento[i],classeTr[i]);
+			}
+			
+			// cria todas as tuplas de validação
+			for(int i = 0; i < classeV.length; i++){
+				this.validacao[i] = new Tupla(validacao[i],classeV[i]);
+			}
+			
+			// cria todas as tuplas de teste
+			for(int i = 0; i < classeTe.length; i++){
+				this.teste[i] = new Tupla(teste[i],classeTe[i]);
 			}
 			
 		}
