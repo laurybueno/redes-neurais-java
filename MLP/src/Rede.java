@@ -63,7 +63,7 @@
 		this.camadaEscondida = new Neuronio[camadaEscondida];
 		this.camadaSaida = new Neuronio[camadaSaida];
 		
-				// cria os neurônios escondidos
+		// cria os neurônios escondidos
 		for(int j = 0; j < camadaEscondida; j++){
 			this.camadaEscondida[j] = new Neuronio(camadaEntrada);
 			this.camadaEscondida[j].reset();
@@ -349,6 +349,11 @@
 		
 		// se a rede não conseguiu tomar apenas uma decisão, é retornado um erro
 		return -1;	
+	}
+	
+	// Clona uma Rede e retorna a referência ao novo objeto
+	public Rede clonar(){
+		return Rede.fromString(this.toString());
 	}
 	
 	// especifica como salvar a rede em formato String
