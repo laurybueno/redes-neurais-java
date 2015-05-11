@@ -140,8 +140,8 @@
 			double atualResultado;
 			int fracassosSeguidos = 0;
 			
+			// while determina quando a melhoria não é mais suficiente para prosseguir o treinamento
 			while(haMelhoria) {
-				for(int i = 0; i < intervalo; i++){
 					
 					// Loop das épocas de treinamento
 					for(int epoca = 1; epoca <= intervalo; epoca++){
@@ -164,14 +164,16 @@
 						fracassosSeguidos++;
 					}
 					
+					// se ocorreram mais fracassos consecutivos do que o permitido, declare a interrupção de treinamento
+					if(fracassosSeguidos >= fracassos)
+						haMelhoria = false;
+					
 					// testa o desempenho da rede no momento
 					System.out.println("Épocas executadas: "+EpocasExecutadas);
 					System.out.println("Taxa de erro: "+erros(TREINAMENTO));
 					System.out.println("Taxa de aprendizado: "+aprendizado);
 					System.out.println();
 					//aprendizado = aprendizado*0.999;
-					
-				} // encerra o looop dos intervalos
 				
 			} // encerra o while de treinamento
 			
