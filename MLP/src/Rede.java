@@ -88,9 +88,13 @@
 		Tupla[] validacao;
 		Tupla[] teste;
 		
-		
 		// taxa de aprendizado deste treinamento
 		double aprendizado;
+		
+		// constantes usadas para definir quais dados serão usados em testes com o método "erros()"
+		private static final int TREINAMENTO = 0;
+		private static final int VALIDACAO = 1;
+		private static final int TESTE = 2;
 		
 		// construtor recebe todas as linhas do banco de dados 
 		public Treinamento(double[][] treinamento, int[] classeTr,
@@ -122,33 +126,54 @@
 		}
 
 		
-		// ponto de entrada para o algoritmo de treinamento
-		public Rede executar(int treinamentos){
+		// Ponto de entrada para o algoritmo de treinamento.
+		// "intervalo" armazena o intervalo de épocas em que a rede passará por validação
+		// "fracassos" determina quantos intervalos fracassados serão tolerados antes de o método desistir e retornar a melhor Rede encontrada até o momento
+		public Rede executar(int intervalo, int fracassos){
 			
-			// armazena o intervalo de épocas em que a rede passará por validação
-			int intervalo = 100;
 			int EpocasExecutadas = 0;
+			boolean haMelhora = true; // enquanto houver melhora de desempenho, o treinamento continua
 			
-			for(int i = 0; i < treinamentos/intervalo; i++){
-				
-				// Loop das épocas de treinamento
-				for(int epoca = 1; epoca <= intervalo; epoca++){
-
-					// Loop das tuplas em cada época
-					for(int linhaDeDados = 0; linhaDeDados < entrada.length; linhaDeDados++){
-						sessao(entrada[linhaDeDados]);
+			// se prepara para armazenar a a rede de melhor desempenho encontrada até o momento
+			double melhorResultado = Double.MAX_VALUE;
+			Rede melhorRede = null;
+			double atualResultado;
+			int fracassosSeguidos = 0;
+			
+			while(haMelhoria) {
+				for(int i = 0; i < intervalo; i++){
+					
+					// Loop das épocas de treinamento
+					for(int epoca = 1; epoca <= intervalo; epoca++){
+						// Loop das tuplas em cada época
+						for(int linhaDeDados = 0; linhaDeDados < treinamento.length; linhaDeDados++){
+							sessao(treinamento[linhaDeDados]);
+						}
+						EpocasExecutadas++;
+					} // encerra loop das épocas
+					
+					atualResultado = erros(VALIDACAO);
+					
+					// se a rede validada teve o melhor resultado até agora, ela é armazenada
+					if(atualResultado < melhorResultado) {
+						melhorResultado = atualResultado;
+						melhorRede = Rede.this.clonar();
+						fracassosSeguidos = 0;
 					}
-					EpocasExecutadas++;
-				} // encerra loop das épocas
+					else{
+						fracassosSeguidos++;
+					}
+					
+					// testa o desempenho da rede no momento
+					System.out.println("Épocas executadas: "+EpocasExecutadas);
+					System.out.println("Taxa de erro: "+erros(TREINAMENTO));
+					System.out.println("Taxa de aprendizado: "+aprendizado);
+					System.out.println();
+					//aprendizado = aprendizado*0.999;
+					
+				} // encerra o looop dos intervalos
 				
-				// testa o desempenho da rede no momento
-				System.out.println("Épocas executadas: "+EpocasExecutadas);
-				System.out.println("Taxa de erro: "+errosTreinamento());
-				System.out.println("Taxa de aprendizado: "+aprendizado);
-				System.out.println();
-				//aprendizado = aprendizado*0.999;
-				
-			} // encerra o looop dos intervalos
+			} // encerra o while de treinamento
 			
 			// retorna a rede neural modificada
 			return Rede.this;
@@ -251,8 +276,8 @@
 		} // fim de uma sessão de Treinamento
 		
 		/*
-		 * Retorna a quantidade de acertos que a rede consegue alcançar
-		 * no conjunto usado para treinamento.
+		 * Retorna a quantidade de erros que a rede consegue alcançar
+		 * no conjunto de dados apontado via parâmetro.
 		 */
 		private double errosTreinamento(){
 			
