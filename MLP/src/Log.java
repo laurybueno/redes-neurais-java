@@ -13,9 +13,15 @@ public class Log {
 	private String diretorio;
 	private String extensao = ".csv";
 	
-	public void addDados(int epocaAtual, double taxaRedAprendizado, double taxaAprendizadoAtual, int epocasReduzidas) {
+	// construtor prepara a pŕimeira linha do CSV a ser gravado
+	public Log(){
+		String linha = "epocaAtual;desempenho;taxaAprendizadoAtual";
+		dados.add(linha);
+	}
+	
+	public void addDados(int epocaAtual, double desempenho, double taxaAprendizadoAtual) {
 		// As strings já são formatadas no formato do .csv, utilizando ";" como separador
-		String linha = epocaAtual + ";" + "taxaRedAprendizado" + ";" + taxaAprendizadoAtual + ";" + epocasReduzidas;
+		String linha = epocaAtual + ";" + desempenho + ";" + taxaAprendizadoAtual;
 		dados.add(linha);
 	}
 	
