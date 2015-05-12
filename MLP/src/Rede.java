@@ -140,6 +140,13 @@
 			double atualResultado;
 			int fracassosSeguidos = 0;
 			
+			// prepara o controle de Log para treinamento e validação
+			Log logTreinamento = new Log();
+			Log logValidacao = new Log();
+			logTreinamento.setNomeArquivo("redesTreinamento_"+LocalDateTime.now());
+			logValidacao.setNomeArquivo("redesValidacao_"+LocalDateTime.now());
+			
+			
 			// while determina quando a melhoria não é mais suficiente para prosseguir o treinamento
 			while(haMelhoria) {
 					
@@ -153,6 +160,10 @@
 					} // encerra loop das épocas
 					
 					atualResultado = erros(VALIDACAO);
+					
+					// guarda o desempenho em Validação
+					logValidacao.addDados(EpocasExecutadas,atualResultado,aprendizado);
+					
 					
 					// se a rede validada teve o melhor resultado até agora, ela é armazenada
 					if(atualResultado < melhorResultado) {
@@ -168,11 +179,16 @@
 					if(fracassosSeguidos >= fracassos)
 						haMelhoria = false;
 					
-					// testa o desempenho da rede no momento
+					// Mostra para o usuario o desempenho em Validação
 					System.out.println("Épocas executadas: "+EpocasExecutadas);
-					System.out.println("Taxa de erro: "+erros(TREINAMENTO));
+					System.out.println("Taxa de erro: "+ atualResultado);
 					System.out.println("Taxa de aprendizado: "+aprendizado);
 					System.out.println();
+					
+					// guarda o desempenho em Treinamento
+					atualResultado = erros(TREINAMENTO);
+					logTreinamento.addDados(EpocasExecutadas,atualResultado,aprendizado);
+					
 					//aprendizado = aprendizado*0.999;
 				
 			} // encerra o while de treinamento
