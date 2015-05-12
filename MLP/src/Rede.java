@@ -193,6 +193,10 @@
 				
 			} // encerra o while de treinamento
 			
+			// descarrega os logs em disco
+			logValidacao.gravaArquivo();
+			logTreinamento.gravaArquivo();
+			
 			// retorna a rede neural modificada
 			return Rede.this;
 		}
