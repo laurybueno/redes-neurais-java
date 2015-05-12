@@ -77,6 +77,24 @@
 		
 	}
 
+
+	/* Gerador de hash MD5 para Rede.
+	*  Usa os hashs gerados por todos os neurônios para criar um identificador único da Rede atual.
+	*/
+	public String hashString(){
+		
+		MessageDigest md = new MessageDigest("MD5");
+		
+		// concatena todos os hashs MD5 dos Neurônios desta Rede e gera um novo MD5
+		for(int i = 0; i <  camadaEscondida.length; i++)
+			md.update(camadaEscondida[i].hashCode());
+		
+		for(int i = 0; i <  camadaSaida.length; i++)
+			md.update(camadaSaida[i].hashCode());
+		
+		return md.toString();
+	}
+	
 	
 	//************* Controle para treinamento *********************//
 	// A classe aninhada a seguir é dedicada ao controle de fluxo de treinamento da rede neural MLP	
