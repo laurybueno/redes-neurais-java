@@ -8,12 +8,13 @@ public class LVQ {
 	
 	int contadorPioras; // conta quantas vezes a LVQ teve uma piora no estado
 	int numeroMaxPioras; // limitaQuantidade de vezes que houve piora
+	double diferencaEntreErros; //mede a diferenca de erro do melhorEstado com estado rodando
 	int numeroIteracoes; //contador de Iteracoes(Epocas)
 	int numeroFixo; //numero que ira restringir ate que Epoca a LVQ pode chegar
 	double taxaDeAprendizado; //taxa de Aprendizado
 	double reducaoAprendizado; //valor que reduz a taxa de Aprendizado
 	double valorMinimo; //valorMinimo que a taxa de aprendizado pode chegar
-	CondicaoParada parada = new CondicaoParada();
+	CondicaoParada parada = new CondicaoParada(); //objeto de condicao de parada
 	
 	//Construtor de inicializacao do LVQ que recebe como parametro um objeto Inicializa que inicializa os pesos e os dados de Entrada do LVQ.
 	//Além de receber por parametros dados destinados a serem definidos pelo Usuario.
@@ -40,7 +41,8 @@ public class LVQ {
 		this.dadosValidacao = this.clonaMatriz(original.dadosValidacao);
 		this.contadorPioras = original.contadorPioras;
 		this.numeroMaxPioras = original.numeroMaxPioras;
-		this.numeroIteracoes = original.numeroFixo; 
+		this.diferencaEntreErros = original.diferencaEntreErros;
+		this.numeroIteracoes = original.numeroIteracoes; 
 		this.numeroFixo = original.numeroFixo;
 		this.taxaDeAprendizado = original.taxaDeAprendizado; 
 		this.reducaoAprendizado = original.reducaoAprendizado; 
@@ -91,7 +93,7 @@ public class LVQ {
 	public void ProgressaoTreinamento(String nomeArquivoLog){
 		
 		//intervalo entre epocas, que deve haver quando executar a progessaoTreinamento
-		int epocas = 50;	
+		int epocas = 20;	
 		
 		//verifica se deve mostrar pogresso para epoca corrente.
 		if((this.numeroIteracoes % epocas)==0){ 
@@ -218,6 +220,9 @@ public class LVQ {
 			//cria copia desse mesmo LVQ
 			melhorEstado = new LVQ(this);
 			
+			//inicia diferenca entre erros como zero
+			melhorEstado.diferencaEntreErros =0;
+			
 			//inicia contador de pioras
 			this.contadorPioras = 0;
 		}
@@ -234,12 +239,20 @@ public class LVQ {
 			//determina os erros da validacao para o estado atual
 			double ErroAtual = CalculaTaxaErro(validacaoAtual, this.dadosValidacao);
 			
+			//calcula diferenca entre erros
+			double diferencaErros = ErroMelhorEstado - ErroAtual;
+			
 			//Caso erro do MelhorEstado e pior que do Estado Atual
-			if(ErroMelhorEstado >= ErroAtual){
+			if(diferencaErros > 0){
+				//reinicia contador
+				this.contadorPioras = 0;
+				
 				//atualiza MelhorEstado
 				melhorEstado = new LVQ(this);
 			}
-			else{
+			//Caso erro do Melhor Estado e melhor que do Estado Atual e piora atual é pior que piora anterior
+			if(diferencaErros < 0 && melhorEstado.diferencaEntreErros > diferencaErros){
+				melhorEstado.diferencaEntreErros = diferencaErros;
 				this.contadorPioras++;
 			}
 		}
@@ -259,18 +272,51 @@ public class LVQ {
 		//testa pelo valor minimo permitido para a taxa de aprendizado
 		if(this.valorMinimo != -1 && testa == true){
 			testa = testa && parada.testaValorMinimo(this.taxaDeAprendizado, this.valorMinimo);
-			if(testa==false)
+			
+			//caso deve ocorrer parada
+			if(testa==false){
 				System.out.println("---Parada por valor minimo da taxa de aprendizado---");
+				
+				//verifica se existe um melhor estado
+				if(melhorEstado != null){
+					//Faz a validacao para o Melhor Estado
+					double [] validacaoMelhorEstado = melhorEstado.Validacao();
+					
+					//determina os erros da validacao para o melhorEstado
+					double ErroMelhorEstado = CalculaTaxaErro(validacaoMelhorEstado, melhorEstado.dadosValidacao);
+					
+					//Faz a validacao para o Estado atual
+					double [] validacaoAtual = this.Validacao();
+					
+					//determina os erros da validacao para o estado atual
+					double ErroAtual = CalculaTaxaErro(validacaoAtual, this.dadosValidacao);
+					
+					//calcula diferenca entre erros
+					double diferencaErros = ErroMelhorEstado - ErroAtual;
+					
+					//caso erro atual e pior que do melhor estado
+					if(diferencaErros < 0){
+						//recupera melhor estado
+						this.vetoresDePesos = melhorEstado.vetoresDePesos;
+						System.out.println();
+						System.out.println("Neuronios de Saída com melhor estado "+melhorEstado.numeroIteracoes+" recuperados !");
+					}
+				}
+			}
 		}
 		
 		//testa para o valor maximo permitido de pioras
 		if(this.numeroMaxPioras != -1 && testa == true){
 			testa = testa && parada.testaQntPioras(this.contadorPioras, this.numeroMaxPioras);
+			//caso deve ocorrer parada
 			if(testa==false){
 				System.out.println("---Parada pela quantidade de pioras permitida---");
 				
 				//restaura o Pesos do Melhor Estado
 				this.vetoresDePesos = melhorEstado.vetoresDePesos;
+				System.out.println();
+				System.out.println("Neuronios de Saída da Epoca "+melhorEstado.numeroIteracoes+" recuperados !");
+				
 			}
 		}
 		
