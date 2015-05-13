@@ -107,8 +107,8 @@ public class Neuronio {
 	//************* Função de limiar *********************//
 	
 	// enquanto estiver em execução, essa será a função de limiar invocada
-	public boolean limiar(double[] entrada){
-		return feedForward(entrada) >= 0;
+	public double limiar(double[] entrada){
+		return feedForward(entrada);
 	}
 	
 	/* Cria um cósigo hash para a instância atual de neurônio
