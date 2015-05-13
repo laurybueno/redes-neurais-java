@@ -256,8 +256,10 @@
 				else
 					tk = -1;
 				
-				//System.out.println("("+tk +" - "+ yK[k]+")"+"*"+camadaSaida[k].derivada());
+				// armaezena o tK em Neuronio para computar o erroQuadrado após o fim da sessão
+				camadaSaida[k].tk = tK;
 				
+				// executa os primeiros cálculos da backpropagation
 				deltaK[k] = (tk - yK[k])*camadaSaida[k].derivada();
 				
 				for(int j = 0; j < camadaEscondida.length; j++)
