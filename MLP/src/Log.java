@@ -25,6 +25,11 @@ public class Log {
 		dados.add(linha);
 	}
 	
+	// sobrecarga de addDados torna campo idRede não-obrigatório para o usuário desta classe
+	public void addDados(int epocaAtual, double desempenho, double taxaAprendizadoAtual){
+		addDados(epocaAtual, desempenho, taxaAprendizadoAtual,"");
+	}
+	
 	public void limparDados() {
 		dados.clear();
 	}
