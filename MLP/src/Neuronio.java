@@ -104,11 +104,29 @@ public class Neuronio {
 		return ((1+this.fAtivacao)*(1-this.fAtivacao))/2;
 	}
 	
-	//************* Funções de limiar *********************//
+	//************* Função de limiar *********************//
 	
 	// enquanto estiver em execução, essa será a função de limiar invocada
 	public boolean limiar(double[] entrada){
 		return feedForward(entrada) >= 0;
+	}
+	
+	/* Cria um cósigo hash para a instância atual de neurônio
+	*  Para tanto, ele multiplica todos os pesos uns pelos outros e retorna o inteiro resultanta.
+	*/
+	public int hashCode(){
+		double produto = vies;
+		
+		for(int i = 0; i < peso.length; i++){
+			produto *= peso[i];
+		}
+		
+		// Passa seis casas decimais do produto para a parte inteira do número.
+		// Dessa forma, melhoram as chances de o intValue retornar um valor único para essa combinação de pesos.
+		produto *= 1000000;
+		
+		
+		return produto.intValue();
 	}
 	
 
