@@ -104,12 +104,7 @@ public class Neuronio {
 		return ((1+this.fAtivacao)*(1-this.fAtivacao))/2;
 	}
 	
-	//************* Função de limiar *********************//
-	
-	// enquanto estiver em execução, essa será a função de limiar invocada
-	public double limiar(double[] entrada){
-		return feedForward(entrada);
-	}
+	//************* Funções de mapeamento e desempenho *********************//
 	
 	/* Cria um cósigo hash para a instância atual de neurônio
 	*  Para tanto, ele multiplica todos os pesos uns pelos outros e retorna o inteiro resultanta.
@@ -128,6 +123,16 @@ public class Neuronio {
 		
 		return produto.intValue();
 	}
+	
+	// Guarda informações que serão usadas para calcular o erro quadrado da instância de Neuronio
+	
+	double tK; // target pattern que o neurônio deveria ter alcançado no feedForward
+	
+	// erroQuadrado só será computado para neurônios de saída
+	public double erroQuadrado(){
+		return Math.abs(tK - fAtivacao);
+	}
+	
 	
 
 }
