@@ -157,7 +157,7 @@
 			Rede melhorRede = null;
 			double atualResultado;
 			int fracassosSeguidos = 0;
-			
+
 			// prepara o controle de Log para treinamento e validação
 			Log logTreinamento = new Log();
 			Log logValidacao = new Log();
@@ -215,8 +215,8 @@
 			logValidacao.gravaArquivo();
 			logTreinamento.gravaArquivo();
 			
-			// retorna a rede neural modificada
-			return Rede.this;
+			// retorna a melhor rede neural encontrada no processo de treinamento
+			return melhorRede;
 		}
 		
 		// uma sessao de treinamento inclui uma operação de feedforward e backpropagation
