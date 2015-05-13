@@ -356,39 +356,35 @@
 		for(int i = 0; i < camadaEscondida.length; i++)
 			z[i] = camadaEscondida[i].feedForward(tupla);
 		
-		// passa todos os valores da camada escondida para a camanda de saída e armazena os limiares
-		boolean[] y = new boolean[camadaSaida.length];
+		// passa todos os valores da camada escondida para a camanda de saída e armazena os resultados finais
+		double[] y = new double[camadaSaida.length];
 		for(int i = 0; i < camadaSaida.length; i++)
-			y[i] = camadaSaida[i].limiar(z);
+			y[i] = camadaSaida[i].feedForward(z);
 		
 		return decide(y);
 		
 	}
 	
 	/*
-	 * Método recebe um array de booleans gerado pela camada de saída e resolve a decisão da rede.
-	 * Se nenhum neurônio respondeu true, ou se mais de um o fez, o método retorna -1.
+	 * Método recebe um array de doubles gerado pela camada de saída e interpreta a decisão da rede.
+	 * O neurônio que responder com o maior valor será considerado o decisor.
 	 */
 	
-	private int decide(boolean[] saida){
+	private int decide(double[] saida){
 		
 		int ret = -1;
-		int decisoes = 0;
+		int maior = Double.MAX_VALUE*(-1); // menor double possível
 		
-		// System.out.println("Array de saída: "+Arrays.toString(saida));
-
+		// encontra o neurônio que retornou o maior valor
 		for(int i = 0; i < saida.length; i++){
-			if(saida[i] == true){
+			if(saida[i] > maior){
+				maior = saida[i];
 				ret = i;
-				decisoes++; // se a rede tomar mais de uma decisão, ou nenhuma decisão, ela deve ser rejeitada
 			}
 		}
 		
-		if(decisoes==1)
-			return ret;
+		return ret;
 		
-		// se a rede não conseguiu tomar apenas uma decisão, é retornado um erro
-		return -1;	
 	}
 	
 	// Clona uma Rede e retorna a referência ao novo objeto
