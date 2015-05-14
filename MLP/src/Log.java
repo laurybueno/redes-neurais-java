@@ -17,6 +17,7 @@ public class Log {
 	public Log(){
 		String linha = "epocaAtual;desempenho;taxaAprendizadoAtual;idRede";
 		dados.add(linha);
+		diretorio = "";
 	}
 	
 	public void addDados(int epocaAtual, double desempenho, double taxaAprendizadoAtual, String idRede) {
