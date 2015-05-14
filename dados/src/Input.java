@@ -107,7 +107,7 @@ public class Input {
 		int tamanho = tamanho(nomeArquivo);
 		for(int i=0;i<tamanho;i++){
 			String linha = leituralinha(nomeArquivo, i);
-			if(linha.charAt(linha.length()-3)==classe){//se a ultima letra for o numero da classe por causa do ".0"
+			if(linha.charAt(linha.length()-1)==classe){//se a ultima letra for o numero da classe por causa do ".0"
 				classeX.add(linha);
 			}
 		}
@@ -116,20 +116,20 @@ public class Input {
 	
 	public void funcaoIntegradora(String nomeArquivo, int pTreino, int pTeste, int pValidacao, String normalizacao){
 		
-		List[] classes = preencheClasse(nomeArquivo);
+		List[] classes = preencheClasse(nomeArquivo); //faz um arranjo de listas. Cada lista contem todos os dados de uma classe
 		System.out.println("passou pra lista");
-		for(int i=0;i<classes.length;i++){
+		for(int i=0;i<classes.length;i++){//embaralha as classes
 			classes[i] = shuffle(classes[i]);
 		}
 
-		int[] quantidade = calculaQuantidade(pTreino, pTeste, pValidacao, nomeArquivo);
+		int[] quantidade = calculaQuantidade(pTreino, pTeste, pValidacao, nomeArquivo);//guarda em um arranjo a quantidade de linhas para treino, teste e validacao
+		
+
+		String[] dados = dados(tamanho(nomeArquivo), classes);//pega um arranjo de string ordenado um dado de cada classe
 		
 		
-		String[] dados = dados(tamanho(nomeArquivo), classes);
 		
-		
-		
-		String[] dados1 = cortaString(0, quantidade[0], dados);
+		String[] dados1 = cortaString(0, quantidade[0], dados);// pega X primeiros itens do arranjo total
 		String[] dados2 = cortaString(quantidade[0],quantidade[1],dados);
 		String[] dados3 = cortaString(quantidade[1], quantidade[2], dados);
 		
