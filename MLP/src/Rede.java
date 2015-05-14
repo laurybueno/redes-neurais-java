@@ -419,7 +419,7 @@ public class Rede {
 	// especifica como salvar a rede em formato String
 	public String toString(){
 		StringBuffer rede = new StringBuffer();
-		rede.append(camadaEscondida.length + ";" + camadaSaida.length + ";" + camadaEscondida[0].peso.length + ";" + camadaSaida[0].peso.length + "\n");
+		rede.append(camadaEscondida.length + ";" + camadaSaida.length + ";" + camadaEscondida[0].peso.length + ";" + camadaSaida[0].peso.length + ";\n");
 		//rede.append(viesEscondida + ";" + viesSaida + "\n");
 		// Camada escondida
 		for(int i = 0; i < camadaEscondida.length; i++) {
@@ -452,8 +452,8 @@ public class Rede {
 		String[] tamanhos = linhas[0].split(";"); // separa x e y da primeira linha
 		
 		// Cria os arranjos com as informações do tamanho das camadas e de seus pesos
-		double[][] nCamadaEscondida = new double[Integer.parseInt(tamanhos[0])][Integer.parseInt(linhas[2])];
-		double[][] nCamadaSaida = new double[Integer.parseInt(tamanhos[1])][Integer.parseInt(linhas[3])];		
+		double[][] nCamadaEscondida = new double[Integer.parseInt(tamanhos[0])][Integer.parseInt(tamanhos[2])];
+		double[][] nCamadaSaida = new double[Integer.parseInt(tamanhos[1])][Integer.parseInt(tamanhos[3])];		
 		
 		// As demais linhas representam os neurônios e seus pesos
 		int indiceEscondida = 0;
