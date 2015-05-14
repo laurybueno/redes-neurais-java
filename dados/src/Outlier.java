@@ -82,10 +82,15 @@ public class Outlier {
 			//System.out.println();
 		}
 		
-		//pega o length/2 de cada coluna
-		for(int i=0;i<mediana.length;i++){
-			mediana[i] = dados[dados.length/2][i];
+		int meio;
+		
+		for(int i = 0; i < inversa.length; i++) {
+			meio = inversa[i].length/2;
+			if(meio % 2 == 0) // não há valor central, portanto deve-se somar os dois valores centrais
+				mediana[i] = inversa[i][meio] + inversa[i][meio-1];
+			else mediana[i] = inversa[i][meio];
 		}
+		
 		return mediana;
 	}
 	
