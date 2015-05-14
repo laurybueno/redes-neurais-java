@@ -18,7 +18,5 @@ dados/.~lock.normalizadoMinMax.csv#
 LVQ/src/Main.java
 LVQ/src/Main.java
 LVQ/src/Main.java
-*.csv
 *.class
 *.class
-dados/testes_aleatorios/.~lock.teste.csv#
