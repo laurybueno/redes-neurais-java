@@ -15,7 +15,7 @@ public class Outlier {
 	public boolean[] outlier (double[][] dados){
 		boolean[] outlier = new boolean[dados.length];
 		double[] variancia = new double[dados[0].length];
-		mediana(dados);
+		double[] mediana = mediana(dados);
 		for(int i=0;i<variancia.length;i++){
 			double mediaColuna = mediaColuna(dados, i);
 			variancia[i]=varianciaColuna(dados, i, mediaColuna);
@@ -23,12 +23,13 @@ public class Outlier {
 		
 		for(int i=0;i<dados.length;i++){
 			for (int j=0;j<dados[i].length;j++){
-				double variouMuito = variancia[j]*2.5;
+				double variouMuito = mediana[j] + (variancia[j]*2.5);
 				if(variouMuito>dados[i][j] && (variouMuito>dados[i][j]*-1)){//esse ponto nao eh outlier
 					break;
 				}
 				if(j==dados[i].length-1){
 					outlier[i]=true;
+					System.out.println(outlier[i]);
 				}
 			}
 		}
@@ -67,9 +68,9 @@ public class Outlier {
 		}
 		for(int i=0;i<inversa.length;i++){
 			for (int j=0;j<inversa[i].length;j++){
-				System.out.print(inversa[i][j]+" ");
+				//System.out.print(inversa[i][j]+" ");
 			}
-			System.out.println();
+			//System.out.println();
 		}
 		//ordena as colunas
 		for(int i=0;i<dados[0].length;i++){
@@ -86,9 +87,10 @@ public class Outlier {
 		
 		for(int i = 0; i < inversa.length; i++) {
 			meio = inversa[i].length/2;
-			if(meio % 2 == 0) // não há valor central, portanto deve-se somar os dois valores centrais
-				mediana[i] = inversa[i][meio] + inversa[i][meio-1];
+			if(meio % 2 == 0) // não há valor central, portanto deve-se somar os dois valores centrais para obter a média
+				mediana[i] = (inversa[i][meio] + inversa[i][meio-1])/2;
 			else mediana[i] = inversa[i][meio];
+			//System.out.println(mediana[i]);
 		}
 		
 		return mediana;
