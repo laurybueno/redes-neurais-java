@@ -120,13 +120,14 @@ public class Neuronio {
 		// Dessa forma, melhoram as chances de o intValue retornar um valor único para essa combinação de pesos.
 		produto *= 1000000;
 		
+		Double ret = new Double(produto);
 		
-		return produto.intValue();
+		return ret.intValue();
 	}
 	
 	// Guarda informações que serão usadas para calcular o erro quadrado da instância de Neuronio
 	
-	double tK; // target pattern que o neurônio deveria ter alcançado no feedForward
+	double tk; // target pattern que o neurônio deveria ter alcançado no feedForward
 	
 	// erroQuadrado só será computado para neurônios de saída
 	public double erroQuadrado(){

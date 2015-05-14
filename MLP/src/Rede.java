@@ -1,4 +1,9 @@
-﻿public class Rede {
+﻿import java.security.MessageDigest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Rede {
 
 	/*
 	 * Esta classe controla o funcionamento da Rede Neural MLP.
@@ -81,9 +86,10 @@
 	/* Gerador de hash MD5 para Rede.
 	*  Usa os hashs gerados por todos os neurônios para criar um identificador único da Rede atual.
 	*/
+	/*
 	public String hashString(){
 		
-		MessageDigest md = new MessageDigest("MD5");
+		MessageDigest md = MessageDigest.getInstance("MD5");
 		
 		// concatena todos os hashs MD5 dos Neurônios desta Rede e gera um novo MD5
 		for(int i = 0; i <  camadaEscondida.length; i++)
@@ -94,6 +100,7 @@
 		
 		return md.toString();
 	}
+	*/
 	
 	
 	//************* Controle para treinamento *********************//
@@ -161,12 +168,16 @@
 			// prepara o controle de Log para treinamento e validação
 			Log logTreinamento = new Log();
 			Log logValidacao = new Log();
-			logTreinamento.setNomeArquivo("redesTreinamento_"+LocalDateTime.now());
-			logValidacao.setNomeArquivo("redesValidacao_"+LocalDateTime.now());
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+			Date date = new Date();
+			
+			logTreinamento.setNomeArquivo("redesTreinamento_"+dateFormat.format(date));
+			logValidacao.setNomeArquivo("redesValidacao_"+dateFormat.format(date));
 			
 			
 			// while determina quando a melhoria não é mais suficiente para prosseguir o treinamento
-			while(haMelhoria) {
+			while(haMelhora) {
 					
 					// Loop das épocas de treinamento
 					for(int epoca = 1; epoca <= intervalo; epoca++){
@@ -195,7 +206,7 @@
 					
 					// se ocorreram mais fracassos consecutivos do que o permitido, declare a interrupção de treinamento
 					if(fracassosSeguidos >= fracassos)
-						haMelhoria = false;
+						haMelhora = false;
 					
 					// Mostra para o usuario o desempenho em Validação
 					System.out.println("Épocas executadas: "+EpocasExecutadas);
@@ -257,7 +268,7 @@
 					tk = -1;
 				
 				// armaezena o tK em Neuronio para computar o erroQuadrado após o fim da sessão
-				camadaSaida[k].tk = tK;
+				camadaSaida[k].tk = tk;
 				
 				// executa os primeiros cálculos da backpropagation
 				deltaK[k] = (tk - yK[k])*camadaSaida[k].derivada();
@@ -324,7 +335,7 @@
 		private double erros(int META){
 			
 			// decide qual será o conjunto de dados usado para testar desempenho
-			Tupla[] entrada;
+			Tupla[] entrada = null;
 			if(META == TREINAMENTO)
 				entrada = treinamento;
 			else if(META == VALIDACAO)
@@ -375,7 +386,7 @@
 	private int decide(double[] saida){
 		
 		int ret = -1;
-		int maior = Double.MAX_VALUE*(-1); // menor double possível
+		double maior = Double.MAX_VALUE*(-1); // menor double possível
 		
 		// encontra o neurônio que retornou o maior valor
 		for(int i = 0; i < saida.length; i++){
