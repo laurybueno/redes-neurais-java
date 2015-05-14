@@ -3,6 +3,7 @@ import java.util.Scanner;
 //classe criada para gerar todos os arquivos necessarios ( logs ) para o relatorio
 public class Relatorio {
 	public static void main (String[] argq){
+		System.out.println("executando o relatorio");
 		long tempoInicio = System.currentTimeMillis(); 
 		//------------- TREINAMENTO ---------------//
 		
@@ -12,11 +13,12 @@ public class Relatorio {
 		String primEntrada = "primeiraEntrada";
 		//parametros objeto Inicializa - Fim
 		
-		int quantidadeTestes =10;
+		//int quantidadeTestes =10;
 // int neuronioSaida, double taxaDeAprendizado, double reducaoAprendizado, int quantidadeVezes
+		
 		String normalização = "MinMax";//muda pra qual normalizacao vc quer
-		executaLVQ(normalização, nulo,  1, 0.5, 0, 1, "01");
-		executaLVQ(normalização, nulo,  1, 0.005, 0.00001, 1, "02");
+		//executaLVQ(normalização, nulo,  1, 0.5, 0, 1, "01xffgxgf");
+		/*executaLVQ(normalização, nulo,  1, 0.005, 0.00001, 1, "02");
 		executaLVQ(normalização, nulo,  1, 0.00005, 0.000000001, 1, "03");
 		executaLVQ(normalização, nulo,  5, 0.5, 0, 1, "04");
 		executaLVQ(normalização, nulo,  5, 0.005, 0.00001, 1, "05");
@@ -42,11 +44,19 @@ public class Relatorio {
 		executaLVQ(normalização, random,  10, 0.5, 0, quantidadeTestes, "7");
 		executaLVQ(normalização, random,  10, 0.005, 0.00001, quantidadeTestes, "8");
 		executaLVQ(normalização, random,  10, 0.00005, 0.000000001, quantidadeTestes, "9");
-
-		System.out.println("Tempo Total de execucao: "+(System.currentTimeMillis()-tempoInicio));
+		*/
 		
-		//criaArquivoMediaAprendizado("log/logzScorealeatoria", quantidadeTestes , "log/logzMediaScorealeatoria.csv");
-		//criaArquivoMediaAprendizado("log/logMinMaxaleatoria", quantidadeTestes , "log/logMediaMinMaxaleatoria.csv");
+		executaLVQ("MinMax", random, 4, 0.00005, 0.000000001, 1, "olha esse aqui");
+		//executaLVQ("zScore", random, 4, 0.00005, 0.000000001, 10, "LucaszScore");
+		//System.out.println("Tempo Total de execucao: "+(System.currentTimeMillis()-tempoInicio));
+		
+		//3
+		//criaArquivoMediaAprendizado("log/lucas/MinMax_aleatoria_", quantidadeTestes , "log/lucas/logzMediaMinMaxaleatoria.csv", "MinMax");
+		System.out.println("feito o primeiro");
+		//criaArquivoMediaAprendizado("log/lucas/zScore_aleatoria_", quantidadeTestes , "log/lucas/logMediazScorealeatoria.csv", "zScore");
+		
+		executaLVQ("MinMax", nulo, 4, 0.00005, 0.000000001, 1, "LucasNulo");
+		executaLVQ("zScore", nulo, 4, 0.00005, 0.000000001, 1, "LucasNulo");
 		
 	}
 	
@@ -54,17 +64,18 @@ public class Relatorio {
 	static void executaLVQ(String normalizacao, String parametroInicio, int neuronioSaida, double taxaDeAprendizado, double reducaoAprendizado, int quantidadeVezes, String adicional){
 		for(int cont=0;cont<quantidadeVezes;cont++){//contador de vezes que testou
 			Log log = new Log();
-			log.criaHead("log/dns/"+normalizacao+"_"+parametroInicio+"_"+cont+"_"+adicional);
+			String pasta = "log/lucas/";
+			log.criaHead(pasta+normalizacao+"_"+parametroInicio+"_"+cont+"_"+adicional);
 			
 			
 			//Objeto responsavel por inicializar os pesos (neuronios de saida) e por alinhar os dados de teste recebidos da
 			//entrada.
 			//Recebe arquivo de dados de treinamento (ex: "entrada.txt"), e numero de neuronios de saida por cada classe (ex:"1")
-			Inicializa inicializa = new Inicializa("../dados/treinozScore.csv","../dados/validacaozScore.csv", neuronioSaida, parametroInicio);//coloca arquivo de treino
+			Inicializa inicializa = new Inicializa("../dados/treino"+normalizacao+".csv","../dados/validacao"+normalizacao+".csv", neuronioSaida, parametroInicio);//coloca arquivo de treino
 			
 			//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - inicio//
 			
-			int numeroFixo = 10000; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
+			int numeroFixo = 5000; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
 			//System.out.println("digite o numero de epocas:");
 			//int numeroFixo = sc.nextInt();
 			//System.out.println("digite a taxa de aprendizado:");
@@ -82,12 +93,12 @@ public class Relatorio {
 			//e dados de entrada, alem de medidas que iram definir a cara da rede (numero fixo que as iteracoes podem chegar, taxa de Aprendizado, 
 			//taxa de reducao do Aprendizado e valor minimo que a taxa de reducao pode chegar)
 			LVQ lvq1 = new LVQ(inicializa, numeroFixo, taxaDeAprendizado, reducaoAprendizado, valorMinimo, maxPioras);
-			lvq1.Aprendizado("log/dns/"+normalizacao+"_"+parametroInicio+"_" +cont+"_"+adicional);
+			lvq1.Aprendizado(pasta+normalizacao+"_"+parametroInicio+"_" +cont+"_"+adicional);
 			String nomeArquivoTeste ="../dados/teste"+normalizacao+".csv";
 			double[] respostas = lvq1.Teste(nomeArquivoTeste);
 			MatrizConfusao confusao = new MatrizConfusao();
 			confusao.adicionaMatriz(nomeArquivoTeste, respostas);
-			confusao.gravaMAtrizConfusao("log/dns/"+normalizacao+"_"+parametroInicio+"_" +cont+"_"+adicional+"_MatrizConfusao.csv");
+			confusao.gravaMAtrizConfusao(pasta+normalizacao+"_"+parametroInicio+"_" +cont+"_"+adicional+"_MatrizConfusao.csv");
 		}
 	}
 	
@@ -103,12 +114,12 @@ public class Relatorio {
 		return media;
 	}
 	
-	static void criaArquivoMediaAprendizado(String arquivoLeitura, int quantidadeArquivos, String arquivoGravacao){
+	static void criaArquivoMediaAprendizado(String arquivoLeitura, int quantidadeArquivos, String arquivoGravacao, String normalizacao){
 		Input le = new Input();
-		double[][] dados = le.arquivoComHeadToMatrizDouble(arquivoLeitura+0+"Aprendizado.csv");
+		double[][] dados = le.arquivoComHeadToMatrizDouble(arquivoLeitura+0+"_Lucas"+normalizacao+"Aprendizado.csv");
 		
 		for(int i=1;i<quantidadeArquivos;i++){//ja leu o primeiro
-			double[][] media = le.arquivoComHeadToMatrizDouble(arquivoLeitura+i+"Aprendizado.csv");
+			double[][] media = le.arquivoComHeadToMatrizDouble(arquivoLeitura+i+"_Lucas"+normalizacao+"Aprendizado.csv");
 			dados= mediaMatriz(media, dados);
 		}
 		

@@ -18,7 +18,7 @@ public class Main{
 		//Objeto responsavel por inicializar os pesos (neuronios de saida) e por alinhar os dados de teste recebidos da
 		//entrada.
 		//Recebe arquivo de dados de treinamento (ex: "entrada.txt"), e numero de neuronios de saida por cada classe (ex:"1")
-		Inicializa inicializa = new Inicializa("../dados/treinozScore.csv","../dados/validacaozScore.csv", 3, random);//coloca arquivo de treino
+		Inicializa inicializa = new Inicializa("../dados/treinozScore.csv","../dados/validacaozScore.csv", 3, primEntrada);//coloca arquivo de treino
 		
 		//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - inicio//
 		

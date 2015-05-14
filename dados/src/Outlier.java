@@ -1,19 +1,92 @@
+import java.util.Arrays;
 
 public class Outlier {
+	public boolean outliernoarquivo(String nomearquivo){
+		Input im = new Input();
+		double[][] normal = im.arquivoToMatrizDouble(nomearquivo);
+		boolean outliers[] = outlier(normal);
+		for(int i=0;i<outliers.length;i++){
+		//	System.out.println(i+" "+outliers[i]);
+		}
+		return false;
+	}
 	
-	//funcao para encontrar outliers, se um
+	//funcao para encontrar outliers, se um ponto eh maior que 150% do desvio padrao, entao ele eh outlier
 	public boolean[] outlier (double[][] dados){
 		boolean[] outlier = new boolean[dados.length];
-		for(int i =0;i<dados.length;i++){ //percorre matriz de dados
+		double[] variancia = new double[dados[0].length];
+		mediana(dados);
+		for(int i=0;i<variancia.length;i++){
+			double mediaColuna = mediaColuna(dados, i);
+			variancia[i]=varianciaColuna(dados, i, mediaColuna);
+		}
+		
+		for(int i=0;i<dados.length;i++){
 			for (int j=0;j<dados[i].length;j++){
-				if(dados[i][j]<2.0 && dados[i][j]>-2){//se tiver um elemnto menor que 2 e maior do que -2, o registro nao eh outlier
+				double variouMuito = variancia[j]*2.5;
+				if(variouMuito>dados[i][j] && (variouMuito>dados[i][j]*-1)){//esse ponto nao eh outlier
 					break;
 				}
 				if(j==dados[i].length-1){
-					outlier[i]= true;
+					outlier[i]=true;
 				}
 			}
 		}
 		return outlier;
 	}
+	
+	public double varianciaColuna(double[][] dados, int coluna, double mediaColuna){
+		int quantidadeElementos = dados.length;
+		double variancia =0;
+		for(int i=0;i<dados.length;i++){
+			variancia = variancia + Math.pow((dados[i][coluna]- mediaColuna), 2);
+		}
+		variancia = variancia/quantidadeElementos;
+		return variancia;
+	}
+	
+	public double mediaColuna(double[][] dados, int coluna){
+		int quantidadeLinhas = dados.length;
+		double somaTotalColuna =0;
+		for (int i=0;i<dados.length;i++){
+			somaTotalColuna = somaTotalColuna + dados[i][coluna];
+		}
+		double media = somaTotalColuna/quantidadeLinhas;
+		return media;
+	}
+	
+	//faz uma funcao pra calcular a mediana de cada coluna por favor
+	public double[] mediana (double[][] dados){
+		
+		double[] mediana = new double[dados[0].length];
+		double[][] inversa = new double[dados[0].length][dados.length];
+		for (int i=0;i<dados.length;i++){
+			for (int j=0;j<dados[i].length;j++){
+				inversa[j][i]=dados[i][j];
+			}
+		}
+		for(int i=0;i<inversa.length;i++){
+			for (int j=0;j<inversa[i].length;j++){
+				System.out.print(inversa[i][j]+" ");
+			}
+			System.out.println();
+		}
+		//ordena as colunas
+		for(int i=0;i<dados[0].length;i++){
+			Arrays.sort(inversa[i]);//ta ordena as linhas
+		}
+		for(int i=0;i<inversa.length;i++){
+			for(int j=0;j<inversa[i].length;j++){
+		//		System.out.print(inversa[i][j]+" ");
+			}
+			//System.out.println();
+		}
+		
+		//pega o length/2 de cada coluna
+		for(int i=0;i<mediana.length;i++){
+			mediana[i] = dados[dados.length/2][i];
+		}
+		return mediana;
+	}
+	
 }

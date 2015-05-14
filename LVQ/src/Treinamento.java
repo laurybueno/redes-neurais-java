@@ -26,6 +26,8 @@ public class Treinamento {
 			
 			//atualiza o peso dessa unidadeDeSaida descoberta.
 			AtualizacaoPesos(WJ , i, indiceWJ);
+			
+			
 		}
 	}
 	

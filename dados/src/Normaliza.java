@@ -23,11 +23,9 @@ public class Normaliza {
 				dados[i][j]=(dados[i][j]-minimo[i])/(maximo[i]-minimo[i]);
 			}
 		}
-		
-		
-		
-		
-		double[][] minMax = geraNovaMatriz(dados);
+
+		double[][] normal = geraNovaMatriz(dados);
+		double[][] minMax = geraNovaMatriz(normal);
 
 		String[] normalizado = new String[minMax.length];
 
@@ -152,6 +150,8 @@ public class Normaliza {
 		}
 		//se desvio padrao for zero, bota null
 		//(atributo-media)/desvio padrao
+		boolean[] aux = new boolean[dados[0].length];// auxiliar para salvar quais linahs devem ser deletadas
+		int cont=0;
 		for(int i=0;i<dados.length;i++){
 			for (int j=0;j<dados[i].length-1;j++){//nao nromaliza a ultima coluna (classe)
 				if(desvioPadrao[j]!=0){
@@ -159,14 +159,22 @@ public class Normaliza {
 				}
 				else{
 					dados[i][j]=0;
+					cont++;
 				}
 			}
 		}
+		
+		cont = cont/dados.length;//divide pela quantidade de linahs
+		
+		double[][] teste = geraNovaMatriz(dados);
+		double[][] normal = geraNovaMatriz(teste);
+
+		
 		//passa de double[][] para string[] para poder gravar
-		String[] normalizado = new String[dados.length];
+		String[] normalizado = new String[normal.length];
 
 		for(int i=0;i<dados.length;i++){
-			normalizado[i] = Arrays.toString(dados[i]);
+			normalizado[i] = Arrays.toString(normal[i]);
 			normalizado[i] = normalizado[i].substring(1);//tira colchetes do inicio
 			normalizado[i] = normalizado[i].substring (0, normalizado[i].length() - 1); //tira colchetes do fim
 		}
