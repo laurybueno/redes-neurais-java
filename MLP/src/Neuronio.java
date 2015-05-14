@@ -131,7 +131,7 @@ public class Neuronio {
 	
 	// erroQuadrado só será computado para neurônios de saída
 	public double erroQuadrado(){
-		return Math.abs(tK - fAtivacao);
+		return Math.abs(tk - fAtivacao);
 	}
 	
 	

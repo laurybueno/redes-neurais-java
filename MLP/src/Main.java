@@ -23,34 +23,55 @@ public class Main {
 	
 	public static void main(String[] args){
 		
-		double[][] entrada = Arquivo.csvToDouble("../dados/dados_teste10.csv");
+		double[][] ent = Arquivo.csvToDouble("../dados/testes_aleatorios/treino.csv");
+		double[][] val = Arquivo.csvToDouble("../dados/testes_aleatorios/validacao.csv");
+		double[][] tes = Arquivo.csvToDouble("../dados/testes_aleatorios/teste.csv");
 		
-		Rede mlp = new Rede(64,64,10);
+		Tupla[] entrada = converteTupla(ent);
+		Tupla[] validacao = converteTupla(val);
+		Tupla[] teste = converteTupla(tes);
 		
+		Rede mlp = new Rede(64,30,10);
 		
-		// separa os dados de suas classes
-		int[] classe = new int[entrada.length];
-		double[][] dados = new double[entrada.length][(entrada[0].length-1)];
-		
-		for(int i = 0; i < entrada.length; i++){
-			
-			for(int j = 0; j < entrada[0].length; j++){
-				if(j < 64)
-					dados[i][j] = entrada[i][j];
-				else
-					classe[i] = (int)entrada[i][j];
-			}
-			
-		}
 		
 		//System.out.println(mlp.toString());
-		Rede.Treinamento train = mlp.new Treinamento(dados, classe, 1);
+		Rede.Treinamento train = mlp.new Treinamento(entrada, validacao, teste, 0.001);
 		
-		train.executar(10000000);
+		train.executar(100,2000);
 		
 		System.out.println(mlp.toString());
 		
 	}
+	
+	
+	// Separa os dados de suas classes e retorna um array de Tuplas.
+	// A última coluna de dados será sempre considerada a classe.
+	public static Tupla[] converteTupla(double[][] entrada){
+		
+		double[][] dados = new double[entrada.length][(entrada[0].length-1)];
+		int[] classe = new int[entrada.length];
+		
+		for(int i = 0; i < entrada.length; i++){
+
+			for(int j = 0; j < entrada[0].length; j++){
+				if(j < (entrada[0].length-1))
+					dados[i][j] = entrada[i][j];
+				else
+					classe[i] = (int)entrada[i][j];
+			}
+		}
+		
+		// cria as tuplas correspondentes
+		Tupla[] tupla = new Tupla[entrada.length];
+		
+		for (int i = 0; i < classe.length; i++) {
+			tupla[i] = new Tupla(dados[i],classe[i]);
+		}
+		
+		return tupla;
+		
+	}
+	
 	
 	
 	// printa um array bidimensional quadrado na tela e informa quantas linhas foram lidas
