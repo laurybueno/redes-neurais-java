@@ -149,6 +149,14 @@ public class Rede {
 			}
 			
 		}
+		
+		// Quando as tuplas forem contruídas externamente, o contrutor a seguir deverá ser usado.
+		public Treinamento(Tupla[] treinamento, Tupla[] validacao, Tupla[] teste, double aprendizado){
+			this.treinamento = treinamento;
+			this.validacao = validacao;
+			this.teste = teste;
+			this.aprendizado = aprendizado;
+		}
 
 		
 		// Ponto de entrada para o algoritmo de treinamento.
@@ -169,7 +177,7 @@ public class Rede {
 			Log logTreinamento = new Log();
 			Log logValidacao = new Log();
 			
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 			Date date = new Date();
 			
 			logTreinamento.setNomeArquivo("redesTreinamento_"+dateFormat.format(date));
@@ -197,7 +205,7 @@ public class Rede {
 					// se a rede validada teve o melhor resultado até agora, ela é armazenada
 					if(atualResultado < melhorResultado) {
 						melhorResultado = atualResultado;
-						melhorRede = Rede.this.clonar();
+						// melhorRede = Rede.this.clonar();
 						fracassosSeguidos = 0;
 					}
 					else{
@@ -210,13 +218,16 @@ public class Rede {
 					
 					// Mostra para o usuario o desempenho em Validação
 					System.out.println("Épocas executadas: "+EpocasExecutadas);
-					System.out.println("Taxa de erro: "+ atualResultado);
-					System.out.println("Taxa de aprendizado: "+aprendizado);
-					System.out.println();
+					System.out.println("Erros em validação: "+ atualResultado);
+					
 					
 					// guarda o desempenho em Treinamento
 					atualResultado = erros(TREINAMENTO);
 					logTreinamento.addDados(EpocasExecutadas,atualResultado,aprendizado);
+					
+					System.out.println("Erros em treinamento: "+ atualResultado);
+					System.out.println("Taxa de aprendizado: "+aprendizado);
+					System.out.println();
 					
 					//aprendizado = aprendizado*0.999;
 				
