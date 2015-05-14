@@ -23,15 +23,15 @@ public class Main {
 	
 	public static void main(String[] args){
 		
-		double[][] ent = Arquivo.csvToDouble("../dados/testes_aleatorios/treino.csv");
-		double[][] val = Arquivo.csvToDouble("../dados/testes_aleatorios/validacao.csv");
-		double[][] tes = Arquivo.csvToDouble("../dados/testes_aleatorios/teste.csv");
+		double[][] ent = Arquivo.csvToDouble("../dados/testes_brutos/treino.csv");
+		double[][] val = Arquivo.csvToDouble("../dados/testes_brutos/validacao.csv");
+		double[][] tes = Arquivo.csvToDouble("../dados/testes_brutos/teste.csv");
 		
 		Tupla[] entrada = converteTupla(ent);
 		Tupla[] validacao = converteTupla(val);
 		Tupla[] teste = converteTupla(tes);
 		
-		Rede mlp = new Rede(64,30,10);
+		Rede mlp = new Rede(64,10,10);
 		
 		
 		//System.out.println(mlp.toString());
