@@ -41,6 +41,15 @@ public class Neuronio {
 	
 	
 	}
+	
+	// Zera todos pesos deste neurônio
+	public void zera(){
+		
+		for (int i = 0; i < this.peso.length; i++) {
+			this.peso[i] = 0;
+		}
+		this.vies = 0;
+	}
 
 	// Altera o peso da sinapse entre este neurônio e o neurônio N da camada anterior
 	public void setPeso(int N, double variacao){
