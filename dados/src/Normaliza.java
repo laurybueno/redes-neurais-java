@@ -12,20 +12,23 @@ public class Normaliza {
 	//funcao para normalizar usando a tecnica minMax
 	//recebe como parametro o nome do arquivo em que se quer normalizar
 	//escreve os dados normalizados no arquivo normalizadoMinMax
-	public void minMax(String nomeArquivoLeitura){
+	public void minMax(String nomeArquivoLeitura,double newMin,double newMax){
 		Input arquivo = new Input();
 		double[][] dados = arquivo.arquivoToMatrizDouble(nomeArquivoLeitura);//le arqquivo e passa para uma matriz de double
 		double[] minimo = encontraMin(dados);//arranjo contendo o menor numeor de cada coluna respectivamente
 		double[] maximo = encontraMax(dados);//arranjo contendo o maior numeor de cada coluna respectivamente
 		
-		for(int i =0;i<dados.length;i++){
-			for(int j=0;j<dados[i].length-1;j++){
-				dados[i][j]=(dados[i][j]-minimo[i])/(maximo[i]-minimo[i]);
+		double[][] normal = geraNovaMatriz(dados, 0);
+		double[][] minMax = geraNovaMatriz(normal, 0);
+		
+		for(int i =0;i<minMax.length;i++){
+			for(int j=0;j<minMax[i].length-1;j++){
+				minMax[i][j]=(minMax[i][j]-0)/(16-0);//fez de 0 a 1
+				minMax[i][j] = (minMax[i][j]*(newMax - newMin))+newMin;
 			}
 		}
 
-		double[][] normal = geraNovaMatriz(dados);
-		double[][] minMax = geraNovaMatriz(normal);
+		
 
 		String[] normalizado = new String[minMax.length];
 
@@ -57,15 +60,15 @@ public class Normaliza {
 	 }
 	
 	//funcao para deletar coluna que so tem numeor igual
-	public double [][] geraNovaMatriz(double[][] args1){
+	public double [][] geraNovaMatriz(double[][] args1, double newMin){
 		double [][] novaMatriz = clonaMatriz(args1);
 		boolean parada = true;
 		int coluna = 0;
 		while (parada && coluna < args1[0].length){
-			if(sotem0(args1, coluna)){
+			if(sotem0(args1, coluna, newMin)){
 				parada = false;
 				novaMatriz = deletaColuna(args1, coluna);
-				geraNovaMatriz(novaMatriz);
+				geraNovaMatriz(novaMatriz, newMin);
 			}
 			else{
 				coluna++;
@@ -88,9 +91,9 @@ public class Normaliza {
 
 	//funcao para checar coluna que só tem 0
 	//recebe como parametro a matriz e o numeor da coluna
-	boolean sotem0(double[][] dados, int coluna){
+	boolean sotem0(double[][] dados, int coluna, double newMin){
 		for(int i=0;i<dados.length;i++){
-			if(dados[i][coluna]!=0){
+			if(dados[i][coluna]!=newMin){
 				return false;
 			}
 		}
@@ -100,14 +103,14 @@ public class Normaliza {
 	
 	//funcao que retorna um arranjo contendo o menor numero encontrado em cada coluna respectivamente
 	public double[] encontraMin(double[][] dados){
-		double[] minimo = new double[dados.length];
-		for(int i=0;i<dados.length;i++){//percorre o arranjo colocando o primeiro elemento de cada coluna
-			minimo[i] = dados[i][0];
+		double[] minimo = new double[dados[0].length];
+		for(int i=0;i<minimo.length;i++){
+			minimo[i]=17;
 		}
-		for(int i=0;i<dados.length;i++){//percorre o arranjo de dados
-			for(int j=1;j<dados[i].length;j++){// o primeiro elemtno ja esta no aranjo
-				if(dados[i][j]<minimo[i]){
-					minimo[i]=dados[i][j];
+		for(int i=0;i<dados.length;i++){//percorre o arranjo colocando o primeiro elemento de cada coluna
+			for (int j=0;j<dados[i].length;j++){
+				if(dados[i][j]<minimo[j]){
+					minimo[j]=dados[i][j];
 				}
 			}
 		}
@@ -116,14 +119,11 @@ public class Normaliza {
 	
 	//funcao que retorna um arranjo contendo o maior numero encontrado em cada coluna respectivamente
 		public double[] encontraMax(double[][] dados){
-			double[] maximo = new double[dados.length];
+			double[] maximo = new double[dados[0].length];
 			for(int i=0;i<dados.length;i++){//percorre o arranjo colocando o primeiro elemento de cada coluna
-				maximo[i] = dados[i][0];
-			}
-			for(int i=0;i<dados.length;i++){//percorre o arranjo de dados
-				for(int j=1;j<dados[i].length;j++){// o primeiro elemtno ja esta no aranjo
-					if(dados[i][j]>maximo[i]){
-						maximo[i]=dados[i][j];
+				for (int j=0;j<dados[i].length;j++){
+					if(dados[i][j]>maximo[j]){
+						maximo[j]=dados[i][j];
 					}
 				}
 			}
@@ -137,43 +137,44 @@ public class Normaliza {
 		Input arquivo = new Input();
 		//le arqquivo e passa para uma matriz de double
 		double[][] dados = arquivo.arquivoToMatrizDouble(nomeArquivoLeitura);
+		double[][] teste = geraNovaMatriz(dados, 0);
+		double[][] normal = geraNovaMatriz(teste, 0);
 		//calcula a media da coluna
-		double[] medias = new double[dados[0].length];
+		double[] medias = new double[normal[0].length];
 		for(int i=0;i<medias.length;i++){
-			medias[i] = mediaColuna(dados, i);
+			medias[i] = mediaColuna(normal, i);
 		}
 		
 		//calcula o desvio padrao da coluna
-		double[] desvioPadrao = new double[dados[0].length];
+		double[] desvioPadrao = new double[normal[0].length];
 		for(int i=0;i<desvioPadrao.length;i++){
-			desvioPadrao[i] = desvioPadraoColuna(dados, i, medias[i]);
+			desvioPadrao[i] = desvioPadraoColuna(normal, i, medias[i]);
 		}
 		//se desvio padrao for zero, bota null
 		//(atributo-media)/desvio padrao
-		boolean[] aux = new boolean[dados[0].length];// auxiliar para salvar quais linahs devem ser deletadas
+		boolean[] aux = new boolean[normal[0].length];// auxiliar para salvar quais linahs devem ser deletadas
 		int cont=0;
-		for(int i=0;i<dados.length;i++){
-			for (int j=0;j<dados[i].length-1;j++){//nao nromaliza a ultima coluna (classe)
+		for(int i=0;i<normal.length;i++){
+			for (int j=0;j<normal[i].length-1;j++){//nao nromaliza a ultima coluna (classe)
 				if(desvioPadrao[j]!=0){
-					dados[i][j]= (dados[i][j]-medias[j])/desvioPadrao[j];
+					normal[i][j]= (normal[i][j]-medias[j])/desvioPadrao[j];
 				}
 				else{
-					dados[i][j]=0;
+					normal[i][j]=0;
 					cont++;
 				}
 			}
 		}
 		
-		cont = cont/dados.length;//divide pela quantidade de linahs
+		cont = cont/normal.length;//divide pela quantidade de linahs
 		
-		double[][] teste = geraNovaMatriz(dados);
-		double[][] normal = geraNovaMatriz(teste);
+		
 
 		
 		//passa de double[][] para string[] para poder gravar
 		String[] normalizado = new String[normal.length];
 
-		for(int i=0;i<dados.length;i++){
+		for(int i=0;i<normal.length;i++){
 			normalizado[i] = Arrays.toString(normal[i]);
 			normalizado[i] = normalizado[i].substring(1);//tira colchetes do inicio
 			normalizado[i] = normalizado[i].substring (0, normalizado[i].length() - 1); //tira colchetes do fim
@@ -213,7 +214,10 @@ public class Normaliza {
 		for(int i=0;i<dados.length;i++){
 			variancia = variancia + Math.pow((dados[i][coluna]- mediaColuna), 2);
 		}
-		variancia = variancia/quantidadeElementos;
+		if (variancia>0){
+			variancia = variancia/quantidadeElementos-1;
+		}
+		System.out.println("a");
 		return variancia;
 	}
 }
