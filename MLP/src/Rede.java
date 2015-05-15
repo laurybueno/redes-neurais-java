@@ -290,7 +290,7 @@ public class Rede {
 				if(k == tupla.classe())
 					tk = 1;	
 				else
-					tk = -1;
+					tk = 0;
 				
 				// armaezena o tK em Neuronio para computar o erroQuadrado após o fim da sessão
 				camadaSaida[k].tk = tk;
@@ -334,7 +334,6 @@ public class Rede {
 			}
 			
 			// atualiza pesos e viés na camada de saída
-			
 			for(int k = 0; k < camadaSaida.length; k++){
 				camadaSaida[k].setVies(camadaSaida[k].getVies()+delta_w0K[k]);
 				for(int j = 0; j < camadaEscondida.length; j++)
