@@ -152,8 +152,6 @@ public class Normaliza {
 		}
 		//se desvio padrao for zero, bota null
 		//(atributo-media)/desvio padrao
-		boolean[] aux = new boolean[normal[0].length];// auxiliar para salvar quais linahs devem ser deletadas
-		int cont=0;
 		for(int i=0;i<normal.length;i++){
 			for (int j=0;j<normal[i].length-1;j++){//nao nromaliza a ultima coluna (classe)
 				if(desvioPadrao[j]!=0){
@@ -161,12 +159,10 @@ public class Normaliza {
 				}
 				else{
 					normal[i][j]=0;
-					cont++;
 				}
 			}
 		}
 		
-		cont = cont/normal.length;//divide pela quantidade de linahs
 		
 		
 
@@ -211,13 +207,12 @@ public class Normaliza {
 	public double varianciaColuna(double[][] dados, int coluna, double mediaColuna){
 		int quantidadeElementos = dados.length;
 		double variancia =0;
-		for(int i=0;i<dados.length;i++){
-			variancia = variancia + Math.pow((dados[i][coluna]- mediaColuna), 2);
+		if(mediaColuna!=0){
+			for(int i=0;i<dados.length;i++){
+				variancia = variancia + Math.pow((dados[i][coluna]- mediaColuna), 2);
+			}
+			variancia = variancia/(quantidadeElementos-1);
 		}
-		if (variancia>0){
-			variancia = variancia/quantidadeElementos-1;
-		}
-		System.out.println("a");
 		return variancia;
 	}
 }
