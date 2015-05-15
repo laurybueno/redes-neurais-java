@@ -487,14 +487,14 @@ public class Rede {
 		
 		//System.out.printf("viesEscondida[%d]\nviesSaida[%d]\n", nCamadaEscondida.length, nCamadaSaida.length);
 		
-		for(int i = 2; i < linhas.length; i++) { // percorre todas as linhas da string
+		for(int i = 1; i < linhas.length; i++) { // percorre todas as linhas da string
 			String[] neuronios = linhas[i].split(";"); // divide os dados entre os separadores (;)
 			if(neuronios[0].equals("1")) { // neurônio de camada escondida
 				viesEscondida[indiceViesEscondida] = Double.parseDouble(neuronios[1]);
 				indiceViesEscondida++;
 				for(int j = 2; j < neuronios.length; j++) {
 					nCamadaEscondida[indiceEscondida][j-2] = Double.parseDouble(neuronios[j]);
-				}
+				}	
 				indiceEscondida++; // atualiza o índice da camada escondida
 			} else if(neuronios[0].equals("2")) { // neurônio de camada de saída
 				viesSaida[indiceViesSaida] = Double.parseDouble(neuronios[1]);
