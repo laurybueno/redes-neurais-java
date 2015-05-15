@@ -60,9 +60,9 @@ public class Rede {
 	
 	// MODO DE TREINAMENTO
 	// Esse construtor será invocado se a rede for iniciada em modo de treinamento
-	// A definição de pesos será delegada para a classe Neuronio
-	// Este método assume que o viés de cada camada será determinado externamente
-	public Rede(int camadaEntrada, int camadaEscondida, int camadaSaida){
+	// A definição de pesos será delegada para a classe Neuronio,
+	// mas cabe a este construtor decidir se o usuário quer pesos 0 ou aleatórios.
+	public Rede(int camadaEntrada, int camadaEscondida, int camadaSaida, boolean random){
 		
 		// reserva espaço nos arrays para todos os neurônios que serão criados a seguir
 		this.camadaEscondida = new Neuronio[camadaEscondida];
@@ -71,13 +71,15 @@ public class Rede {
 		// cria os neurônios escondidos
 		for(int j = 0; j < camadaEscondida; j++){
 			this.camadaEscondida[j] = new Neuronio(camadaEntrada);
-			this.camadaEscondida[j].reset();
+			if(random) this.camadaEscondida[j].reset();
+			else this.camadaEscondida[j].zera();
 		}
 		
 		// cria os neurônios de saída
 		for(int k = 0; k < camadaSaida; k++){
 			this.camadaSaida[k] = new Neuronio(camadaEscondida);
-			this.camadaSaida[k].reset();
+			if(random) this.camadaSaida[k].reset();
+			else this.camadaSaida[k].zera();
 		}
 		
 	}
@@ -180,8 +182,8 @@ public class Rede {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 			Date date = new Date();
 			
-			logTreinamento.setNomeArquivo("redesTreinamento_"+dateFormat.format(date));
-			logValidacao.setNomeArquivo("redesValidacao_"+dateFormat.format(date));
+			logTreinamento.setNomeArquivo("redesTreinamento_"+"_nE"+camadaEscondida.length+"_tA"+aprendizado+"__"+dateFormat.format(date));
+			logValidacao.setNomeArquivo("redesValidacao_"+"_nE"+camadaEscondida.length+"_tA"+aprendizado+"__"+dateFormat.format(date));
 			
 			
 			// while determina quando a melhoria não é mais suficiente para prosseguir o treinamento
@@ -205,7 +207,7 @@ public class Rede {
 					// se a rede validada teve o melhor resultado até agora, ela é armazenada
 					if(atualResultado < melhorResultado) {
 						melhorResultado = atualResultado;
-						// melhorRede = Rede.this.clonar();
+						melhorRede = Rede.this.clonar();
 						fracassosSeguidos = 0;
 					}
 					else{
@@ -233,9 +235,21 @@ public class Rede {
 				
 			} // encerra o while de treinamento
 			
+			/* Agora que a melhor rede possível foi encontrada, 
+			 * ela deve ser avaliada pelo conjunto de teste.
+			 * Esse resultado será guardado na última linha do arquivo
+			 * de validação.
+			 */
+			
+			double errosFinal = erros(TESTE, melhorRede);
+			logValidacao.addDados(0,errosFinal,aprendizado);
+			
 			// descarrega os logs em disco
 			logValidacao.gravaArquivo();
 			logTreinamento.gravaArquivo();
+			
+			System.out.println("Melhor desempenho alcançado em validação: "+melhorResultado);
+			System.out.println("Desempenho em teste: "+errosFinal);
 			
 			// retorna a melhor rede neural encontrada no processo de treinamento
 			return melhorRede;
@@ -340,10 +354,10 @@ public class Rede {
 		} // fim de uma sessão de Treinamento
 		
 		/*
-		 * Retorna a quantidade de erros que a rede consegue alcançar
-		 * no conjunto de dados apontado via parâmetro.
+		 * Retorna a quantidade de erros que a rede especificada 
+		 * consegue alcançar no conjunto de dados apontado via parâmetro.
 		 */
-		private double erros(int META){
+		private double erros(int META, Rede mlp){
 			
 			// decide qual será o conjunto de dados usado para testar desempenho
 			Tupla[] entrada = null;
@@ -361,11 +375,18 @@ public class Rede {
 			
 			
 			for(int i = 0; i < tentativas; i++){
-				resultado = Rede.this.executar(entrada[i]);
+				resultado = mlp.executar(entrada[i]);
 				if(resultado != entrada[i].classe())
 					erros++;
 			}
 			return (double)erros/tentativas;
+		}
+		
+		/* Quando a rede a ser avaliada não for especificada,
+		 * ele assume que deve avaliar a rede da instância atual.
+		 */
+		private double erros(int META){
+			return erros(META,Rede.this);
 		}
 		
 
