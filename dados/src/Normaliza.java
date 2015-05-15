@@ -23,8 +23,14 @@ public class Normaliza {
 		
 		for(int i =0;i<minMax.length;i++){
 			for(int j=0;j<minMax[i].length-1;j++){
-				minMax[i][j]=(minMax[i][j]-minimo[j])/(maximo[j]-minimo[j]);//fez de 0 a 1
-				minMax[i][j] = (minMax[i][j]*(newMax - newMin))+newMin;
+				double divisor = maximo[j]-minimo[j];
+				if(divisor != 0){
+					minMax[i][j]=(minMax[i][j]-minimo[j])/(maximo[j]-minimo[j]);//fez de 0 a 1
+					minMax[i][j] = (minMax[i][j]*(newMax - newMin))+newMin;
+				}
+				else{
+					minMax[i][j]=0;
+				}
 			}
 		}
 
