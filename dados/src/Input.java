@@ -7,6 +7,7 @@ import java.io.LineNumberReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -101,31 +102,44 @@ public class Input {
 	
 	//funcao que recebe como parametro o nome do arquivo e retorna todos os registros da classe recebida como parametro
 	//retorna uma lista de strings
-	public List<String> todasClassesX(String nomeArquivo, int numero){
+	public List<String> todasClassesX(double[][] dados, int numero){
 		char classe =Character.forDigit(numero, 10);
 		List<String> classeX = new ArrayList<String>();
-		int tamanho = tamanho(nomeArquivo);
-		for(int i=0;i<tamanho;i++){
-			String linha = leituralinha(nomeArquivo, i);
-			if(linha.charAt(linha.length()-1)==classe){//se a ultima letra for o numero da classe por causa do ".0"
-				classeX.add(linha);
+		int tamanho = dados.length;
+		for (int i=0;i<dados.length;i++){
+			for (int j=0;j<dados[i].length;j++){
+				if(dados[i][dados[i].length-1]== ((double) numero )){
+					String linha = Arrays.toString(dados[i]);
+					linha = linha.replace("[", "");
+					linha = linha.replace("]", "");
+					classeX.add(linha);
+				}
 			}
 		}
 		return classeX;
 	}
-	
+
 	public void funcaoIntegradora(String nomeArquivo, int pTreino, int pTeste, int pValidacao, String normalizacao){
 		
 		List[] classes = preencheClasse(nomeArquivo); //faz um arranjo de listas. Cada lista contem todos os dados de uma classe
 		System.out.println("passou pra lista");
 		for(int i=0;i<classes.length;i++){//embaralha as classes
+			Iterator<String> it = classes[i].iterator();
+			/*while(it.hasNext()){
+				String linha = it.next();
+				linha = linha.replace("[", "");
+				linha = linha.replace("]", "");
+				//troca elemento linha
+			}*/
+		
 			classes[i] = shuffle(classes[i]);
 		}
-
+		
+		
 		int[] quantidade = calculaQuantidade(pTreino, pTeste, pValidacao, nomeArquivo);//guarda em um arranjo a quantidade de linhas para treino, teste e validacao
 		
 
-		String[] dados = dados(tamanho(nomeArquivo), classes);//pega um arranjo de string ordenado um dado de cada classe
+		String[] dados = ordenaPorClasse(tamanho(nomeArquivo), classes);//pega um arranjo de string ordenado um dado de cada classe
 		
 		
 		
@@ -210,7 +224,7 @@ public class Input {
 	
 	
 	//informo a quantidade e a lista total ele me retorna um arranjo de String pegando um de cada classe.
-	public String[] dados (int quantidadeDados, List[] todos){
+	public String[] ordenaPorClasse (int quantidadeDados, List[] todos){
 		escreveArquivoClasses(todos);
 		String[] novo = new String[quantidadeDados];
 		
@@ -228,17 +242,52 @@ public class Input {
 				cont=0;
 			}
 		}
+		for(int i=0;i<novo.length;i++){
+			novo[i] = novo[i].replace("[", "");
+			novo[i] = novo[i].replace("]", "");
+		}
 		return novo;
 	}
+	
+	//rece como parametor a quantidade de dados total e um arranjo de listas, cada lista contem todos os dados de uma determinada classe
+	//retorna um arranjo de string ordenado por classe. a ordem será 0-1-2-3-4-5-6-7-8-9
+	/*public String[] ordenaPorClasse (int quantidadeDados, List[] todos){
+		String[] novo = new String[quantidadeDados];
+		Iterator<String> it0 = todos[0].iterator();
+		Iterator<String> it1 = todos[1].iterator();
+		Iterator<String> it2 = todos[2].iterator();
+		Iterator<String> it3 = todos[3].iterator();
+		Iterator<String> it4 = todos[4].iterator();
+		Iterator<String> it5 = todos[5].iterator();
+		Iterator<String> it6 = todos[6].iterator();
+		Iterator<String> it7 = todos[7].iterator();
+		Iterator<String> it8 = todos[8].iterator();
+		Iterator<String> it9 = todos[9].iterator();
+		
+		for(int i=0;i<novo.length;i=i+10){// 10 por que ele ja salva das 10 classes
+			novo[i]=it0.next();
+			novo[i+1]=it1.next();
+			novo[i+2]=it2.next();
+			novo[i+3]=it3.next();
+			novo[i+4]=it4.next();
+			novo[i+5]=it5.next();
+			novo[i+6]=it6.next();
+			novo[i+7]=it7.next();
+			novo[i+8]=it8.next();
+			novo[i+9]=it9.next();
+					
+		}
+		return novo;
+	}*/
 	
 	
 	//retorna um arranjo de lista. Cada elemento do aranjo contem uma lsita contendo todos os registros de uma determinada classe
 	//Esta ordenado por classes
 	public List[] preencheClasse(String nomeArquivo) {
-		
+		double[][] dados = arquivoToMatrizDouble(nomeArquivo);
 		List[] classe = new List[10];
 		for(int i = 0; i < 10; i++) {
-			classe[i] = todasClassesX(nomeArquivo, i);
+			classe[i] = todasClassesX(dados, i);
 		}
 		return classe;
 	}
