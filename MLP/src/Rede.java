@@ -353,7 +353,7 @@ public class Rede {
 		} // fim de uma sessão de Treinamento
 		
 		/*
-		 * Retorna a quantidade de erros que a rede especificada 
+		 * Retorna a quantidade de erros (acurácia) que a rede especificada 
 		 * consegue alcançar no conjunto de dados apontado via parâmetro.
 		 */
 		private double erros(int META, Rede mlp){
@@ -386,6 +386,23 @@ public class Rede {
 		 */
 		private double erros(int META){
 			return erros(META,Rede.this);
+		}
+		
+		/* Cria e printa a matriz de confusão da rede neural especificada
+		 * via parâmetro. Esse mapeamento sempre será feito com o conjunto de teste.
+		 * As linhas da matriz gerada representam a realidade, 
+		 * enquanto as colunas mostram as respostas da rede.
+		 */
+		private int[][] matrizConfusao(Rede mlp){
+			
+			int[][] matriz = new int[10][10];
+			
+			// roda por todas as linhas de dados em teste
+			for(int i=0; i<teste.length; i++){
+				matriz[teste[i].classe()][mlp.executar(teste[i])]++;
+			}
+			
+			return matriz;
 		}
 		
 
