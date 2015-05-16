@@ -15,11 +15,12 @@ public class Normaliza {
 	public void minMax(String nomeArquivoLeitura,double newMin,double newMax){
 		Input arquivo = new Input();
 		double[][] dados = arquivo.arquivoToMatrizDouble(nomeArquivoLeitura);//le arqquivo e passa para uma matriz de double
-		double[] minimo = encontraMin(dados);//arranjo contendo o menor numeor de cada coluna respectivamente
-		double[] maximo = encontraMax(dados);//arranjo contendo o maior numeor de cada coluna respectivamente
 		
 		double[][] normal = geraNovaMatriz(dados, 0);
 		double[][] minMax = geraNovaMatriz(normal, 0);
+		
+		double[] minimo = encontraMin(minMax);//arranjo contendo o menor numeor de cada coluna respectivamente
+		double[] maximo = encontraMax(minMax);//arranjo contendo o maior numeor de cada coluna respectivamente
 		
 		for(int i =0;i<minMax.length;i++){
 			for(int j=0;j<minMax[i].length-1;j++){
@@ -124,17 +125,20 @@ public class Normaliza {
 	}
 	
 	//funcao que retorna um arranjo contendo o maior numero encontrado em cada coluna respectivamente
-		public double[] encontraMax(double[][] dados){
-			double[] maximo = new double[dados[0].length];
-			for(int i=0;i<dados.length;i++){//percorre o arranjo colocando o primeiro elemento de cada coluna
-				for (int j=0;j<dados[i].length;j++){
-					if(dados[i][j]>maximo[j]){
-						maximo[j]=dados[i][j];
-					}
+	public double[] encontraMax(double[][] dados){
+		double[] maximo = new double[dados[0].length];
+		for(int i=0;i<dados.length;i++){
+			for (int j=0;j<dados[i].length;j++){
+				if(dados[i][j]>maximo[j]){
+					maximo[j]=dados[i][j];
 				}
 			}
-			return maximo;
 		}
+		return maximo;
+	}
+	
+	
+		
 	
 	//funcao para fazer a normalizacao usando a tecnica Z score
 	//recebe como parametro o nome do arquivo em que se quer normalizar e o nome do arquivo onde vai salvar isso
