@@ -15,20 +15,20 @@ public class Log {
 	
 	// construtor prepara a pŕimeira linha do CSV a ser gravado
 	public Log(){
-		String linha = "epocaAtual;desempenho;taxaAprendizadoAtual;idRede";
+		String linha = "epocaAtual;taxaErros;erroQuadrado;taxaAprendizadoAtual;idRede";
 		dados.add(linha);
 		diretorio = "";
 	}
 	
-	public void addDados(int epocaAtual, double desempenho, double taxaAprendizadoAtual, String idRede) {
+	public void addDados(int epocaAtual, double desempenho, double erroQuadrado, double taxaAprendizadoAtual, String idRede) {
 		// As strings já são formatadas no formato do .csv, utilizando ";" como separador
-		String linha = epocaAtual + ";" + desempenho + ";" + taxaAprendizadoAtual + ";" + idRede;
+		String linha = epocaAtual + ";" + desempenho + ";" + erroQuadrado + ";" + taxaAprendizadoAtual + ";" + idRede;
 		dados.add(linha);
 	}
 	
 	// sobrecarga de addDados torna campo idRede não-obrigatório para o usuário desta classe
-	public void addDados(int epocaAtual, double desempenho, double taxaAprendizadoAtual){
-		addDados(epocaAtual, desempenho, taxaAprendizadoAtual,"");
+	public void addDados(int epocaAtual, double desempenho, double erroQuadrado, double taxaAprendizadoAtual){
+		addDados(epocaAtual, desempenho, erroQuadrado, taxaAprendizadoAtual,"");
 	}
 	
 	public void limparDados() {
