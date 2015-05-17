@@ -1,0 +1,90 @@
+ "Arquivo de treinoMinMax0.csv"
+  0   1   2   3   4   5   6   7   8   9 
+338 338 337 337 337 337 337 337 337 337 
+ "Arquivo de treinoMinMax1.csv"
+  0   1   2   3   4   5   6   7   8   9 
+338 338 337 337 337 337 337 337 337 337 
+ "Arquivo de treinoMinMax2.csv"
+  0   1   2   3   4   5   6   7   8   9 
+338 338 337 337 337 337 337 337 337 337 
+ "Arquivo de treinoMinMax3.csv"
+  0   1   2   3   4   5   6   7   8   9 
+338 338 337 337 337 337 337 337 337 337 
+ "Arquivo de treinoMinMax4.csv"
+  0   1   2   3   4   5   6   7   8   9 
+338 338 337 337 337 337 337 337 337 337 
+ "Arquivo de treinoMinMax5.csv"
+  0   1   2   3   4   5   6   7   8   9 
+338 338 337 337 337 337 337 337 337 337 
+ "Arquivo de treinoMinMax6.csv"
+  0   1   2   3   4   5   6   7   8   9 
+338 338 337 337 337 337 337 337 337 337 
+ "Arquivo de treinoMinMax7.csv"
+  0   1   2   3   4   5   6   7   8   9 
+338 338 337 337 337 337 337 337 337 337 
+ "Arquivo de treinoMinMax8.csv"
+  0   1   2   3   4   5   6   7   8   9 
+338 338 337 337 337 337 337 337 337 337 
+ "Arquivo de treinoMinMax9.csv"
+  0   1   2   3   4   5   6   7   8   9 
+338 338 337 337 337 337 337 337 337 337 
+ "Arquivo de validacaoMinMax0.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 112 112 113 113 113 113 113 112 
+ "Arquivo de validacaoMinMax1.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 112 112 113 113 113 113 113 112 
+ "Arquivo de validacaoMinMax2.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 112 112 113 113 113 113 113 112 
+ "Arquivo de validacaoMinMax3.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 112 112 113 113 113 113 113 112 
+ "Arquivo de validacaoMinMax4.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 112 112 113 113 113 113 113 112 
+ "Arquivo de validacaoMinMax5.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 112 112 113 113 113 113 113 112 
+ "Arquivo de validacaoMinMax6.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 112 112 113 113 113 113 113 112 
+ "Arquivo de validacaoMinMax7.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 112 112 113 113 113 113 113 112 
+ "Arquivo de validacaoMinMax8.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 112 112 113 113 113 113 113 112 
+ "Arquivo de validacaoMinMax9.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 112 112 113 113 113 113 113 112 
+ "Arquivo de testeMinMax0.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 113 113 113 113 112 112 112 112 
+ "Arquivo de testeMinMax1.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 113 113 113 113 112 112 112 112 
+ "Arquivo de testeMinMax2.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 113 113 113 113 112 112 112 112 
+ "Arquivo de testeMinMax3.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 113 113 113 113 112 112 112 112 
+ "Arquivo de testeMinMax4.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 113 113 113 113 112 112 112 112 
+ "Arquivo de testeMinMax5.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 113 113 113 113 112 112 112 112 
+ "Arquivo de testeMinMax6.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 113 113 113 113 112 112 112 112 
+ "Arquivo de testeMinMax7.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 113 113 113 113 112 112 112 112 
+ "Arquivo de testeMinMax8.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 113 113 113 113 112 112 112 112 
+ "Arquivo de testeMinMax9.csv"
+  0   1   2   3   4   5   6   7   8   9 
+112 112 113 113 113 113 112 112 112 112 
