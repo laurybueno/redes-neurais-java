@@ -220,8 +220,8 @@ public class Rede {
 					
 					
 					// se a rede validada teve o melhor resultado até agora, ela é armazenada
-					if(atualErroQuad < melhorResultado) {
-						melhorResultado = atualErroQuad;
+					if(atualAcuracia < melhorResultado) {
+						melhorResultado = atualAcuracia;
 						melhorRede = Rede.this.clonar();
 						fracassosSeguidos = 0;
 					}
@@ -437,14 +437,14 @@ public class Rede {
 				mlp.executar(entrada[i]);
 				
 				// encontra o erro quadrado médio para a tupla executada
-				for (int j = 0; j < camadaSaida.length; j++) {
-					temp += Math.abs(camadaSaida[j].tk - camadaSaida[j].fAtivacao); 
+				for (int j = 0; j < mlp.camadaSaida.length; j++) {
+					temp += Math.pow((mlp.camadaSaida[j].tk - mlp.camadaSaida[j].fAtivacao), 2); 
 				}
-				erroQuad += (temp/camadaSaida.length);
+				erroQuad += temp;
 				temp = 0;
 				
 			}
-			return erroQuad/entrada.length;
+			return erroQuad;
 		}
 		
 		/* Quando a rede a ser avaliada não for especificada,
