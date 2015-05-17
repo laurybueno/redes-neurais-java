@@ -247,20 +247,21 @@ public class Relatorio {
 		}
 		
 		Output grava = new Output();
-		String[] linha = new String[1+dados0[0].length];
-		linha[0]="-1";
-		for(int i=0;i<dados0.length;i++){
-			linha[i+1]=","+String.valueOf(i);
-		}
-		grava.escreveArquivo("log/dns/desviopadrao"+inicio+normalizacao+execucao+".csv", linha, false);
+		String[][] linha = new String[dados0.length][dados0[0].length];
 		
 		for (int i=0;i<dados0.length;i++){
-			linha[0]=String.valueOf(i)+",";
 			for (int j=0;j<dados0[i].length;j++){
-				linha[j+1]=String.valueOf((int)dados0[i][j])+",";//pega o valor do elemento da matriz
+				
+				linha[i][j]=String.valueOf((double)dados0[i][j])+",";//pega o valor do elemento da matriz
 			}
-			grava.escreveArquivo("log/dns/desviopadrao"+inicio+normalizacao+execucao+".csv", linha, true);
+		}	
+		
+		grava.escreveArquivo("log/dns/desviopadrao"+inicio+normalizacao+execucao+".csv", linha[0], false);
+		for(int i=1;i<linha.length;i++){
+			grava.escreveArquivo("log/dns/desviopadrao"+inicio+normalizacao+execucao+".csv", linha[i], true);
 		}
+		
+
 		
 	}
 	static double[][] criaMediaMatrizConfusao(String nomeArquivo, int numeroexecucao, String normalizacao, String inicio){
@@ -294,19 +295,20 @@ public class Relatorio {
 		
 		
 		Output grava = new Output();
-		String[] linha = new String[dados0[0].length];
-		grava.escreveArquivo("log/dns/mediaMatrizConfusao"+inicio+execucao+".csv", linha, false);
+		String[][] linha = new String[dados0.length][dados0[0].length];
 		
 		for (int i=0;i<dados0.length;i++){
 			for (int j=0;j<dados0[i].length;j++){
 				
-				linha[j]=String.valueOf((double)dados0[i][j])+",";//pega o valor do elemento da matriz
+				linha[i][j]=String.valueOf((double)dados0[i][j])+",";//pega o valor do elemento da matriz
 			}
-			if (i==0){
-				grava.escreveArquivo("log/dns/mediaMatrizConfusao"+inicio+execucao+".csv", linha, false);
-			}
-			grava.escreveArquivo("log/dns/mediaMatrizConfusao"+inicio+execucao+".csv", linha, true);
 		}	
+		
+		grava.escreveArquivo("log/dns/mediaMatrizConfusao"+inicio+execucao+".csv", linha[0], false);
+		for(int i=1;i<linha.length;i++){
+			grava.escreveArquivo("log/dns/mediaMatrizConfusao"+inicio+execucao+".csv", linha[i], true);
+		}
+		
 		//tem que fazer pra ele deletar a priemira linha e a primeira coluna
 		return dados0;
 	}
