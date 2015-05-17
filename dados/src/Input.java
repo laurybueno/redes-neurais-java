@@ -119,7 +119,7 @@ public class Input {
 		return classeX;
 	}
 
-	public void funcaoIntegradora(String nomeArquivo, int pTreino, int pTeste, int pValidacao, String normalizacao){
+	public void houldout(String nomeArquivo, int pTreino, int pTeste, int pValidacao, String normalizacao){
 		
 		List[] classes = preencheClasse(nomeArquivo); //faz um arranjo de listas. Cada lista contem todos os dados de uma classe
 		System.out.println("passou pra lista");

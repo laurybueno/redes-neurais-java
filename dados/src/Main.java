@@ -13,16 +13,16 @@ public class Main {
 		Input arquivo = new Input();
 		Normaliza normal = new Normaliza();
 		normal.zScore("dados.csv", "normalizadozScore.csv");
-		normal.minMax("dados.csv",-1.0,1.0);
+		normal.minMax("dados.csv",0.1,0.9 , "minMax");
 		
 		System.out.println("criando treino, teste, validacao");
-		
-		//arquivo.funcaoIntegradora("dados.csv", 60, 20, 20, "_bruto");
-		System.out.println("feito o bruto");
-		arquivo.funcaoIntegradora("normalizadominMax.csv", 60, 20, 20, "MinMax");
-		System.out.println("fez min max");
-		//arquivo.funcaoIntegradora("normalizadozScore.csv", 60, 20, 20, "zScore");
-		
+		for(int i=0;i<10;i++){//faz os 10 houldouts para os testes
+			arquivo.houldout("dados.csv", 60, 20, 20, "_bruto"+String.valueOf(i));
+			System.out.println("feito o bruto");
+			arquivo.houldout("normalizadominMax.csv", 60, 20, 20, "minMax"+String.valueOf(i));
+			System.out.println("fez min max");
+			arquivo.houldout("normalizadozScore.csv", 60, 20, 20, "zScore"+String.valueOf(i));
+		}
 		System.out.println("acabou");
 	}
 }

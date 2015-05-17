@@ -12,7 +12,7 @@ public class Normaliza {
 	//funcao para normalizar usando a tecnica minMax
 	//recebe como parametro o nome do arquivo em que se quer normalizar
 	//escreve os dados normalizados no arquivo normalizadoMinMax
-	public void minMax(String nomeArquivoLeitura,double newMin,double newMax){
+	public void minMax(String nomeArquivoLeitura,double newMin,double newMax, String normalizacao){
 		Input arquivo = new Input();
 		double[][] dados = arquivo.arquivoToMatrizDouble(nomeArquivoLeitura);//le arqquivo e passa para uma matriz de double
 		
@@ -46,7 +46,7 @@ public class Normaliza {
 		}
 		//grava no disco
 		Output grava = new Output();
-		grava.escreveArquivo("normalizadoMinMax.csv", normalizado, false);
+		grava.escreveArquivo("normalizado"+normalizacao+".csv", normalizado, false);
 		
 	}
 	
