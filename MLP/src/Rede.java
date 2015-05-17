@@ -185,7 +185,8 @@ public class Rede {
 			// se prepara para armazenar a a rede de melhor desempenho encontrada até o momento
 			double melhorResultado = Double.MAX_VALUE;
 			melhorRede = null;
-			double atualResultado;
+			double atualAcuracia;
+			double atualErroQuad;
 			int fracassosSeguidos = 0;
 
 			// prepara o controle de Log para treinamento e validação
@@ -210,15 +211,17 @@ public class Rede {
 						EpocasExecutadas++;
 					} // encerra loop das épocas
 					
-					atualResultado = erros(VALIDACAO);
+					atualAcuracia = erros(VALIDACAO);
+					atualErroQuad = erroQuadMed(VALIDACAO);
+					
 					
 					// guarda o desempenho em Validação
-					logValidacao.addDados(EpocasExecutadas,atualResultado,aprendizado);
+					logValidacao.addDados(EpocasExecutadas,atualAcuracia,atualErroQuad,aprendizado);
 					
 					
 					// se a rede validada teve o melhor resultado até agora, ela é armazenada
-					if(atualResultado < melhorResultado) {
-						melhorResultado = atualResultado;
+					if(atualErroQuad < melhorResultado) {
+						melhorResultado = atualErroQuad;
 						melhorRede = Rede.this.clonar();
 						fracassosSeguidos = 0;
 					}
@@ -232,14 +235,17 @@ public class Rede {
 					
 					// Mostra para o usuario o desempenho em Validação
 					System.out.println("Épocas executadas: "+EpocasExecutadas);
-					System.out.println("Erros em validação: "+ atualResultado);
+					System.out.println("Erros em validação: "+ atualAcuracia);
+					System.out.println("Erro quadrado em validação: "+ atualErroQuad);
 					
 					
 					// guarda o desempenho em Treinamento
-					atualResultado = erros(TREINAMENTO);
-					logTreinamento.addDados(EpocasExecutadas,atualResultado,aprendizado);
+					atualAcuracia = erros(TREINAMENTO);
+					atualErroQuad = erroQuadMed(TREINAMENTO);
+					logTreinamento.addDados(EpocasExecutadas,atualAcuracia,atualErroQuad,aprendizado);
 					
-					System.out.println("Erros em treinamento: "+ atualResultado);
+					System.out.println("Erros em treinamento: "+ atualAcuracia);
+					System.out.println("Erro quadrado em treinamento: "+ atualErroQuad);
 					System.out.println("Taxa de aprendizado: "+aprendizado);
 					System.out.println();
 					
@@ -255,16 +261,18 @@ public class Rede {
 			Log logTeste = new Log();
 			logTeste.setNomeArquivo("redesTeste_"+"_nE"+camadaEscondida.length+"_tA"+aprendizado+"__"+dateFormat.format(date));
 			
-			double errosFinal = erros(TESTE, melhorRede);
-			logTeste.addDados(EpocasExecutadas,errosFinal,aprendizado,melhorRede.hashString());
+			double acuraciaFinal = erros(TESTE, melhorRede);
+			double erroQuadFinal = erroQuadMed(TESTE, melhorRede);
+			logTeste.addDados(EpocasExecutadas,acuraciaFinal,erroQuadFinal,aprendizado,melhorRede.hashString());
 			
 			// descarrega os logs em disco
 			logValidacao.gravaArquivo();
 			logTreinamento.gravaArquivo();
 			logTeste.gravaArquivo();
 			
-			System.out.println("Melhor desempenho alcançado em validação: "+melhorResultado);
-			System.out.println("Desempenho em teste: "+errosFinal);
+			System.out.println("Melhor erro quadrado alcançado em validação: "+melhorResultado);
+			System.out.println("Erros em teste: "+acuraciaFinal);
+			System.out.println("Erro quadrado em teste: "+erroQuadFinal);
 			
 			// prepara e salva em disco a matriz de confusão
 			salvaMatriz(matrizConfusao(melhorRede));
@@ -407,6 +415,43 @@ public class Rede {
 		 */
 		private double erros(int META){
 			return erros(META,Rede.this);
+		}
+		
+		/*
+		 * Encontra o erro quadrado médio para a Rede especificada.
+		 */
+		private double erroQuadMed(int META, Rede mlp){
+			// decide qual será o conjunto de dados usado para testar desempenho
+			Tupla[] entrada = null;
+			if(META == TREINAMENTO)
+				entrada = treinamento;
+			else if(META == VALIDACAO)
+				entrada = validacao;
+			else if(META == TESTE)
+				entrada = teste;
+			
+			double erroQuad = 0;
+			double temp = 0;
+			
+			for (int i = 0; i < entrada.length; i++) {
+				mlp.executar(entrada[i]);
+				
+				// encontra o erro quadrado médio para a tupla executada
+				for (int j = 0; j < camadaSaida.length; j++) {
+					temp += Math.abs(camadaSaida[j].tk - camadaSaida[j].fAtivacao); 
+				}
+				erroQuad += (temp/camadaSaida.length);
+				temp = 0;
+				
+			}
+			return erroQuad/entrada.length;
+		}
+		
+		/* Quando a rede a ser avaliada não for especificada,
+		 * ele assume que deve avaliar a rede da instância atual.
+		 */
+		private double erroQuadMed(int META){
+			return erroQuadMed(META,Rede.this);
 		}
 		
 		/* Cria a matriz de confusão da rede neural especificada
