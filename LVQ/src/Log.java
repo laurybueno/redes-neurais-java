@@ -26,6 +26,14 @@ public class Log {
 		grava.escreveArquivo(nomeArquivo, head, false);
 	}
 	
+	public void criaheadMediaEpocas(String nomeArquivo){
+		String [] head = new String[2];
+		head[0] = "Media de Epocas:";
+		head[1] = "Media da Taxa de Erro sobre o teste";
+		Output grava = new Output();
+		grava.escreveArquivo(nomeArquivo, head, false);
+	}
+	
 	
 	public void escreveLogRedes(int epocaAtual, double taxaReducaoAprendizado, double taxaAprendizadoAtual, double quantidadeReduzir, double[][] pesos, String nomeArquivo){
 		String[] linha = new String[4+pesos.length*pesos[0].length];
