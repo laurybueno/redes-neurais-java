@@ -1,6 +1,6 @@
 # mostra a distribuição de dados de todos os arquivos de holdout
 
-leTabelas <- function (nome) {
+raw.leNormalizacao <- function (nome) {
   # dados <- read.csv("../dados.csv",header=FALSE)
   
   # lê todos os arquivos de preparados pelo holdout de acordo com o nome determinado
@@ -22,11 +22,18 @@ leTabelas <- function (nome) {
   
 }
 
-#dados <- leTabelas("testeMinMax")
-
-
-leTabelas("treinoMinMax")
-leTabelas("validacaoMinMax")
-leTabelas("testeMinMax")
+# le uma tabela e decide qual coluna sera seu factor
+raw.leTabela <- function(nome){
+  teste <- read.csv(nome,header=FALSE)
+  
+  # descobre qual é a última coluna do arquivo lido (coluna de classes)
+  dimensoes <- dim(teste)
+  uCol <- dimensoes[2]
+  
+  teste[,uCol] <- as.factor(teste[,uCol])
+  print(paste("Arquivo de ",nome,".csv",sep = ""))
+  print(summary(teste[,uCol]))
+  
+}
 
 
