@@ -21,3 +21,4 @@ LVQ/src/Main.java
 *.class
 *.class
 *.RData
+*.csv

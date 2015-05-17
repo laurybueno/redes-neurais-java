@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 //classe criada para gerar todos os arquivos necessarios ( logs ) para o relatorio
 public class Relatorio {
-	public static void main (String[] argq){
+	public static void main (String[] arg){
 		
 		System.out.println("executando o relatorio");
 		long tempoInicio = System.currentTimeMillis(); 
@@ -16,8 +16,18 @@ public class Relatorio {
 		
 		//int quantidadeTestes =10;
 // int neuronioSaida, double taxaDeAprendizado, double reducaoAprendizado,max pioras,  int quantidadeVezes .. numeorHouldout
-		double[][] media = criaMediaMatrizConfusao("log/dns/_bruto_aleatoria_0_");
-		criaDesVioPadraoMatrizConfusao("log/dns/_bruto_aleatoria_0_", media);
+		for(int i=0;i<18;i++){//cria media dos 17 testes
+			double[][] media = criaMediaMatrizConfusao("log/dns/_bruto_", i,"_bruto", "aleatoria_0_");
+			criaDesVioPadraoMatrizConfusao("log/dns/_bruto_", media, i, "_bruto","aleatoria_0_" );
+			
+			media = criaMediaMatrizConfusao("log/dns/_bruto_", i,"_bruto", "zero_0_");
+			criaDesVioPadraoMatrizConfusao("log/dns/_bruto_", media, i, "_bruto", "zero_0_");
+			
+			media = criaMediaMatrizConfusao("log/dns/_bruto_", i,"_bruto", "primeiraEntrada_0_");
+			criaDesVioPadraoMatrizConfusao("log/dns/_bruto_", media, i, "_bruto", "primeiraEntrada_0_");
+		}
+		System.out.println("cabo");
+		
 		String normalizacao = "_bruto";//muda pra qual normalizacao vc quer
 		/*for(int i=0; i<10; i++){//chama a funcao para gerar os logs de aprendizado
 			executaLVQ(normalizacao, nulo, 1, 0.01, 0.00001, 1, 1, String.valueOf(i)+"00", String.valueOf(i));
@@ -201,18 +211,26 @@ public class Relatorio {
 		}
 	}
 	
-	static void criaDesVioPadraoMatrizConfusao(String nomeArquivo, double[][] media){
+	static void criaDesVioPadraoMatrizConfusao(String nomeArquivo, double[][] media, int numeroexecucao, String normalizacao, String inicio){
+		String execucao;
+		if(numeroexecucao<10){
+			execucao = "0"+String.valueOf(numeroexecucao);
+		}
+		else{
+			execucao = String.valueOf(numeroexecucao);
+		}
+		
 		Input arquivo = new Input();
-		double[][] dados0 = arquivo.arquivoToMatrizDouble(nomeArquivo+"000_MatrizConfusao.csv");
-		double[][] dados1 = arquivo.arquivoToMatrizDouble(nomeArquivo+"100_MatrizConfusao.csv");
-		double[][] dados2 = arquivo.arquivoToMatrizDouble(nomeArquivo+"200_MatrizConfusao.csv");
-		double[][] dados3 = arquivo.arquivoToMatrizDouble(nomeArquivo+"300_MatrizConfusao.csv");
-		double[][] dados4 = arquivo.arquivoToMatrizDouble(nomeArquivo+"400_MatrizConfusao.csv");
-		double[][] dados5 = arquivo.arquivoToMatrizDouble(nomeArquivo+"500_MatrizConfusao.csv");
-		double[][] dados6 = arquivo.arquivoToMatrizDouble(nomeArquivo+"600_MatrizConfusao.csv");
-		double[][] dados7 = arquivo.arquivoToMatrizDouble(nomeArquivo+"700_MatrizConfusao.csv");
-		double[][] dados8 = arquivo.arquivoToMatrizDouble(nomeArquivo+"800_MatrizConfusao.csv");
-		double[][] dados9 = arquivo.arquivoToMatrizDouble(nomeArquivo+"900_MatrizConfusao.csv");
+		double[][] dados0 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"0"+execucao+"_MatrizConfusao.csv");
+		double[][] dados1 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"1"+execucao+"_MatrizConfusao.csv");
+		double[][] dados2 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"2"+execucao+"_MatrizConfusao.csv");
+		double[][] dados3 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"3"+execucao+"_MatrizConfusao.csv");
+		double[][] dados4 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"4"+execucao+"_MatrizConfusao.csv");
+		double[][] dados5 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"5"+execucao+"_MatrizConfusao.csv");
+		double[][] dados6 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"6"+execucao+"_MatrizConfusao.csv");
+		double[][] dados7 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"7"+execucao+"_MatrizConfusao.csv");
+		double[][] dados8 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"8"+execucao+"_MatrizConfusao.csv");
+		double[][] dados9 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"9"+execucao+"_MatrizConfusao.csv");
 		
 		for(int i=1;i<dados0.length;i++){// priemeira linha e primeira coluna sao iguais
 			for(int j=1;j<dados0[i].length;j++){
@@ -229,35 +247,42 @@ public class Relatorio {
 		}
 		
 		Output grava = new Output();
-		String[] linha = new String[1+dados0[0].length];
-		linha[0]="-1";
-		for(int i=0;i<dados0.length;i++){
-			linha[i+1]=","+String.valueOf(i);
-		}
-		
-		grava.escreveArquivo("log/dns/desviopadrao.csv", linha, false);
+		String[][] linha = new String[dados0.length][dados0[0].length];
 		
 		for (int i=0;i<dados0.length;i++){
-			linha[0]=String.valueOf(i)+",";
 			for (int j=0;j<dados0[i].length;j++){
-				linha[j+1]=String.valueOf((int)dados0[i][j])+",";//pega o valor do elemento da matriz
+				
+				linha[i][j]=String.valueOf((double)dados0[i][j])+",";//pega o valor do elemento da matriz
 			}
-			grava.escreveArquivo("log/dns/desviopadrao.csv", linha, true);
+		}	
+		
+		grava.escreveArquivo("log/dns/desviopadrao"+inicio+normalizacao+execucao+".csv", linha[0], false);
+		for(int i=1;i<linha.length;i++){
+			grava.escreveArquivo("log/dns/desviopadrao"+inicio+normalizacao+execucao+".csv", linha[i], true);
 		}
 		
+
+		
 	}
-	static double[][] criaMediaMatrizConfusao(String nomeArquivo){
+	static double[][] criaMediaMatrizConfusao(String nomeArquivo, int numeroexecucao, String normalizacao, String inicio){
+		String execucao;
+		if(numeroexecucao<10){
+			execucao = "0"+String.valueOf(numeroexecucao);
+		}
+		else{
+			execucao = String.valueOf(numeroexecucao);
+		}
 		Input arquivo = new Input();
-		double[][] dados0 = arquivo.arquivoToMatrizDouble(nomeArquivo+"000_MatrizConfusao.csv");
-		double[][] dados1 = arquivo.arquivoToMatrizDouble(nomeArquivo+"100_MatrizConfusao.csv");
-		double[][] dados2 = arquivo.arquivoToMatrizDouble(nomeArquivo+"200_MatrizConfusao.csv");
-		double[][] dados3 = arquivo.arquivoToMatrizDouble(nomeArquivo+"300_MatrizConfusao.csv");
-		double[][] dados4 = arquivo.arquivoToMatrizDouble(nomeArquivo+"400_MatrizConfusao.csv");
-		double[][] dados5 = arquivo.arquivoToMatrizDouble(nomeArquivo+"500_MatrizConfusao.csv");
-		double[][] dados6 = arquivo.arquivoToMatrizDouble(nomeArquivo+"600_MatrizConfusao.csv");
-		double[][] dados7 = arquivo.arquivoToMatrizDouble(nomeArquivo+"700_MatrizConfusao.csv");
-		double[][] dados8 = arquivo.arquivoToMatrizDouble(nomeArquivo+"800_MatrizConfusao.csv");
-		double[][] dados9 = arquivo.arquivoToMatrizDouble(nomeArquivo+"900_MatrizConfusao.csv");
+		double[][] dados0 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"0"+execucao+"_MatrizConfusao.csv");
+		double[][] dados1 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"1"+execucao+"_MatrizConfusao.csv");
+		double[][] dados2 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"2"+execucao+"_MatrizConfusao.csv");
+		double[][] dados3 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"3"+execucao+"_MatrizConfusao.csv");
+		double[][] dados4 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"4"+execucao+"_MatrizConfusao.csv");
+		double[][] dados5 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"5"+execucao+"_MatrizConfusao.csv");
+		double[][] dados6 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"6"+execucao+"_MatrizConfusao.csv");
+		double[][] dados7 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"7"+execucao+"_MatrizConfusao.csv");
+		double[][] dados8 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"8"+execucao+"_MatrizConfusao.csv");
+		double[][] dados9 = arquivo.arquivoToMatrizDouble(nomeArquivo+inicio+"9"+execucao+"_MatrizConfusao.csv");
 
 		for(int i=1;i<dados0.length;i++){//priemira linha eh sempre igual (header)
 			for( int j=1;j<dados0[i].length;j++){//priemira coluna eh sempre igual (header)
@@ -270,20 +295,18 @@ public class Relatorio {
 		
 		
 		Output grava = new Output();
-		String[] linha = new String[1+dados0[0].length];
-		linha[0]="-1";
-		for(int i=0;i<dados0.length;i++){
-			linha[i+1]=","+String.valueOf(i);
-		}
-		
-		grava.escreveArquivo("log/dns/TESTEEE.csv", linha, false);
+		String[][] linha = new String[dados0.length][dados0[0].length];
 		
 		for (int i=0;i<dados0.length;i++){
-			linha[0]=String.valueOf(i)+",";
 			for (int j=0;j<dados0[i].length;j++){
-				linha[j+1]=String.valueOf((int)dados0[i][j])+",";//pega o valor do elemento da matriz
+				
+				linha[i][j]=String.valueOf((double)dados0[i][j])+",";//pega o valor do elemento da matriz
 			}
-			grava.escreveArquivo("log/dns/TESTEEE.csv", linha, true);
+		}	
+		
+		grava.escreveArquivo("log/dns/mediaMatrizConfusao"+inicio+execucao+".csv", linha[0], false);
+		for(int i=1;i<linha.length;i++){
+			grava.escreveArquivo("log/dns/mediaMatrizConfusao"+inicio+execucao+".csv", linha[i], true);
 		}
 		
 		//tem que fazer pra ele deletar a priemira linha e a primeira coluna
