@@ -93,8 +93,9 @@ public class LVQ {
 	public void ProgressaoTreinamento(String nomeArquivoLog){
 		
 		//intervalo entre epocas, que deve haver quando executar a progessaoTreinamento
-		int epocas = 1;	
+		int epocas =20;	
 		
+
 		//verifica se deve mostrar pogresso para epoca corrente.
 		if((this.numeroIteracoes % epocas)==0){ 
 			
