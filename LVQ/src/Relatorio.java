@@ -14,39 +14,22 @@ public class Relatorio {
 		//parametros objeto Inicializa - Fim
 		
 		//int quantidadeTestes =10;
-// int neuronioSaida, double taxaDeAprendizado, double reducaoAprendizado, int quantidadeVezes
+// int neuronioSaida, double taxaDeAprendizado, double reducaoAprendizado,max pioras,  int quantidadeVezes .. numeorHouldout
 		
-		String normalização = "MinMax";//muda pra qual normalizacao vc quer
-		//executaLVQ(normalização, nulo,  1, 0.5, 0, 1, "01xffgxgf");
-		/*executaLVQ(normalização, nulo,  1, 0.005, 0.00001, 1, "02");
-		executaLVQ(normalização, nulo,  1, 0.00005, 0.000000001, 1, "03");
-		executaLVQ(normalização, nulo,  5, 0.5, 0, 1, "04");
-		executaLVQ(normalização, nulo,  5, 0.005, 0.00001, 1, "05");
-		executaLVQ(normalização, nulo,  5, 0.00005, 0.000000001, 1, "06");
-		executaLVQ(normalização, nulo,  10, 0.5, 0, 1, "07");
-		executaLVQ(normalização, nulo,  10, 0.005, 0.00001, 1, "08");
-		executaLVQ(normalização, nulo,  10, 0.00005, 0.000000001, 1, "09");
-		executaLVQ(normalização, primEntrada,  1, 0.5, 0, 1, "10");
-		executaLVQ(normalização, primEntrada,  1, 0.005, 0.00001, 1, "11");
-		executaLVQ(normalização, primEntrada,  1, 0.00005, 0.000000001, 1, "12");
-		executaLVQ(normalização, primEntrada,  5, 0.5, 0, 1, "13");
-		executaLVQ(normalização, primEntrada,  5, 0.005, 0.00001, 1, "14");
-		executaLVQ(normalização, primEntrada,  5, 0.00005, 0.000000001, 1, "15");
-		executaLVQ(normalização, primEntrada,  10, 0.5, 0, 1, "16");
-		executaLVQ(normalização, primEntrada,  10, 0.005, 0.00001, 1, "17");
-		executaLVQ(normalização, primEntrada,  10, 0.00005, 0.000000001, 1, "18");
-		executaLVQ(normalização, random,  1, 0.5, 0, quantidadeTestes, "1");
-		executaLVQ(normalização, random,  1, 0.005, 0.00001, quantidadeTestes, "2");
-		executaLVQ(normalização, random,  1, 0.00005, 0.000000001, quantidadeTestes, "3");
-		executaLVQ(normalização, random,  5, 0.5, 0, quantidadeTestes, "4");
-		executaLVQ(normalização, random,  5, 0.005, 0.00001, quantidadeTestes, "6");
-		executaLVQ(normalização, random,  5, 0.00005, 0.000000001, quantidadeTestes, "6");
-		executaLVQ(normalização, random,  10, 0.5, 0, quantidadeTestes, "7");
-		executaLVQ(normalização, random,  10, 0.005, 0.00001, quantidadeTestes, "8");
-		executaLVQ(normalização, random,  10, 0.00005, 0.000000001, quantidadeTestes, "9");
-		*/
-		
-		executaLVQ("MinMax", random, 4, 0.00005, 0.000000001, 1, "olha esse aqui");
+		String normalizacao = "_bruto";//muda pra qual normalizacao vc quer
+		for(int i=0; i<10; i++){
+			//chama a funcao para gerar os logs de aprendizado
+			executaLVQ(normalizacao, nulo, 3, 0.01, 0.00001, 10, 1, String.valueOf(i)+"00", String.valueOf(i));
+		}
+		for(int i=0;i<10;i++){
+			//faz a media do aprendizado anterior
+			criaArquivoMediaAprendizado("log/dns/_bruto_zero_", 0/*quantidade de testes (se for random, fica 10 aqui) */ , "log/dns/_bruto_zero_0_MEDIA.csv", normalizacao, String.valueOf(i));
+		}
+		//testes para mostrar o resultado das normalizacoes
+		//executaLVQ("_bruto", random, 2, 0.00005, 0.000000001, 1, "olha esse aqui");
+		//executaLVQ("zScore", random, 2, 0.00005, 0.000000001, 1, "olha esse aqui");
+		//executaLVQ("minMax", random, 2, 0.00005, 0.000000001, 1, "olha esse aqui");
+		System.out.println("fez os testes das normalizacoes");
 		//executaLVQ("zScore", random, 4, 0.00005, 0.000000001, 10, "LucaszScore");
 		//System.out.println("Tempo Total de execucao: "+(System.currentTimeMillis()-tempoInicio));
 		
@@ -55,27 +38,27 @@ public class Relatorio {
 		System.out.println("feito o primeiro");
 		//criaArquivoMediaAprendizado("log/lucas/zScore_aleatoria_", quantidadeTestes , "log/lucas/logMediazScorealeatoria.csv", "zScore");
 		
-		executaLVQ("MinMax", nulo, 4, 0.00005, 0.000000001, 1, "LucasNulo");
-		executaLVQ("zScore", nulo, 4, 0.00005, 0.000000001, 1, "LucasNulo");
+		//executaLVQ("MinMax", primEntrada, 4, 0.00005, 0.000000001, 1, "LucasNulo");
+		//executaLVQ("zScore", nulo, 4, 0.00005, 0.000000001, 1, "LucasNulo");
 		
 	}
 	
 	//funcao para executar a LVQ com os parametros dados uma determinada quantidade de vezes criando os logs
-	static void executaLVQ(String normalizacao, String parametroInicio, int neuronioSaida, double taxaDeAprendizado, double reducaoAprendizado, int quantidadeVezes, String adicional){
+	static void executaLVQ(String normalizacao, String parametroInicio, int neuronioSaida, double taxaDeAprendizado, double reducaoAprendizado, int maxPioras,int quantidadeVezes, String adicional, String numeroHouldout){
 		for(int cont=0;cont<quantidadeVezes;cont++){//contador de vezes que testou
 			Log log = new Log();
-			String pasta = "log/lucas/";
+			String pasta = "log/dns/";
 			log.criaHead(pasta+normalizacao+"_"+parametroInicio+"_"+cont+"_"+adicional);
 			
 			
 			//Objeto responsavel por inicializar os pesos (neuronios de saida) e por alinhar os dados de teste recebidos da
 			//entrada.
 			//Recebe arquivo de dados de treinamento (ex: "entrada.txt"), e numero de neuronios de saida por cada classe (ex:"1")
-			Inicializa inicializa = new Inicializa("../dados/treino"+normalizacao+".csv","../dados/validacao"+normalizacao+".csv", neuronioSaida, parametroInicio);//coloca arquivo de treino
+			Inicializa inicializa = new Inicializa("../dados/holdout/treino"+normalizacao+numeroHouldout+".csv","../dados/holdout/validacao"+normalizacao+numeroHouldout+".csv", neuronioSaida, parametroInicio);//coloca arquivo de treino
 			
 			//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - inicio//
 			
-			int numeroFixo = 5000; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
+			int numeroFixo = 10000; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
 			//System.out.println("digite o numero de epocas:");
 			//int numeroFixo = sc.nextInt();
 			//System.out.println("digite a taxa de aprendizado:");
@@ -84,7 +67,7 @@ public class Relatorio {
 			//double reducaoAprendizado = sc.nextDouble();
 	 		double valorMinimo=0; //valor minimo que a taxa de aprendizado pode chegar (ex:0.1)
 			//System.out.println("digite o valor minimo que a taxa de aprendizado pode chegar");
-	 		int maxPioras = 10;
+	 		
 			//double valorMinimo = sc.nextDouble();
 			//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - fim// (ex:)
 			
@@ -94,7 +77,7 @@ public class Relatorio {
 			//taxa de reducao do Aprendizado e valor minimo que a taxa de reducao pode chegar)
 			LVQ lvq1 = new LVQ(inicializa, numeroFixo, taxaDeAprendizado, reducaoAprendizado, valorMinimo, maxPioras);
 			lvq1.Aprendizado(pasta+normalizacao+"_"+parametroInicio+"_" +cont+"_"+adicional);
-			String nomeArquivoTeste ="../dados/teste"+normalizacao+".csv";
+			String nomeArquivoTeste ="../dados/holdout/teste"+normalizacao+numeroHouldout+".csv";
 			double[] respostas = lvq1.Teste(nomeArquivoTeste);
 			MatrizConfusao confusao = new MatrizConfusao();
 			confusao.adicionaMatriz(nomeArquivoTeste, respostas);
@@ -114,9 +97,9 @@ public class Relatorio {
 		return media;
 	}
 	
-	static void criaArquivoMediaAprendizado(String arquivoLeitura, int quantidadeArquivos, String arquivoGravacao, String normalizacao){
+	static void criaArquivoMediaAprendizado(String arquivoLeitura, int quantidadeArquivos, String arquivoGravacao, String normalizacao,String numeroHouldout){
 		Input le = new Input();
-		double[][] dados = le.arquivoComHeadToMatrizDouble(arquivoLeitura+0+"_Lucas"+normalizacao+"Aprendizado.csv");
+		double[][] dados = le.arquivoComHeadToMatrizDouble(arquivoLeitura+0+"_"+numeroHouldout+"00Aprendizado.csv");
 		
 		for(int i=1;i<quantidadeArquivos;i++){//ja leu o primeiro
 			double[][] media = le.arquivoComHeadToMatrizDouble(arquivoLeitura+i+"_Lucas"+normalizacao+"Aprendizado.csv");
