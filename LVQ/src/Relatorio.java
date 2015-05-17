@@ -3,6 +3,7 @@ import java.util.Scanner;
 //classe criada para gerar todos os arquivos necessarios ( logs ) para o relatorio
 public class Relatorio {
 	public static void main (String[] argq){
+		
 		System.out.println("executando o relatorio");
 		long tempoInicio = System.currentTimeMillis(); 
 		//------------- TREINAMENTO ---------------//
@@ -15,16 +16,93 @@ public class Relatorio {
 		
 		//int quantidadeTestes =10;
 // int neuronioSaida, double taxaDeAprendizado, double reducaoAprendizado,max pioras,  int quantidadeVezes .. numeorHouldout
-		
+		double[][] media = criaMediaMatrizConfusao("log/dns/_bruto_aleatoria_0_");
+		criaDesVioPadraoMatrizConfusao("log/dns/_bruto_aleatoria_0_", media);
 		String normalizacao = "_bruto";//muda pra qual normalizacao vc quer
-		for(int i=0; i<10; i++){
-			//chama a funcao para gerar os logs de aprendizado
-			executaLVQ(normalizacao, nulo, 3, 0.01, 0.00001, 10, 1, String.valueOf(i)+"00", String.valueOf(i));
+		/*for(int i=0; i<10; i++){//chama a funcao para gerar os logs de aprendizado
+			executaLVQ(normalizacao, nulo, 1, 0.01, 0.00001, 1, 1, String.valueOf(i)+"00", String.valueOf(i));
+			executaLVQ(normalizacao, nulo, 1, 0.0001, 0.0000001, 1, 1, String.valueOf(i)+"01", String.valueOf(i));
+			executaLVQ(normalizacao, nulo, 1, 0.000001, 0.000000001, 1, 1, String.valueOf(i)+"02", String.valueOf(i));
+
+			executaLVQ(normalizacao, nulo, 1, 0.01, 0.00001, 3, 1, String.valueOf(i)+"03", String.valueOf(i));
+			executaLVQ(normalizacao, nulo, 1, 0.0001, 0.0000001, 3, 1, String.valueOf(i)+"04", String.valueOf(i));
+			executaLVQ(normalizacao, nulo, 1, 0.000001, 0.000000001, 3, 1, String.valueOf(i)+"05", String.valueOf(i));
+
+			executaLVQ(normalizacao, nulo, 5, 0.01, 0.00001, 1, 1, String.valueOf(i)+"06", String.valueOf(i));
+			executaLVQ(normalizacao, nulo, 5, 0.0001, 0.0000001, 1, 1, String.valueOf(i)+"07", String.valueOf(i));
+			executaLVQ(normalizacao, nulo, 5, 0.000001, 0.000000001, 1, 1, String.valueOf(i)+"08", String.valueOf(i));
+
+			executaLVQ(normalizacao, nulo, 5, 0.01, 0.00001, 3, 1, String.valueOf(i)+"09", String.valueOf(i));
+			executaLVQ(normalizacao, nulo, 5, 0.0001, 0.0000001, 3, 1, String.valueOf(i)+"10", String.valueOf(i));
+			executaLVQ(normalizacao, nulo, 5, 0.000001, 0.000000001, 3, 1, String.valueOf(i)+"11", String.valueOf(i));
+
+			executaLVQ(normalizacao, nulo, 10, 0.01, 0.00001, 1, 1, String.valueOf(i)+"12", String.valueOf(i));
+			executaLVQ(normalizacao, nulo, 10, 0.0001, 0.0000001, 1, 1, String.valueOf(i)+"13", String.valueOf(i));
+			executaLVQ(normalizacao, nulo, 10, 0.000001, 0.000000001, 1, 1, String.valueOf(i)+"14", String.valueOf(i));
+
+			executaLVQ(normalizacao, nulo, 10, 0.01, 0.00001, 3, 1, String.valueOf(i)+"15", String.valueOf(i));
+			executaLVQ(normalizacao, nulo, 10, 0.0001, 0.0000001, 3, 1, String.valueOf(i)+"16", String.valueOf(i));
+			executaLVQ(normalizacao, nulo, 10, 0.000001, 0.000000001, 3, 1, String.valueOf(i)+"17", String.valueOf(i));
+
+			executaLVQ(normalizacao, primEntrada, 1, 0.01, 0.00001, 1, 1, String.valueOf(i)+"00", String.valueOf(i));
+			executaLVQ(normalizacao, primEntrada, 1, 0.0001, 0.0000001, 1, 1, String.valueOf(i)+"01", String.valueOf(i));
+			executaLVQ(normalizacao, primEntrada, 1, 0.000001, 0.000000001, 1, 1, String.valueOf(i)+"02", String.valueOf(i));
+
+			executaLVQ(normalizacao, primEntrada, 1, 0.01, 0.00001, 3, 1, String.valueOf(i)+"03", String.valueOf(i));
+			executaLVQ(normalizacao, primEntrada, 1, 0.0001, 0.0000001, 3, 1, String.valueOf(i)+"04", String.valueOf(i));
+			executaLVQ(normalizacao, primEntrada, 1, 0.000001, 0.000000001, 3, 1, String.valueOf(i)+"05", String.valueOf(i));
+
+			executaLVQ(normalizacao, primEntrada, 5, 0.01, 0.00001, 1, 1, String.valueOf(i)+"06", String.valueOf(i));
+			executaLVQ(normalizacao, primEntrada, 5, 0.0001, 0.0000001, 1, 1, String.valueOf(i)+"07", String.valueOf(i));
+			executaLVQ(normalizacao, primEntrada, 5, 0.000001, 0.000000001, 1, 1, String.valueOf(i)+"08", String.valueOf(i));
+
+			executaLVQ(normalizacao, primEntrada, 5, 0.01, 0.00001, 3, 1, String.valueOf(i)+"09", String.valueOf(i));
+			executaLVQ(normalizacao, primEntrada, 5, 0.0001, 0.0000001, 3, 1, String.valueOf(i)+"10", String.valueOf(i));
+			executaLVQ(normalizacao, primEntrada, 5, 0.000001, 0.000000001, 3, 1, String.valueOf(i)+"11", String.valueOf(i));
+
+			executaLVQ(normalizacao, primEntrada, 10, 0.01, 0.00001, 1, 1, String.valueOf(i)+"12", String.valueOf(i));
+			executaLVQ(normalizacao, primEntrada, 10, 0.0001, 0.0000001, 1, 1, String.valueOf(i)+"13", String.valueOf(i));
+			executaLVQ(normalizacao, primEntrada, 10, 0.000001, 0.000000001, 1, 1, String.valueOf(i)+"14", String.valueOf(i));
+
+			executaLVQ(normalizacao, primEntrada, 10, 0.01, 0.00001, 3, 1, String.valueOf(i)+"15", String.valueOf(i));
+			executaLVQ(normalizacao, primEntrada, 10, 0.0001, 0.0000001, 3, 1, String.valueOf(i)+"16", String.valueOf(i));
+			executaLVQ(normalizacao, primEntrada, 10, 0.000001, 0.000000001, 3, 1, String.valueOf(i)+"17", String.valueOf(i));
+
+			executaLVQ(normalizacao, random, 1, 0.01, 0.00001, 1, 1, String.valueOf(i)+"00", String.valueOf(i));
+			executaLVQ(normalizacao, random, 1, 0.0001, 0.0000001, 1, 1, String.valueOf(i)+"01", String.valueOf(i));
+			executaLVQ(normalizacao, random, 1, 0.000001, 0.000000001, 1, 1, String.valueOf(i)+"02", String.valueOf(i));
+
+			executaLVQ(normalizacao, random, 1, 0.01, 0.00001, 3, 1, String.valueOf(i)+"03", String.valueOf(i));
+			executaLVQ(normalizacao, random, 1, 0.0001, 0.0000001, 3, 1, String.valueOf(i)+"04", String.valueOf(i));
+			executaLVQ(normalizacao, random, 1, 0.000001, 0.000000001, 3, 1, String.valueOf(i)+"05", String.valueOf(i));
+
+			executaLVQ(normalizacao, random, 5, 0.01, 0.00001, 1, 1, String.valueOf(i)+"06", String.valueOf(i));
+			executaLVQ(normalizacao, random, 5, 0.0001, 0.0000001, 1, 1, String.valueOf(i)+"07", String.valueOf(i));
+			executaLVQ(normalizacao, random, 5, 0.000001, 0.000000001, 1, 1, String.valueOf(i)+"08", String.valueOf(i));
+
+			executaLVQ(normalizacao, random, 5, 0.01, 0.00001, 3, 1, String.valueOf(i)+"09", String.valueOf(i));
+			executaLVQ(normalizacao, random, 5, 0.0001, 0.0000001, 3, 1, String.valueOf(i)+"10", String.valueOf(i));
+			executaLVQ(normalizacao, random, 5, 0.000001, 0.000000001, 3, 1, String.valueOf(i)+"11", String.valueOf(i));
+
+			executaLVQ(normalizacao, random, 10, 0.01, 0.00001, 1, 1, String.valueOf(i)+"12", String.valueOf(i));
+			executaLVQ(normalizacao, random, 10, 0.0001, 0.0000001, 1, 1, String.valueOf(i)+"13", String.valueOf(i));
+			executaLVQ(normalizacao, random, 10, 0.000001, 0.000000001, 1, 1, String.valueOf(i)+"14", String.valueOf(i));
+
+			executaLVQ(normalizacao, random, 10, 0.01, 0.00001, 3, 1, String.valueOf(i)+"15", String.valueOf(i));
+			executaLVQ(normalizacao, random, 10, 0.0001, 0.0000001, 3, 1, String.valueOf(i)+"16", String.valueOf(i));
+			executaLVQ(normalizacao, random, 10, 0.000001, 0.000000001, 3, 1, String.valueOf(i)+"17", String.valueOf(i));
 		}
+		System.out.println("vai gerar a media agora");
 		for(int i=0;i<10;i++){
 			//faz a media do aprendizado anterior
-			criaArquivoMediaAprendizado("log/dns/_bruto_zero_", 0/*quantidade de testes (se for random, fica 10 aqui) */ , "log/dns/_bruto_zero_0_MEDIA.csv", normalizacao, String.valueOf(i));
-		}
+			//0 porque quantidade de testes (se for random, fica 10 aqui)
+			criaArquivoMediaAprendizado("log/dns/_bruto_zero_0_", 0, "log/dns/_bruto_aleatoria_00_MEDIAaprendizado.csv", "_bruto", String.valueOf(i));
+			criaArquivoMediaAprendizado("log/dns/_bruto_aleatoria_0_", 0, "log/dns/_bruto_primeiraEntraa_0_MEDIAaprendizado.csv", "_bruto", String.valueOf(i));
+			criaArquivoMediaAprendizado("log/dns/_bruto_primeiraEntrada_0_", 0, "log/dns/_bruto_zero_0_MEDIAaprendizado.csv", "_bruto", String.valueOf(i));
+			
+		}*/
+		System.out.println("gerou a media");
+		
 		//testes para mostrar o resultado das normalizacoes
 		//executaLVQ("_bruto", random, 2, 0.00005, 0.000000001, 1, "olha esse aqui");
 		//executaLVQ("zScore", random, 2, 0.00005, 0.000000001, 1, "olha esse aqui");
@@ -99,10 +177,10 @@ public class Relatorio {
 	
 	static void criaArquivoMediaAprendizado(String arquivoLeitura, int quantidadeArquivos, String arquivoGravacao, String normalizacao,String numeroHouldout){
 		Input le = new Input();
-		double[][] dados = le.arquivoComHeadToMatrizDouble(arquivoLeitura+0+"_"+numeroHouldout+"00Aprendizado.csv");
+		double[][] dados = le.arquivoComHeadToMatrizDouble(arquivoLeitura+"000"+"Aprendizado.csv");
 		
 		for(int i=1;i<quantidadeArquivos;i++){//ja leu o primeiro
-			double[][] media = le.arquivoComHeadToMatrizDouble(arquivoLeitura+i+"_Lucas"+normalizacao+"Aprendizado.csv");
+			double[][] media = le.arquivoComHeadToMatrizDouble(arquivoLeitura+i+"00"+"Aprendizado.csv");
 			dados= mediaMatriz(media, dados);
 		}
 		
@@ -121,5 +199,94 @@ public class Relatorio {
 			}
 			grava.escreveArquivo(arquivoGravacao, s, true);
 		}
+	}
+	
+	static void criaDesVioPadraoMatrizConfusao(String nomeArquivo, double[][] media){
+		Input arquivo = new Input();
+		double[][] dados0 = arquivo.arquivoToMatrizDouble(nomeArquivo+"000_MatrizConfusao.csv");
+		double[][] dados1 = arquivo.arquivoToMatrizDouble(nomeArquivo+"100_MatrizConfusao.csv");
+		double[][] dados2 = arquivo.arquivoToMatrizDouble(nomeArquivo+"200_MatrizConfusao.csv");
+		double[][] dados3 = arquivo.arquivoToMatrizDouble(nomeArquivo+"300_MatrizConfusao.csv");
+		double[][] dados4 = arquivo.arquivoToMatrizDouble(nomeArquivo+"400_MatrizConfusao.csv");
+		double[][] dados5 = arquivo.arquivoToMatrizDouble(nomeArquivo+"500_MatrizConfusao.csv");
+		double[][] dados6 = arquivo.arquivoToMatrizDouble(nomeArquivo+"600_MatrizConfusao.csv");
+		double[][] dados7 = arquivo.arquivoToMatrizDouble(nomeArquivo+"700_MatrizConfusao.csv");
+		double[][] dados8 = arquivo.arquivoToMatrizDouble(nomeArquivo+"800_MatrizConfusao.csv");
+		double[][] dados9 = arquivo.arquivoToMatrizDouble(nomeArquivo+"900_MatrizConfusao.csv");
+		
+		for(int i=1;i<dados0.length;i++){// priemeira linha e primeira coluna sao iguais
+			for(int j=1;j<dados0[i].length;j++){
+				double variancia = Math.pow(dados0[i][j]-media[i][j], 2) + Math.pow(dados1[i][j]-media[i][j], 2) + 
+						Math.pow(dados2[i][j]-media[i][j], 2) + Math.pow(dados3[i][j]-media[i][j], 2) +  Math.pow(dados4[i][j]-media[i][j], 2)
+						+ Math.pow(dados5[i][j]-media[i][j], 2) + Math.pow(dados6[i][j]-media[i][j], 2) + Math.pow(dados7[i][j]-media[i][j], 2)
+						+ Math.pow(dados8[i][j]-media[i][j], 2) + Math.pow(dados8[i][j]-media[i][j], 2);
+				variancia = variancia/9;//10 -1
+				double desvioPadrao = Math.sqrt(variancia);
+				dados0[i][j] = desvioPadrao;
+				System.out.print(dados0[i][j]+" ");
+			}
+			System.out.println();
+		}
+		
+		Output grava = new Output();
+		String[] linha = new String[1+dados0[0].length];
+		linha[0]="-1";
+		for(int i=0;i<dados0.length;i++){
+			linha[i+1]=","+String.valueOf(i);
+		}
+		
+		grava.escreveArquivo("log/dns/desviopadrao.csv", linha, false);
+		
+		for (int i=0;i<dados0.length;i++){
+			linha[0]=String.valueOf(i)+",";
+			for (int j=0;j<dados0[i].length;j++){
+				linha[j+1]=String.valueOf((int)dados0[i][j])+",";//pega o valor do elemento da matriz
+			}
+			grava.escreveArquivo("log/dns/desviopadrao.csv", linha, true);
+		}
+		
+	}
+	static double[][] criaMediaMatrizConfusao(String nomeArquivo){
+		Input arquivo = new Input();
+		double[][] dados0 = arquivo.arquivoToMatrizDouble(nomeArquivo+"000_MatrizConfusao.csv");
+		double[][] dados1 = arquivo.arquivoToMatrizDouble(nomeArquivo+"100_MatrizConfusao.csv");
+		double[][] dados2 = arquivo.arquivoToMatrizDouble(nomeArquivo+"200_MatrizConfusao.csv");
+		double[][] dados3 = arquivo.arquivoToMatrizDouble(nomeArquivo+"300_MatrizConfusao.csv");
+		double[][] dados4 = arquivo.arquivoToMatrizDouble(nomeArquivo+"400_MatrizConfusao.csv");
+		double[][] dados5 = arquivo.arquivoToMatrizDouble(nomeArquivo+"500_MatrizConfusao.csv");
+		double[][] dados6 = arquivo.arquivoToMatrizDouble(nomeArquivo+"600_MatrizConfusao.csv");
+		double[][] dados7 = arquivo.arquivoToMatrizDouble(nomeArquivo+"700_MatrizConfusao.csv");
+		double[][] dados8 = arquivo.arquivoToMatrizDouble(nomeArquivo+"800_MatrizConfusao.csv");
+		double[][] dados9 = arquivo.arquivoToMatrizDouble(nomeArquivo+"900_MatrizConfusao.csv");
+
+		for(int i=1;i<dados0.length;i++){//priemira linha eh sempre igual (header)
+			for( int j=1;j<dados0[i].length;j++){//priemira coluna eh sempre igual (header)
+				dados0[i][j] = dados0[i][j]+dados1[i][j]+dados2[i][j]+dados3[i][j]+dados4[i][j]+dados5[i][j]
+						+dados6[i][j]+dados7[i][j]+dados8[i][j]+dados9[i][j];
+				dados0[i][j]= dados0[i][j]/10;
+			}
+		}
+		
+		
+		
+		Output grava = new Output();
+		String[] linha = new String[1+dados0[0].length];
+		linha[0]="-1";
+		for(int i=0;i<dados0.length;i++){
+			linha[i+1]=","+String.valueOf(i);
+		}
+		
+		grava.escreveArquivo("log/dns/TESTEEE.csv", linha, false);
+		
+		for (int i=0;i<dados0.length;i++){
+			linha[0]=String.valueOf(i)+",";
+			for (int j=0;j<dados0[i].length;j++){
+				linha[j+1]=String.valueOf((int)dados0[i][j])+",";//pega o valor do elemento da matriz
+			}
+			grava.escreveArquivo("log/dns/TESTEEE.csv", linha, true);
+		}
+		
+		//tem que fazer pra ele deletar a priemira linha e a primeira coluna
+		return dados0;
 	}
 }
