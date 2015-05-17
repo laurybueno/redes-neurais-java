@@ -1,4 +1,7 @@
-﻿import java.security.MessageDigest;
+﻿import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -123,6 +126,10 @@ public class Rede {
 		private static final int VALIDACAO = 1;
 		private static final int TESTE = 2;
 		
+		// cria uma referência no tempo para ser usada na criação de arquivos de log
+		private Date date;
+		
+		
 		// construtor recebe todas as linhas do banco de dados 
 		public Treinamento(double[][] treinamento, int[] classeTr,	
 					double[][] validacao, int[] classeV,
@@ -134,6 +141,8 @@ public class Rede {
 			this.teste = new Tupla[classeTe.length];
 			
 			this.aprendizado = aprendizado;
+			
+			this.date = new Date();
 			
 			// cria todas as tuplas de treinamento
 			for(int i = 0; i < classeTr.length; i++){
@@ -180,7 +189,6 @@ public class Rede {
 			Log logValidacao = new Log();
 			
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-			Date date = new Date();
 			
 			logTreinamento.setNomeArquivo("redesTreinamento_"+"_nE"+camadaEscondida.length+"_tA"+aprendizado+"__"+dateFormat.format(date));
 			logValidacao.setNomeArquivo("redesValidacao_"+"_nE"+camadaEscondida.length+"_tA"+aprendizado+"__"+dateFormat.format(date));
@@ -237,8 +245,7 @@ public class Rede {
 			
 			/* Agora que a melhor rede possível foi encontrada, 
 			 * ela deve ser avaliada pelo conjunto de teste.
-			 * Esse resultado será guardado na última linha do arquivo
-			 * de validação.
+			 * Esse resultado será guardado em um arquivo de log específico.
 			 */
 			
 			double errosFinal = erros(TESTE, melhorRede);
@@ -405,6 +412,41 @@ public class Rede {
 			return matriz;
 		}
 		
+		/* 
+		 * Recebe uma matriz de confusão e a printa na tela e salva em arquivo
+		 */
+		private String printaMatriz(int[][] matriz) {
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+			PrintStream pr;
+
+			try {
+				pr = new PrintStream(new File("matrizConfusao_"+"_nE"+camadaEscondida.length+"_tA"+aprendizado+"__"+dateFormat.format(date)));
+
+				// printa os header de colunas
+				for (int i = 0; i < 10; i++) {
+					pr.print("	"+i);
+				}
+
+				// printa matriz
+				for (int i = 0; i < matriz.length; i++) {
+					pr.println("	"+i);
+					for (int j = 0; j < matriz[i].length; j++) {
+						pr.print("	"+matriz[i][j]);
+					}
+					pr.println();
+				}
+				pr.close();
+				return pr.toString();
+
+
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			
+			return "erro para imprimir a matriz de confusão";
+		}
+
 
 	} // fim da classe aninhada de Treinamento
 	
