@@ -7,24 +7,31 @@
 	*/
 	
 	public static void main(String[] args){
+		if(args.length < 6) {
+			System.out.println("Uso: MLP [arquivo de entrada] [arquivo de validacao] [arquivo de teste] " +
+					"[taxa de aprendizado inicial] [num. de neuronios na camada escondida] [inicializacao de pesos aleatoria (true/false)]");
+			System.exit(1);
+		}
 		
-		/*
-		Tupla[] entrada = converteTupla(Arquivo.csvToDouble("../dados/and.csv"));
-		Tupla[] validacao = converteTupla(Arquivo.csvToDouble("../dados/and.csv"));
-		Tupla[] teste = converteTupla(Arquivo.csvToDouble("../dados/and.csv"));
-		*/
-
-		Tupla[] entrada = converteTupla(Arquivo.csvToDouble("../dados/testes_brutos/treino.csv"));
-		Tupla[] validacao = converteTupla(Arquivo.csvToDouble("../dados/testes_brutos/validacao.csv"));
-		Tupla[] teste = converteTupla(Arquivo.csvToDouble("../dados/testes_brutos/teste.csv"));
-
-		Rede mlp = new Rede(entrada[0].length(),15,10,true);
-		
-		Rede.Treinamento train = mlp.new Treinamento(entrada, validacao, teste, 0.001);
-		
-		train.executar(100,20);
-		
-		System.out.println(mlp.toString());
+		try {
+			Tupla[] entrada = converteTupla(Arquivo.csvToDouble(args[0]));
+			Tupla[] validacao = converteTupla(Arquivo.csvToDouble(args[1]));
+			Tupla[] teste = converteTupla(Arquivo.csvToDouble(args[2]));
+			double taxaAprendizadoInicial = Double.parseDouble(args[3]);
+			int neuroniosCamadaEscondida = Integer.parseInt(args[4]);
+			boolean pesosAleatorios = Boolean.parseBoolean(args[5]);
+			
+			Rede mlp = new Rede(entrada[0].length(),neuroniosCamadaEscondida,10,pesosAleatorios);
+			
+			Rede.Treinamento train = mlp.new Treinamento(entrada, validacao, teste, taxaAprendizadoInicial);
+			
+			train.executar(100,20);
+			
+			System.out.println(mlp.toString());
+		} catch(Exception e) {
+			System.out.println("Argumentos preenchidos incorretamente! Consulte o arquivo readme.txt para mais detalhes.");
+			System.exit(1);
+		}
 		
 	}
 	
