@@ -248,12 +248,17 @@ public class Rede {
 			 * Esse resultado será guardado em um arquivo de log específico.
 			 */
 			
+			
+			Log logTeste = new Log();
+			logTeste.setNomeArquivo("redesTeste_"+"_nE"+camadaEscondida.length+"_tA"+aprendizado+"__"+dateFormat.format(date));
+			
 			double errosFinal = erros(TESTE, melhorRede);
-			logValidacao.addDados(0,errosFinal,aprendizado);
+			logTeste.addDados(EpocasExecutadas,errosFinal,aprendizado);
 			
 			// descarrega os logs em disco
 			logValidacao.gravaArquivo();
 			logTreinamento.gravaArquivo();
+			logTeste.gravaArquivo();
 			
 			System.out.println("Melhor desempenho alcançado em validação: "+melhorResultado);
 			System.out.println("Desempenho em teste: "+errosFinal);
@@ -395,8 +400,9 @@ public class Rede {
 			return erros(META,Rede.this);
 		}
 		
-		/* Cria e printa a matriz de confusão da rede neural especificada
-		 * via parâmetro. Esse mapeamento sempre será feito com o conjunto de teste.
+		/* Cria a matriz de confusão da rede neural especificada
+		 * via parâmetro. Esse mapeamento sempre será 
+		 * feito com o conjunto de teste.
 		 * As linhas da matriz gerada representam a realidade, 
 		 * enquanto as colunas mostram as respostas da rede.
 		 */
