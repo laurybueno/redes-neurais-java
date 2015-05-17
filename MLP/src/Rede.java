@@ -1,7 +1,6 @@
 ﻿import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -91,7 +90,7 @@ public class Rede {
 	/* Gerador de hash MD5 para Rede.
 	*  Usa os hashs gerados por todos os neurônios para criar um identificador único da Rede atual.
 	*/
-	/*
+
 	public String hashString(){
 
 		double hash = 1;
@@ -107,7 +106,6 @@ public class Rede {
 
 
 	}
-	*/
 	
 	
 	//************* Controle para treinamento *********************//
@@ -173,6 +171,9 @@ public class Rede {
 		}
 
 		
+		// a melhor rede que for encontrada em treinamento, será guardada nessa variável
+		Rede melhorRede;
+		
 		// Ponto de entrada para o algoritmo de treinamento.
 		// "intervalo" armazena o intervalo de épocas em que a rede passará por validação
 		// "fracassos" determina quantos intervalos fracassados serão tolerados antes de o método desistir e retornar a melhor Rede encontrada até o momento
@@ -183,7 +184,7 @@ public class Rede {
 			
 			// se prepara para armazenar a a rede de melhor desempenho encontrada até o momento
 			double melhorResultado = Double.MAX_VALUE;
-			Rede melhorRede = null;
+			melhorRede = null;
 			double atualResultado;
 			int fracassosSeguidos = 0;
 
@@ -251,12 +252,11 @@ public class Rede {
 			 * Esse resultado será guardado em um arquivo de log específico.
 			 */
 			
-			
 			Log logTeste = new Log();
 			logTeste.setNomeArquivo("redesTeste_"+"_nE"+camadaEscondida.length+"_tA"+aprendizado+"__"+dateFormat.format(date));
 			
 			double errosFinal = erros(TESTE, melhorRede);
-			logTeste.addDados(EpocasExecutadas,errosFinal,aprendizado);
+			logTeste.addDados(EpocasExecutadas,errosFinal,aprendizado,melhorRede.hashString());
 			
 			// descarrega os logs em disco
 			logValidacao.gravaArquivo();
@@ -268,6 +268,9 @@ public class Rede {
 			
 			// prepara e salva em disco a matriz de confusão
 			salvaMatriz(matrizConfusao(melhorRede));
+			
+			// salva em disco a melhorRede
+			this.salva(melhorRede);
 			
 			// retorna a melhor rede neural encontrada no processo de treinamento
 			return melhorRede;
@@ -434,9 +437,16 @@ public class Rede {
 
 			try {
 				pr = new PrintStream(new File("matrizConfusao_"+"_nE"+camadaEscondida.length+"_tA"+aprendizado+"__"+dateFormat.format(date)+".csv"));
-				pr.print("	");
-
+				
+				// printa um cabeçalho identificando a rede
+				pr.print("Rede id: "+melhorRede.hashString());
+				pr.println();
+				
+				pr.print("Linhas representam a realidade, enquanto colunas mostram as respostas da rede.");
+				pr.println();
+				
 				// printa os header de colunas
+				pr.print("	");
 				for (int i = 0; i < 10; i++) {
 					pr.print("	"+i);
 				}
@@ -457,6 +467,26 @@ public class Rede {
 			}
 			
 		}
+		
+		// Salva a instância especificada de Rede em disco
+		public void salva(Rede mlp){
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+			PrintStream pr;
+
+			try {
+				pr = new PrintStream(new File("redeFinal_"+"_nE"+camadaEscondida.length+"_tA"+aprendizado+"__"+dateFormat.format(date)+".csv"));
+				
+				// printa um cabeçalho identificando a rede
+				pr.print("Rede id: "+mlp.hashString());
+				pr.println();
+				
+				// printa os header de colunas
+				pr.print(mlp.toString());
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+
 
 
 	} // fim da classe aninhada de Treinamento
@@ -506,6 +536,7 @@ public class Rede {
 		return Rede.fromString(this.toString());
 	}
 	
+		
 	// especifica como salvar a rede em formato String
 	public String toString(){
 		StringBuffer rede = new StringBuffer();
