@@ -167,6 +167,7 @@ public class Rede {
 			this.validacao = validacao;
 			this.teste = teste;
 			this.aprendizado = aprendizado;
+			this.date = new Date();
 		}
 
 		
@@ -190,8 +191,8 @@ public class Rede {
 			
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 			
-			logTreinamento.setNomeArquivo("redesTreinamento_"+"_nE"+camadaEscondida.length+"_tA"+aprendizado+"__"+dateFormat.format(date));
-			logValidacao.setNomeArquivo("redesValidacao_"+"_nE"+camadaEscondida.length+"_tA"+aprendizado+"__"+dateFormat.format(date));
+			logTreinamento.setNomeArquivo("redesTreinamento_"+"_nE"+camadaEscondida.length+"_tA"+aprendizado+"__"+dateFormat.format(this.date));
+			logValidacao.setNomeArquivo("redesValidacao_"+"_nE"+camadaEscondida.length+"_tA"+aprendizado+"__"+dateFormat.format(this.date));
 			
 			
 			// while determina quando a melhoria não é mais suficiente para prosseguir o treinamento
@@ -262,6 +263,9 @@ public class Rede {
 			
 			System.out.println("Melhor desempenho alcançado em validação: "+melhorResultado);
 			System.out.println("Desempenho em teste: "+errosFinal);
+			
+			// prepara e salva em disco a matriz de confusão
+			salvaMatriz(matrizConfusao(melhorRede));
 			
 			// retorna a melhor rede neural encontrada no processo de treinamento
 			return melhorRede;
@@ -419,38 +423,37 @@ public class Rede {
 		}
 		
 		/* 
-		 * Recebe uma matriz de confusão e a printa na tela e salva em arquivo
+		 * Recebe uma matriz de confusão e a salva em arquivo
 		 */
-		private String printaMatriz(int[][] matriz) {
+		private void salvaMatriz(int[][] matriz) {
 			
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 			PrintStream pr;
 
 			try {
-				pr = new PrintStream(new File("matrizConfusao_"+"_nE"+camadaEscondida.length+"_tA"+aprendizado+"__"+dateFormat.format(date)));
+				pr = new PrintStream(new File("matrizConfusao_"+"_nE"+camadaEscondida.length+"_tA"+aprendizado+"__"+dateFormat.format(date)+".csv"));
+				pr.print("	");
 
 				// printa os header de colunas
 				for (int i = 0; i < 10; i++) {
 					pr.print("	"+i);
 				}
+				pr.println();
 
 				// printa matriz
 				for (int i = 0; i < matriz.length; i++) {
-					pr.println("	"+i);
+					pr.print("	"+i);
 					for (int j = 0; j < matriz[i].length; j++) {
 						pr.print("	"+matriz[i][j]);
 					}
 					pr.println();
 				}
 				pr.close();
-				return pr.toString();
-
 
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
 			
-			return "erro para imprimir a matriz de confusão";
 		}
 
 

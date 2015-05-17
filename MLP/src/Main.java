@@ -1,7 +1,4 @@
-﻿import java.util.Arrays;
-
-
-public class Main {
+﻿public class Main {
 	
 	/* 
 	Esta classe é o ponto de entrada para a rede neural MLP.
@@ -9,35 +6,23 @@ public class Main {
 	Também é daqui que vem a interface básica para controle do usuário.
 	*/
 	
-	
-	// define quantos neurônios deverão existir na primeira camada
-	int camadaEntrada = 10;
-			
-	// define quantos neurônios deverão existir na camada escondida
-	int camadaEscondida = 10;
-			
-	// define quantos neurônios deverao existir na camada de saída
-	int camadaSaida = 10;
-	
-	
-	
 	public static void main(String[] args){
 		
-		double[][] ent = Arquivo.csvToDouble("../dados/testes_brutos/treino.csv");
-		double[][] val = Arquivo.csvToDouble("../dados/testes_brutos/validacao.csv");
-		double[][] tes = Arquivo.csvToDouble("../dados/testes_brutos/teste.csv");
+		/*
+		Tupla[] entrada = converteTupla(Arquivo.csvToDouble("../dados/and.csv"));
+		Tupla[] validacao = converteTupla(Arquivo.csvToDouble("../dados/and.csv"));
+		Tupla[] teste = converteTupla(Arquivo.csvToDouble("../dados/and.csv"));
+		*/
+
+		Tupla[] entrada = converteTupla(Arquivo.csvToDouble("../dados/testes_brutos/treino.csv"));
+		Tupla[] validacao = converteTupla(Arquivo.csvToDouble("../dados/testes_brutos/validacao.csv"));
+		Tupla[] teste = converteTupla(Arquivo.csvToDouble("../dados/testes_brutos/teste.csv"));
+
+		Rede mlp = new Rede(entrada[0].length(),15,10,true);
 		
-		Tupla[] entrada = converteTupla(ent);
-		Tupla[] validacao = converteTupla(val);
-		Tupla[] teste = converteTupla(tes);
-		
-		Rede mlp = new Rede(64,10,10);
-		
-		
-		//System.out.println(mlp.toString());
 		Rede.Treinamento train = mlp.new Treinamento(entrada, validacao, teste, 0.001);
 		
-		train.executar(100,2000);
+		train.executar(100,20);
 		
 		System.out.println(mlp.toString());
 		
