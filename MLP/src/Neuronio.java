@@ -128,20 +128,13 @@ public class Neuronio {
 	/* Cria um cósigo hash para a instância atual de neurônio
 	*  Para tanto, ele multiplica todos os pesos uns pelos outros e retorna o inteiro resultanta.
 	*/
-	public int hashCode(){
-		double produto = vies;
+	public double hash(){
+		Double produto = new Double(vies);
 		
 		for(int i = 0; i < peso.length; i++){
 			produto *= peso[i];
 		}
-		
-		// Passa seis casas decimais do produto para a parte inteira do número.
-		// Dessa forma, melhoram as chances de o intValue retornar um valor único para essa combinação de pesos.
-		produto *= 1000000;
-		
-		Double ret = new Double(produto);
-		
-		return ret.intValue();
+		return produto;
 	}
 	
 	// Guarda informações que serão usadas para calcular o erro quadrado da instância de Neuronio

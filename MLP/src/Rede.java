@@ -93,17 +93,19 @@ public class Rede {
 	*/
 	/*
 	public String hashString(){
-		
-		MessageDigest md = MessageDigest.getInstance("MD5");
-		
+
+		double hash = 1;
+
 		// concatena todos os hashs MD5 dos Neurônios desta Rede e gera um novo MD5
 		for(int i = 0; i <  camadaEscondida.length; i++)
-			md.update(camadaEscondida[i].hashCode());
-		
+			hash *= camadaEscondida[i].hash();
+
 		for(int i = 0; i <  camadaSaida.length; i++)
-			md.update(camadaSaida[i].hashCode());
+			hash += camadaSaida[i].hash();
 		
-		return md.toString();
+		return Double.toString(hash);
+
+
 	}
 	*/
 	
