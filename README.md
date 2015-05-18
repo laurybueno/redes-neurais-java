@@ -21,4 +21,5 @@ Repositório para o EP sobre Redes Neurais preparado para a professora Sarajane 
         Projeto para fazer as normalizações, deletar atributos e fazer o holdout.
     ### LVQ
         Gera o logAprendizado.csv que contem a taxa de erro do treinamento e da validação durante as epocas. Também gera MatrizConfusao.csv que contem a matriz de confusão gerada pelo teste.
+        Cada elemento dos arquivos .csv são separados por virgulas.
     ### MLP
