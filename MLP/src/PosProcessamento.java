@@ -42,6 +42,11 @@ public class PosProcessamento {
 		return instancia;
 	}
 	
+	public static void clear(){
+		instanciado = false;
+		instancia = null;
+	}
+	
 	public void addMatriz(int[][] nova){
 		matrizes.add(nova);
 	}
