@@ -16,9 +16,6 @@
 		int repeticoes = Integer.parseInt(args[8]);
 		
 		try {
-			Tupla[] entrada = converteTupla(Arquivo.csvToDouble(args[0]));
-			Tupla[] validacao = converteTupla(Arquivo.csvToDouble(args[1]));
-			Tupla[] teste = converteTupla(Arquivo.csvToDouble(args[2]));
 			double taxaAprendizadoInicial = Double.parseDouble(args[3]);
 			int neuroniosCamadaEscondida = Integer.parseInt(args[4]);
 			boolean pesosAleatorios = Boolean.parseBoolean(args[5]);
@@ -27,6 +24,11 @@
 			int fracassos = Integer.parseInt(args[7]);
 			
 			for (int i = 0; i < repeticoes; i++) {
+				// mudança para receber arquivos de holdout sequenciais
+				Tupla[] entrada = converteTupla(Arquivo.csvToDouble(args[0]+i+".csv"));
+				Tupla[] validacao = converteTupla(Arquivo.csvToDouble(args[1]+i+".csv"));
+				Tupla[] teste = converteTupla(Arquivo.csvToDouble(args[2]+i+".csv"));
+				
 				Rede mlp = new Rede(entrada[0].length(),neuroniosCamadaEscondida,10,pesosAleatorios);
 				
 				Rede.Treinamento train = mlp.new Treinamento(entrada, validacao, teste, taxaAprendizadoInicial);
