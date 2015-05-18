@@ -7,13 +7,13 @@
 	*/
 	
 	public static void main(String[] args){
-		if(args.length < 6) {
+		if(args.length < 9) {
 			System.out.println("Uso: MLP [arquivo de entrada] [arquivo de validacao] [arquivo de teste] " +
-					"[taxa de aprendizado inicial] [num. de neuronios na camada escondida] [inicializacao de pesos aleatoria (true/false)]");
+					"[taxa de aprendizado inicial] [num. de neuronios na camada escondida] [inicializacao de pesos aleatoria (true/false)] [intervalos de validacao] [fracassos aceitos] [repeticoes]");
 			System.exit(1);
 		}
 		
-		int repeticoes = 2;
+		int repeticoes = Integer.parseInt(args[8]);
 		
 		try {
 			Tupla[] entrada = converteTupla(Arquivo.csvToDouble(args[0]));
@@ -23,8 +23,8 @@
 			int neuroniosCamadaEscondida = Integer.parseInt(args[4]);
 			boolean pesosAleatorios = Boolean.parseBoolean(args[5]);
 			
-			int intervalo = 100;
-			int fracassos = 2;
+			int intervalo = Integer.parseInt(args[6]);
+			int fracassos = Integer.parseInt(args[7]);
 			
 			for (int i = 0; i < repeticoes; i++) {
 				Rede mlp = new Rede(entrada[0].length(),neuroniosCamadaEscondida,10,pesosAleatorios);
@@ -36,6 +36,7 @@
 			
 			// prepara e grava os sumários de pós-processamento
 			PosProcessamento.getInstance().gravaArq();
+			PosProcessamento.clear();
 			
 			
 		} catch(Exception e) {
