@@ -19,12 +19,27 @@ public class PosProcessamento {
 	double tA;
 	Date data;
 	
-	public PosProcessamento(int nE, double tA, Date data){
+	static private PosProcessamento instancia;
+	static boolean instanciado = false;
+	
+	private PosProcessamento(int nE, double tA, Date data){
 		matrizes = new LinkedList<int[][]>();
 		erros = new LinkedList<double[]>();
 		this.nE = nE;
 		this.tA = tA;
 		this.data = data;
+	}
+	
+	public static PosProcessamento getInstance(int nE, double tA, Date data){
+		if(!instanciado){
+			instancia = new PosProcessamento(nE, tA, data);
+			instanciado = true;
+		}
+		return instancia;
+	}
+	
+	public static PosProcessamento getInstance(){
+		return instancia;
 	}
 	
 	public void addMatriz(int[][] nova){
@@ -54,7 +69,7 @@ public class PosProcessamento {
 
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 10; j++) {
-					desvios[i][j] += (medias[i][j]-atual[i][j])*(medias[i][j]-atual[i][j])/matrizes.size();
+					desvios[i][j] += (double)(medias[i][j]-atual[i][j])*(medias[i][j]-atual[i][j])/matrizes.size();
 				}
 			}
 		}
@@ -83,7 +98,7 @@ public class PosProcessamento {
 			// inclui a matriz atual no cálculo da média
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 10; j++) {
-					medias[i][j] += (atual[i][j]/matrizes.size());
+					medias[i][j] += (double)(atual[i][j]/matrizes.size());
 				}
 			}
 		}
@@ -98,8 +113,8 @@ public class PosProcessamento {
 		
 		while (it.hasNext()) {
 			double[] atual = it.next();
-			medias[0] += (atual[0]/erros.size());
-			medias[1] += (atual[1]/erros.size());
+			medias[0] += (double)(atual[0]/erros.size());
+			medias[1] += (double)(atual[1]/erros.size());
 		}
 		return medias;
 	}
@@ -111,7 +126,7 @@ public class PosProcessamento {
 		PrintStream pr;
 
 		try {
-			pr = new PrintStream(new File("sumMatrizConfusao_"+"_nE"+nE+"_tA"+tA+"__"+dateFormat.format(data)+".csv"));
+			pr = new PrintStream(new File("sumMatrizConfusaoDesv_"+"_nE"+nE+"_tA"+tA+"__"+dateFormat.format(data)+".csv"));
 			
 			// printa um cabeçalho
 			pr.print("Linhas representam a realidade, enquanto colunas mostram as respostas da rede.");
@@ -139,6 +154,41 @@ public class PosProcessamento {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
+		
+		// grava matriz de confusão com médias
+		PrintStream mt;
+		try {
+			mt = new PrintStream(new File("sumMatrizConfusaoMed_"+"_nE"+nE+"_tA"+tA+"__"+dateFormat.format(data)+".csv"));
+			
+			// printa um cabeçalho
+			mt.print("Linhas representam a realidade, enquanto colunas mostram as respostas da rede.");
+			mt.println();
+			
+			// printa os header de colunas
+			mt.print("	");
+			for (int i = 0; i < 10; i++) {
+				mt.print("	"+i);
+			}
+			mt.println();
+			
+			double[][] matriz = matrizMedia();
+
+			// printa matriz
+			for (int i = 0; i < matriz.length; i++) {
+				mt.print("	"+i);
+				for (int j = 0; j < matriz[i].length; j++) {
+					mt.print("	"+matriz[i][j]);
+				}
+				mt.println();
+			}
+			mt.close();
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		
 		
 		// ************** salva o log *************** //
 		Log ult = new Log();

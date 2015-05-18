@@ -21,13 +21,18 @@
 			int neuroniosCamadaEscondida = Integer.parseInt(args[4]);
 			boolean pesosAleatorios = Boolean.parseBoolean(args[5]);
 			
-			Rede mlp = new Rede(entrada[0].length(),neuroniosCamadaEscondida,10,pesosAleatorios);
+			for (int i = 0; i < 2; i++) {
+				Rede mlp = new Rede(entrada[0].length(),neuroniosCamadaEscondida,10,pesosAleatorios);
+				
+				Rede.Treinamento train = mlp.new Treinamento(entrada, validacao, teste, taxaAprendizadoInicial);
+				
+				train.executar(100,2);
+			}
 			
-			Rede.Treinamento train = mlp.new Treinamento(entrada, validacao, teste, taxaAprendizadoInicial);
+			// prepara e grava os sumários de pós-processamento
+			PosProcessamento.getInstance().gravaArq();
 			
-			train.executar(100,20);
 			
-			System.out.println(mlp.toString());
 		} catch(Exception e) {
 			System.out.println("Argumentos preenchidos incorretamente! Consulte o arquivo readme.txt para mais detalhes.");
 			System.exit(1);

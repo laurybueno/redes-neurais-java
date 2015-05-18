@@ -195,6 +195,8 @@ public class Rede {
 			
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 			
+			PosProcessamento.getInstance(camadaEscondida.length,aprendizado,date);
+			
 			logTreinamento.setNomeArquivo("redesTreinamento_"+"_nE"+camadaEscondida.length+"_tA"+aprendizado+"__"+dateFormat.format(this.date));
 			logValidacao.setNomeArquivo("redesValidacao_"+"_nE"+camadaEscondida.length+"_tA"+aprendizado+"__"+dateFormat.format(this.date));
 			
@@ -275,10 +277,18 @@ public class Rede {
 			System.out.println("Erro quadrado em teste: "+erroQuadFinal);
 			
 			// prepara e salva em disco a matriz de confusão
-			salvaMatriz(matrizConfusao(melhorRede));
+			int[][] matrizConfusao = matrizConfusao(melhorRede);
+			salvaMatriz(matrizConfusao);
 			
 			// salva em disco a melhorRede
 			this.salva(melhorRede);
+			
+			// envia dados coletados para o pós-processamento
+			PosProcessamento.getInstance().addMatriz(matrizConfusao);
+			
+			double[] temp = {acuraciaFinal,erroQuadFinal};
+			PosProcessamento.getInstance().addErro(temp);
+			
 			
 			// retorna a melhor rede neural encontrada no processo de treinamento
 			return melhorRede;
