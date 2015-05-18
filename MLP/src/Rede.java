@@ -329,7 +329,7 @@ public class Rede {
 				if(k == tupla.classe())
 					tk = 1;	
 				else
-					tk = 0;
+					tk = -1;
 				
 				// armaezena o tK em Neuronio para computar o erroQuadrado após o fim da sessão
 				camadaSaida[k].tk = tk;

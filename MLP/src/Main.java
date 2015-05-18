@@ -25,9 +25,9 @@
 			
 			for (int i = 0; i < repeticoes; i++) {
 				// mudança para receber arquivos de holdout sequenciais
-				Tupla[] entrada = converteTupla(Arquivo.csvToDouble(args[0]+i+".csv"));
-				Tupla[] validacao = converteTupla(Arquivo.csvToDouble(args[1]+i+".csv"));
-				Tupla[] teste = converteTupla(Arquivo.csvToDouble(args[2]+i+".csv"));
+				Tupla[] entrada = converteTupla(Arquivo.csvToDouble(args[0]));
+				Tupla[] validacao = converteTupla(Arquivo.csvToDouble(args[1]));
+				Tupla[] teste = converteTupla(Arquivo.csvToDouble(args[2]));
 				
 				Rede mlp = new Rede(entrada[0].length(),neuroniosCamadaEscondida,10,pesosAleatorios);
 				
