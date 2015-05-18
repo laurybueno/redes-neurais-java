@@ -39,7 +39,7 @@ public class Relatorio {
 		executaLVQ(numeroEpoca, taxaDeAprendizado, reducaoAprendizado, maxPiora, valorMinimo, nomeTreino, nomeValidacao, nomeTeste, neuronios, inicio);
 	}
 	
-
+	//funcao para executar a LVQ com os parametros dados criando os logs
 	static void executaLVQ(int numeroEpoca, double taxaDeAprendizado, double reducaoAprendizado, int maxPiora, double valorMinimo, String nomeTreino, String nomeValidacao, String nomeTeste, int neuronios, String inicio){
 
 		Log log = new Log();
@@ -64,49 +64,7 @@ public class Relatorio {
 		confusao.adicionaMatriz(nomeTeste, respostas);
 		confusao.gravaMAtrizConfusao("MatrizConfusao.csv");
 	}
-	
-	//funcao para executar a LVQ com os parametros dados uma determinada quantidade de vezes criando os logs
-	static void executaLVQ(String normalizacao, String parametroInicio, int neuronioSaida, double taxaDeAprendizado, double reducaoAprendizado, int maxPioras,int quantidadeVezes, String adicional, String numeroHouldout){
-		for(int cont=0;cont<quantidadeVezes;cont++){//contador de vezes que testou
-			Log log = new Log();
-			String pasta = "log/lucas/";
-			log.criaHead(pasta+normalizacao+"_"+parametroInicio+"_"+cont+"_"+adicional);
-			
-			
-			//Objeto responsavel por inicializar os pesos (neuronios de saida) e por alinhar os dados de teste recebidos da
-			//entrada.
-			//Recebe arquivo de dados de treinamento (ex: "entrada.txt"), e numero de neuronios de saida por cada classe (ex:"1")
-			Inicializa inicializa = new Inicializa("../dados/holdout/treino"+normalizacao+numeroHouldout+".csv","../dados/holdout/validacao"+normalizacao+numeroHouldout+".csv", neuronioSaida, parametroInicio);//coloca arquivo de treino
-			//Inicializa inicializa = new Inicializa("../dados/houldout/treino.csv","../dados/testes_brutos/validacao.csv", neuronioSaida, parametroInicio);
-			//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - inicio//
-			
-			int numeroFixo = 10000; //numero que ira restringir ate que Epoca a LVQ pode chegar (ex:100)
-			//System.out.println("digite o numero de epocas:");
-			//int numeroFixo = sc.nextInt();
-			//System.out.println("digite a taxa de aprendizado:");
-			//double taxaDeAprendizado = sc.nextDouble();
-			//System.out.println("digite o valor que reduz a taxa de aprendizado");
-			//double reducaoAprendizado = sc.nextDouble();
-	 		double valorMinimo=0; //valor minimo que a taxa de aprendizado pode chegar (ex:0.1)
-			//System.out.println("digite o valor minimo que a taxa de aprendizado pode chegar");
-	 		
-			//double valorMinimo = sc.nextDouble();
-			//MEDIDAS QUE DEVINEM A "CARA" DA LVQ - fim// (ex:)
-			
-			
-			//Objeto que da inicio ao corpo da LVQ. Recebendo como parametro um objeto Inicializa, para inicializar seus pesos
-			//e dados de entrada, alem de medidas que iram definir a cara da rede (numero fixo que as iteracoes podem chegar, taxa de Aprendizado, 
-			//taxa de reducao do Aprendizado e valor minimo que a taxa de reducao pode chegar)
-			LVQ lvq1 = new LVQ(inicializa, numeroFixo, taxaDeAprendizado, reducaoAprendizado, valorMinimo, maxPioras);
-			lvq1.Aprendizado(pasta+normalizacao+"_"+parametroInicio+"_" +cont+"_"+adicional);
-			String nomeArquivoTeste ="../dados/holdout/teste"+normalizacao+numeroHouldout+".csv";
-			//String nomeArquivoTeste ="../dados/testes_brutos/teste.csv";
-			double[] respostas = lvq1.Teste(nomeArquivoTeste);
-			MatrizConfusao confusao = new MatrizConfusao();
-			confusao.adicionaMatriz(nomeArquivoTeste, respostas);
-			confusao.gravaMAtrizConfusao(pasta+normalizacao+"_"+parametroInicio+"_" +cont+"_"+adicional+"_MatrizConfusao.csv");
-		}
-	}
+
 	
 	
 	//funcao para calcualr a meida de duas matrizes, usado apara tirar a meida de todos os randomicos
@@ -130,6 +88,7 @@ public class Relatorio {
 		return media;
 	}
 	
+	//funcao para criar o arquivo contendo a media do aprendizado
 	static void criaArquivoMediaAprendizado(String arquivoLeitura, int quantidadeArquivos, String arquivoGravacao, String normalizacao,String numeroHouldout){
 		Input le = new Input();
 		double[][] dados = le.arquivoComHeadToMatrizDouble(arquivoLeitura+"00"+numeroHouldout+"Aprendizado.csv");
@@ -156,6 +115,7 @@ public class Relatorio {
 		}
 	}
 	
+	//faz uma matriz de confusao contendo o desvio padrao de varias matrizes de confusao
 	static void criaDesVioPadraoMatrizConfusao(String nomeArquivo, double[][] media, int numeroexecucao, String normalizacao, String inicio){
 		String execucao;
 		if(numeroexecucao<10){
@@ -204,10 +164,9 @@ public class Relatorio {
 		for(int i=1;i<linha.length;i++){
 			grava.escreveArquivo("log/lucas/desviopadrao"+inicio+normalizacao+execucao+".csv", linha[i], true);
 		}
-		
-
-		
 	}
+	
+	//cria uma matriz de confusao contendo a media de varias matrizes de confusao
 	static double[][] criaMediaMatrizConfusao(String nomeArquivo, int numeroexecucao, String normalizacao, String inicio){
 		String execucao;
 		if(numeroexecucao<10){
@@ -253,7 +212,6 @@ public class Relatorio {
 			grava.escreveArquivo(nomeArquivo+"Media"+inicio+execucao+".csv", linha[i], true);
 		}
 		
-		//tem que fazer pra ele deletar a priemira linha e a primeira coluna
 		return dados0;
 	}
 }

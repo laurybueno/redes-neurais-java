@@ -66,7 +66,7 @@ public class Normaliza {
 	     return novaMatriz;
 	 }
 	
-	//funcao para deletar coluna que so tem numeor igual
+	//funcao para deletar coluna que so tem numeoro igual
 	public double [][] geraNovaMatriz(double[][] args1, double newMin){
 		double [][] novaMatriz = clonaMatriz(args1);
 		boolean parada = true;
@@ -97,7 +97,7 @@ public class Normaliza {
 
 
 	//funcao para checar coluna que só tem 0
-	//recebe como parametro a matriz e o numeor da coluna
+	//recebe como parametro a matriz e o numeoro da coluna
 	boolean sotem0(double[][] dados, int coluna, double newMin){
 		for(int i=0;i<dados.length;i++){
 			if(dados[i][coluna]!=newMin){
@@ -142,7 +142,6 @@ public class Normaliza {
 	
 	//funcao para fazer a normalizacao usando a tecnica Z score
 	//recebe como parametro o nome do arquivo em que se quer normalizar e o nome do arquivo onde vai salvar isso
-	//DANGER: essa funcao nao normaliza a ultima coluna do arquivo
 	public void zScore(String nomeArquivoLeitura, String NomeArquivoGravacao){
 		Input arquivo = new Input();
 		//le arqquivo e passa para uma matriz de double

@@ -129,7 +129,7 @@ public class Input {
 	public void funcaoIntegradora(String nomeArquivo, int p1, int p2, int p3){
 		
 		List[] classes = preencheClasse(nomeArquivo);
-		
+		System.out.println("separou as classes");
 		for(int i=0;i<classes.length;i++){
 			classes[i] = shuffle(classes[i]);
 		}
@@ -145,10 +145,12 @@ public class Input {
 		String[] dados2 = cortaString(quantidade[0],quantidade[1],dados);
 		String[] dados3 = cortaString(quantidade[1], quantidade[2], dados);
 		
-		
+		System.out.println("vai comecar a gravar");
 		Output grava = new Output();
 		grava.escreveArquivo("treino.txt",dados1,false );
+		System.out.println("gravou treino");
 		grava.escreveArquivo("teste.txt", dados2,false);
+		System.out.println("gravou teste");
 		grava.escreveArquivo("validacao.txt", dados3,false);
 
 	}

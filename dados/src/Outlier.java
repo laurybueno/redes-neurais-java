@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 public class Outlier {
-	public boolean outliernoarquivo(String nomearquivo){
+	/*public boolean outliernoarquivo(String nomearquivo){
 		Input im = new Input();
 		double[][] normal = im.arquivoToMatrizDouble(nomearquivo);
 		boolean outliers[] = outlier(normal);
@@ -9,9 +9,9 @@ public class Outlier {
 		//	System.out.println(i+" "+outliers[i]);
 		}
 		return false;
-	}
+	}*/
 	
-	//funcao para encontrar outliers, se um ponto eh maior que 150% do desvio padrao, entao ele eh outlier
+	//funcao para encontrar outliers, se um ponto eh maior que 250% do desvio padrao, entao ele eh outlier
 	public double[] outlier (double[][] dados){
 		double[] outlier = new double[dados.length];
 		double[] variancia = new double[dados[0].length];
@@ -56,7 +56,7 @@ public class Outlier {
 		return media;
 	}
 	
-	//faz uma funcao pra calcular a mediana de cada coluna por favor
+	//funcao pra calcular a mediana de cada coluna
 	public double[] mediana (double[][] dados){
 		
 		double[] mediana = new double[dados[0].length];
@@ -90,7 +90,6 @@ public class Outlier {
 			if(meio % 2 == 0) // não há valor central, portanto deve-se somar os dois valores centrais para obter a média
 				mediana[i] = (inversa[i][meio] + inversa[i][meio-1])/2;
 			else mediana[i] = inversa[i][meio];
-			//System.out.println(mediana[i]);
 		}
 		
 		return mediana;

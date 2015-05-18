@@ -1,4 +1,5 @@
 //Classe para fazer a analise do resultado
+//algumas dessas funcoes so devem ser usadas em matriz de cofnusao binaria
 public class MatrizConfusao {
 	private int[][] matriz;
 	public MatrizConfusao(){
@@ -188,6 +189,7 @@ public class MatrizConfusao {
 		return soma;
 	}
 	
+	//soma todos os elementos da matriz de confusao
 	int totalAmostras(){
 		int cont=0;
 		for(int i=0;i<matriz.length;i++){
@@ -198,11 +200,12 @@ public class MatrizConfusao {
 		return cont;
 	}
 	
+	//faz o arquivo contendo a matriz de confusao
 	public void gravaMAtrizConfusao(String nomeArquivoLog){
 
 		Output grava = new Output();
 		String[] linha = new String[1+matriz[0].length];
-		linha[0]=" ";
+		linha[0]="-1";
 		for(int i=0;i<matriz.length;i++){
 			linha[i+1]=","+String.valueOf(i);
 		}
@@ -217,8 +220,8 @@ public class MatrizConfusao {
 			grava.escreveArquivo(nomeArquivoLog, linha, true);
 		}
 		
-		double kappa = indiceKappa();
-		System.out.println("kappa= "+kappa);
+		//double kappa = indiceKappa();
+		//System.out.println("kappa= "+kappa);
 	}
 	
 	
@@ -232,6 +235,4 @@ public class MatrizConfusao {
 		double fscore = 2*(tpr*ppv)/(tpr+ppv);
 		return fscore;
 	}
-	
-	//pode ser o Característica de Operação do Receptor
 }

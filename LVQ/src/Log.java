@@ -1,10 +1,12 @@
 
 public class Log {
+	//chama as funcoes que criam head dos logs
 	public void criaHead(String nomeArquivoLog){
 		criaHeadRedesNeurais(nomeArquivoLog+"Redes.csv");
 		criaHeadAprendizado(nomeArquivoLog+"Aprendizado.csv");
 	}
 	
+	//cria head do log das redes neurais
 	public void criaHeadRedesNeurais(String nomeArquivo){
 		String[] head = new String[4];
 		head[0] = "Epoca atual:,";
@@ -16,6 +18,7 @@ public class Log {
 		grava.escreveArquivo(nomeArquivo, head, false);
 	}
 	
+	//cria head do log do aprendizado contendo taxa de erro do treino e da validacao
 	public void criaHeadAprendizado(String nomeArquivo){
 		String[] head = new String[3];
 		head[0] = "Epoca atual:,";
@@ -26,6 +29,7 @@ public class Log {
 		grava.escreveArquivo(nomeArquivo, head, false);
 	}
 	
+	
 	public void criaheadMediaEpocas(String nomeArquivo){
 		String [] head = new String[2];
 		head[0] = "Media de Epocas:";
@@ -34,7 +38,7 @@ public class Log {
 		grava.escreveArquivo(nomeArquivo, head, false);
 	}
 	
-	
+	//escreve log contendo o vetor de pesos da rede neural
 	public void escreveLogRedes(int epocaAtual, double taxaReducaoAprendizado, double taxaAprendizadoAtual, double quantidadeReduzir, double[][] pesos, String nomeArquivo){
 		String[] linha = new String[4+pesos.length*pesos[0].length];
 		linha[0] = String.valueOf(epocaAtual)+",";
@@ -54,6 +58,7 @@ public class Log {
 		grava.escreveArquivo(nomeArquivo+"Redes.csv", linha, true);
 	}
 	
+	//escreve log contendo a taxa de erro do trienamento e da validacao de acordo com o passar das epocas
 	public void escreveAprendizado(String nomeArquivo, int epocaAtual, double taxaErroTreinamento, double erroSobreValidacao){
 		String[] linha = new String[3];
 		linha[0] = String.valueOf(epocaAtual)+",";

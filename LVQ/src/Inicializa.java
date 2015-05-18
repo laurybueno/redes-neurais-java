@@ -6,7 +6,7 @@ public class Inicializa{
 	double [][] dadosEntrada; //matriz de dados de entrada (Treinamento)
 	double [][] dadosValidacao; //matriz de dados de Entrada (Validacao)
 	
-	//contrustor de inicializacao principais dados do algoritmo
+	//contrutor de inicializacao principais dados do algoritmo
 	//recebe nome do arquivo de entrada de dados, e a quantidade de neuronios por classe(N)
 	public Inicializa(String nomeTreinamento, String nomeValidacao, int N, String TipoInicializacao)
 	{

@@ -60,7 +60,7 @@ public class Input {
 		return dados;
 	}
 	
-	//recebe como parametor o nome do arquivo e retorna a quantidade de linahs do memso
+	//recebe como parametor o nome do arquivo e retorna a quantidade de linhas do mesmo
 	int tamanho (String nome){
 		int tamanho =0;
 		try{
@@ -99,7 +99,6 @@ public class Input {
 	}
 	
 	//funcao parar criar um arranjo de lista
-	
 	//funcao que recebe como parametro o nome do arquivo e retorna todos os registros da classe recebida como parametro
 	//retorna uma lista de strings
 	public List<String> todasClassesX(double[][] dados, int numero){
@@ -118,7 +117,10 @@ public class Input {
 		}
 		return classeX;
 	}
-
+	
+	
+	//funcao que faz o holdout
+	// recebe como parametro a porcentagem de cada arquivo (teste, treino e validacao) a ser gerado
 	public void houldout(String nomeArquivo, int pTreino, int pTeste, int pValidacao, String normalizacao){
 		
 		List[] classes = preencheClasse(nomeArquivo); //faz um arranjo de listas. Cada lista contem todos os dados de uma classe
@@ -169,12 +171,13 @@ public class Input {
 	}
 	
 	
-	
+	//transforma a lista em um array de string
 	public String[] listToArray(List dados){
 		String [] retorno = (String[]) dados.toArray(new String[dados.size()]);
 
 		return retorno;
 	}
+	
 	
 	public String[] concat(String[] a, String[] b) {
 		   int aLen = a.length;
@@ -249,36 +252,6 @@ public class Input {
 		return novo;
 	}
 	
-	//rece como parametor a quantidade de dados total e um arranjo de listas, cada lista contem todos os dados de uma determinada classe
-	//retorna um arranjo de string ordenado por classe. a ordem será 0-1-2-3-4-5-6-7-8-9
-	/*public String[] ordenaPorClasse (int quantidadeDados, List[] todos){
-		String[] novo = new String[quantidadeDados];
-		Iterator<String> it0 = todos[0].iterator();
-		Iterator<String> it1 = todos[1].iterator();
-		Iterator<String> it2 = todos[2].iterator();
-		Iterator<String> it3 = todos[3].iterator();
-		Iterator<String> it4 = todos[4].iterator();
-		Iterator<String> it5 = todos[5].iterator();
-		Iterator<String> it6 = todos[6].iterator();
-		Iterator<String> it7 = todos[7].iterator();
-		Iterator<String> it8 = todos[8].iterator();
-		Iterator<String> it9 = todos[9].iterator();
-		
-		for(int i=0;i<novo.length;i=i+10){// 10 por que ele ja salva das 10 classes
-			novo[i]=it0.next();
-			novo[i+1]=it1.next();
-			novo[i+2]=it2.next();
-			novo[i+3]=it3.next();
-			novo[i+4]=it4.next();
-			novo[i+5]=it5.next();
-			novo[i+6]=it6.next();
-			novo[i+7]=it7.next();
-			novo[i+8]=it8.next();
-			novo[i+9]=it9.next();
-					
-		}
-		return novo;
-	}*/
 	
 	
 	//retorna um arranjo de lista. Cada elemento do aranjo contem uma lsita contendo todos os registros de uma determinada classe
