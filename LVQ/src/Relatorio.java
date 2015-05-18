@@ -24,8 +24,15 @@ public class Relatorio {
 		System.out.println("digite o numero de neuronios por classe");
 		int neuronios = sc.nextInt();
 		System.out.println("digite a inicialização dos pesos");
-		System.out.println("primeiraEntrada ou zero ou aleatoria");
-		String inicio =  sc.next();
+		System.out.println("0 para zero, 1 para aleatoria e qualquer outra coisa para primeira entrada");
+		int inicial = sc.nextInt();
+		String inicio =  "primeiraEntrada";
+		if(inicial ==0){
+			inicio = "zero";
+		}
+		else if(inicial ==1){
+			inicio = "aleatoria";
+		}
 		//MEDIDAS QUE DEFINEM A "CARA" DA LVQ - fim// (ex:)
 
 		
