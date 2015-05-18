@@ -12,8 +12,8 @@ public class Outlier {
 	}
 	
 	//funcao para encontrar outliers, se um ponto eh maior que 150% do desvio padrao, entao ele eh outlier
-	public boolean[] outlier (double[][] dados){
-		boolean[] outlier = new boolean[dados.length];
+	public double[] outlier (double[][] dados){
+		double[] outlier = new double[dados.length];
 		double[] variancia = new double[dados[0].length];
 		double[] mediana = mediana(dados);
 		for(int i=0;i<variancia.length;i++){
@@ -28,7 +28,7 @@ public class Outlier {
 					break;
 				}
 				if(j==dados[i].length-1){
-					outlier[i]=true;
+					outlier[i]=dados[i][j];
 					System.out.println(outlier[i]);
 				}
 			}
