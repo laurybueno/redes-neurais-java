@@ -1,5 +1,17 @@
 # EP-IA-redes-neurais
 Repositório para o EP sobre Redes Neurais preparado para a professora Sarajane Peres da EACH-USP.
+Para ter acesso a mais logs e histórico do sistema, por favor, acesse: 
+https://github.com/laurybueno/EP-IA-redes-neurais/
+
+
+## Sobre os projetos
+    ### Pre-Processamento
+        Projeto para fazer as normalizações, deletar atributos e fazer o holdout.
+    ### LVQ
+        Gera o logAprendizado.csv que contem a taxa de erro do treinamento e da validação durante as epocas. Também gera MatrizConfusao.csv que contem a matriz de confusão gerada pelo teste.
+        Cada elemento dos arquivos .csv são separados por virgulas.
+    ### MLP
+        Recebe parâmetros via linha de comando e gera diversos relaórios com taxas de erro e aprendizado de uma rede neural MLP. Arquivos de log com "sum" no início são sumários gerados automaticamente após criar várias MLPs com a mesma estrutura.
 
 
 ## Rede MLP:
@@ -14,12 +26,4 @@ Repositório para o EP sobre Redes Neurais preparado para a professora Sarajane 
 
 ## Rede LVQ:
     Uso: execute o Relatorio.java e siga as instruções do console.
-    
-    
-## Sobre os projetos
-    ### Pre-Processamento
-        Projeto para fazer as normalizações, deletar atributos e fazer o holdout.
-    ### LVQ
-        Gera o logAprendizado.csv que contem a taxa de erro do treinamento e da validação durante as epocas. Também gera MatrizConfusao.csv que contem a matriz de confusão gerada pelo teste.
-        Cada elemento dos arquivos .csv são separados por virgulas.
-    ### MLP
+
