@@ -104,10 +104,10 @@ public class Neuronio {
 	public double ativacao(double entrada){
 		entrada = entrada*(-1);
 		// bipolar sigmóide
-		this.fAtivacao = ((2/(1 + Math.exp(entrada))) - 1);
+		//this.fAtivacao = ((2/(1 + Math.exp(entrada))) - 1);
 		
 		// binária sigmóide
-		// this.fAtivacao = 1/(1+Math.exp(entrada));
+		this.fAtivacao = 1/(1+Math.exp(entrada));
 		
 		return this.fAtivacao;
 	}
@@ -116,10 +116,10 @@ public class Neuronio {
 	// Esta derivação se vale de uma simplificação apresentada por Laurene Fausett no livro "Fundamentals of Neural Networks" 
 	public double derivada(){
 		// bipolar sigmóide
-		return ((1+this.fAtivacao)*(1-this.fAtivacao))/2;
+		//return ((1+this.fAtivacao)*(1-this.fAtivacao))/2;
 		
 		// binária sigmóide
-		//return this.fAtivacao*(1-this.fAtivacao);
+		return this.fAtivacao*(1-this.fAtivacao);
 		
 	}
 	
