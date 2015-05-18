@@ -13,6 +13,8 @@
 			System.exit(1);
 		}
 		
+		int repeticoes = 2;
+		
 		try {
 			Tupla[] entrada = converteTupla(Arquivo.csvToDouble(args[0]));
 			Tupla[] validacao = converteTupla(Arquivo.csvToDouble(args[1]));
@@ -21,12 +23,15 @@
 			int neuroniosCamadaEscondida = Integer.parseInt(args[4]);
 			boolean pesosAleatorios = Boolean.parseBoolean(args[5]);
 			
-			for (int i = 0; i < 2; i++) {
+			int intervalo = 100;
+			int fracassos = 2;
+			
+			for (int i = 0; i < repeticoes; i++) {
 				Rede mlp = new Rede(entrada[0].length(),neuroniosCamadaEscondida,10,pesosAleatorios);
 				
 				Rede.Treinamento train = mlp.new Treinamento(entrada, validacao, teste, taxaAprendizadoInicial);
 				
-				train.executar(100,2);
+				train.executar(intervalo,fracassos);
 			}
 			
 			// prepara e grava os sumários de pós-processamento
