@@ -25,7 +25,7 @@ https://github.com/laurybueno/EP-IA-redes-neurais/
     arg6: define se inicialização de pesos é aleatória (true/false)
     arg7: intervalo de épocas em que deverá ocorrer validação
     arg8: máximo de validações com perda de desempenho aceitas
-    arg9: quantas redes neurais deverão ser criadas (e resumidas automaticamente) com os dados dados
+    arg9: quantas redes neurais deverão ser criadas (e resumidas automaticamente) com a estrutura informada
 
 ## Rede LVQ:
     Uso: execute o Relatorio.java e siga as instruções do console.
