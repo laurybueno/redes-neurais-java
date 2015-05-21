@@ -1,5 +1,0 @@
-Esta pasta contem os arquivos que a matriz com a media de acertos e a matriz com o desvio padrão dos acertos, 
-para os casos que foram trabalhados quando descrevemos a arquitetura LVQ no relatório.
-
-Sendo identificados seguindo o indice criado na tabela A, apresentado no relatório.
-Assim podendo ser encontrados pelo seu sufixo que vai de CasoA até CasoM.
