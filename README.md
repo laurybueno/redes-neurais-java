@@ -1,10 +1,12 @@
-# EP-IA-redes-neurais
+EP-IA-redes-neurais
+=====================
 Repositório para o EP sobre Redes Neurais preparado para a professora Sarajane Peres da EACH-USP.
 Para ter acesso a mais logs e histórico do sistema, por favor, acesse: 
 https://github.com/laurybueno/EP-IA-redes-neurais/
 
 
-## Sobre os projetos
+Sobre os projetos
+------------------------
     ### Pre-Processamento
         Projeto para fazer as normalizações, deletar atributos e fazer o holdout.
     ### LVQ
@@ -14,7 +16,8 @@ https://github.com/laurybueno/EP-IA-redes-neurais/
         Recebe parâmetros via linha de comando e gera diversos relaórios com taxas de erro e aprendizado de uma rede neural MLP. Arquivos de log com "sum" no início são sumários gerados automaticamente após criar várias MLPs com a mesma estrutura.
 
 
-## Rede MLP:
+Rede MLP:
+---------------
     Uso: "java Main arg1 arg2 arg3 arg4 arg5 arg6 arg7 arg8"
     Em que:
     arg1: nome do arquivo do conjunto de dados de treino
@@ -27,6 +30,7 @@ https://github.com/laurybueno/EP-IA-redes-neurais/
     arg8: máximo de validações com perda de desempenho aceitas
     arg9: quantas redes neurais deverão ser criadas (e resumidas automaticamente) com a estrutura informada
 
-## Rede LVQ:
+Rede LVQ:
+--------------------
     Uso: execute o Relatorio.java e siga as instruções do console.
 
